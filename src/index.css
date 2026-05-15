@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=DM+Mono:wght@300;400&display=swap');
+@import "tailwindcss";
+
+/* Global font definitions */
+* { font-family: 'Archivo', sans-serif; letter-spacing: -0.01em; }
+.mono { font-family: 'DM Mono', monospace; }
+
+/* Keyframe animations */
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+/* Utility classes */
+.marquee-track { animation: marquee 24s linear infinite; }
+.fade-up { animation: fadeUp 0.75s ease forwards; opacity:0; }
+.d1{animation-delay:0.1s}.d2{animation-delay:0.25s}.d3{animation-delay:0.4s}.d4{animation-delay:0.55s}.d5{animation-delay:0.7s}
+.grid-bg { background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+.text-stroke { -webkit-text-stroke: 1px rgba(255,255,255,0.6); color: transparent; }
+.service-line { transform-origin: left; transition: transform 0.4s ease; }
