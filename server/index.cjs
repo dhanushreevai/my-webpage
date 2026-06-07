@@ -142,7 +142,7 @@ io.on("connection", (socket) => {
 
     setTimeout(() => {
       socket.emit("bot-message", { text: botReply(data.text), time: new Date().toISOString() });
-    }, 700);
+    }, 300);
   });
 
   socket.on("disconnect", () => {

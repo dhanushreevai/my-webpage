@@ -306,7 +306,15 @@ function Logo({ onClick, className = "", dark = false }) {
   );
 }
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = "/api";
+
+const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 
 /* Nature palette */
 const N = {
@@ -669,10 +677,12 @@ function CareersApplyModal({ role, onClose }) {
     if (!file) { setError("Please attach your resume."); return; }
     setStatus("loading"); setError("");
     try {
-      const fd = new FormData();
-      fd.append("name", form.name); fd.append("email", form.email);
-      fd.append("phone", form.phone); fd.append("resume", file);
-      const res = await fetch(`${API_BASE}/apply`, { method: "POST", body: fd });
+      const resumeData = await toBase64(file);
+      const res = await fetch(`${API_BASE}/apply`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.name, email: form.email, phone: form.phone, resumeFileName: file.name, resumeData, resumeMimeType: file.type }),
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Submission failed.");
       setStatus("success");
@@ -780,63 +790,65 @@ function CareersApplyModal({ role, onClose }) {
 
 /* ── Chatbot Widget ───────────────────────────────────────────────────────── */
 function ChatBot() {
+  const WELCOME = { text: "👋 Welcome to 11x Square! I'm your virtual assistant. Ask me about our services, careers, or how to get in touch!", from: "bot", time: new Date().toISOString() };
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([WELCOME]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [socket, setSocket] = useState(null);
   const messagesEndRef = useRef(null);
-
-  useEffect(() => {
-    let s;
-    import("socket.io-client").then(({ io }) => {
-      s = io("http://localhost:5000");
-      setSocket(s);
-      s.on("bot-message", (data) => {
-        setIsTyping(false);
-        setMessages((prev) => [...prev, { text: data.text, from: "bot", time: data.time }]);
-      });
-    });
-    return () => s?.disconnect();
-  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  const sendMessage = () => {
-    if (!input.trim() || !socket) return;
-    setMessages((prev) => [...prev, { text: input.trim(), from: "user", time: new Date().toISOString() }]);
-    setIsTyping(true);
-    socket.emit("user-message", { text: input.trim() });
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+    const text = input.trim();
+    setMessages((prev) => [...prev, { text, from: "user", time: new Date().toISOString() }]);
     setInput("");
+    setIsTyping(true);
+    try {
+      const res = await fetch(`${API_BASE}/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+      const data = await res.json();
+      setMessages((prev) => [...prev, { text: data.text, from: "bot", time: data.time }]);
+    } catch {
+      setMessages((prev) => [...prev, { text: "⚠️ Couldn't reach the server. Please try again.", from: "bot", time: new Date().toISOString() }]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
-  const C = {
-    bg: "#1E293B", header: "#0F172A", indigo: "#6366F1",
-    violet: "#818CF8", muted: "#94A3B8", text: "#E2E8F0",
-  };
+  const C = { bg: "#1A3320", header: "#0C1A0E", accent: "#C4A882", moss: "#7FB38A", text: "#F5EFE6", muted: "#4A7A54" };
 
   return (
     <div className="fixed bottom-6 right-6 z-[300] flex flex-col items-end gap-3">
       {isOpen && (
         <div className="rounded-2xl overflow-hidden shadow-2xl animate-fadeIn flex flex-col"
-          style={{ width: 340, height: 480, background: C.bg, border: "1px solid rgba(99,102,241,0.2)" }}
+          style={{ width: 340, height: 480, background: C.bg, border: "1px solid rgba(196,168,130,0.2)" }}
         >
-          {/* chat header */}
-          <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: C.header }}>
+          {/* header */}
+          <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: C.header, borderBottom: "1px solid rgba(196,168,130,0.15)" }}>
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full flex items-center justify-center text-base" style={{ background: C.indigo }}>🤖</div>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#2D5A3D" }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#2D5A3D" stroke="#C4A882" strokeWidth="1.5"/>
+                  <circle cx="8.5" cy="11" r="1.1" fill="#C4A882"/><circle cx="12" cy="11" r="1.1" fill="#C4A882"/><circle cx="15.5" cy="11" r="1.1" fill="#C4A882"/>
+                </svg>
+              </div>
               <div>
-                <p className="text-sm font-bold text-white leading-tight">11x Assistant</p>
+                <p className="text-sm font-bold leading-tight" style={{ color: C.text }}>11x Assistant</p>
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs" style={{ color: C.muted }}>Online</span>
+                  <span className="text-xs" style={{ color: C.moss }}>Always online</span>
                 </div>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-sm w-7 h-7 flex items-center justify-center rounded-full transition-colors bg-transparent border-0 cursor-pointer"
-              style={{ background: "rgba(255,255,255,0.07)", color: C.muted }}
+            <button onClick={() => setIsOpen(false)} className="w-7 h-7 flex items-center justify-center rounded-lg text-sm bg-transparent border-0 cursor-pointer"
+              style={{ background: "rgba(255,255,255,0.06)", color: C.moss }}
             >✕</button>
           </div>
 
@@ -845,25 +857,21 @@ function ChatBot() {
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}>
                 {msg.from === "bot" && (
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2 shrink-0 mt-0.5" style={{ background: C.indigo }}>🤖</div>
+                  <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs mr-2 shrink-0 mt-0.5" style={{ background: "#2D5A3D" }}>🌿</div>
                 )}
                 <div className="max-w-[78%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-line"
                   style={msg.from === "user"
-                    ? { background: `linear-gradient(135deg, ${C.indigo}, ${C.violet})`, color: "#fff", borderBottomRightRadius: 4 }
+                    ? { background: "linear-gradient(135deg,#2D5A3D,#3D7A52)", color: "#F5EFE6", borderBottomRightRadius: 4 }
                     : { background: "rgba(255,255,255,0.07)", color: C.text, borderBottomLeftRadius: 4 }
                   }
-                >
-                  {msg.text}
-                </div>
+                >{msg.text}</div>
               </div>
             ))}
             {isTyping && (
               <div className="flex justify-start items-end gap-2">
-                <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0" style={{ background: C.indigo }}>🤖</div>
+                <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0" style={{ background: "#2D5A3D" }}>🌿</div>
                 <div className="px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1" style={{ background: "rgba(255,255,255,0.07)" }}>
-                  {[0,1,2].map((i) => (
-                    <span key={i} className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
-                  ))}
+                  {[0,1,2].map((j) => <span key={j} className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: C.moss, animationDelay: `${j*0.15}s` }} />)}
                 </div>
               </div>
             )}
@@ -871,20 +879,20 @@ function ChatBot() {
           </div>
 
           {/* input */}
-          <div className="px-4 py-3 shrink-0 flex gap-2" style={{ borderTop: "1px solid rgba(99,102,241,0.15)" }}>
+          <div className="px-4 py-3 shrink-0 flex gap-2" style={{ borderTop: "1px solid rgba(196,168,130,0.12)" }}>
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
               placeholder="Type a message…"
-              className="nature-input flex-1 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
-              style={{ background: "rgba(255,255,255,0.06)", border: "1.5px solid rgba(99,102,241,0.2)", color: C.text, fontWeight: 500 }}
+              className="nature-input flex-1 rounded-xl px-4 py-2.5 text-sm outline-none"
+              style={{ background: "rgba(255,255,255,0.06)", border: "1.5px solid rgba(196,168,130,0.2)", color: C.text, fontWeight: 500 }}
             />
-            <button onClick={sendMessage} disabled={!input.trim()} className="w-10 h-10 rounded-xl flex items-center justify-center text-white transition-all cursor-pointer disabled:opacity-40 border-0 shrink-0"
-              style={{ background: `linear-gradient(135deg, ${C.indigo}, ${C.violet})` }}
+            <button onClick={sendMessage} disabled={!input.trim()} className="w-10 h-10 rounded-xl flex items-center justify-center transition-all cursor-pointer disabled:opacity-40 border-0 shrink-0"
+              style={{ background: "linear-gradient(135deg,#2D5A3D,#3D7A52)" }}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M2 8h12M9 3l5 5-5 5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 8h12M9 3l5 5-5 5" stroke="#C4A882" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
           </div>
