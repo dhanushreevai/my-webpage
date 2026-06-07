@@ -19,6 +19,6 @@ export default async function handler(req, res) {
     res.status(201).json({ message: "Application submitted successfully.", id: application._id });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Server error. Please try again." });
+    res.status(500).json({ error: err.message || "Server error. Please try again." });
   }
 }

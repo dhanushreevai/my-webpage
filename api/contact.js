@@ -10,6 +10,6 @@ export default async function handler(req, res) {
     res.status(201).json({ message: "Contact saved successfully.", id: contact._id });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Server error. Please try again." });
+    res.status(500).json({ error: err.message || "Server error. Please try again." });
   }
 }
