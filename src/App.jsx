@@ -77,10 +77,10 @@ const STEPS = [
 ];
 
 const STATS = [
-  { val: "120", unit: "+", label: "Projects Delivered", color: "text-[#2D5A3D]" },
-  { val: "48",  unit: "+", label: "Interns Placed",     color: "text-[#3D7A52]" },
-  { val: "11",  unit: "x", label: "Average ROI",        color: "text-[#7A5230]" },
-  { val: "32",  unit: "+", label: "Partner Companies",  color: "text-[#5C3D2E]" },
+  { val: "120", unit: "+", label: "Projects Delivered", color: "text-[#C4A882]" },
+  { val: "48",  unit: "+", label: "Interns Placed",     color: "text-[#7FB38A]" },
+  { val: "11",  unit: "x", label: "Average ROI",        color: "text-[#F5EFE6]" },
+  { val: "32",  unit: "+", label: "Partner Companies",  color: "text-[#DEC49A]" },
 ];
 
 const MARQUEE_ITEMS = [
@@ -210,23 +210,27 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
   };
   const theme = THEMES[color] || { bar: "bg-[#3D7A52]", tag: "rgba(61,122,82,0.2)", tagText: "#7FB38A" };
 
+  const isResting = rotation.x === 0 && rotation.y === 0;
+
   return (
     <div
-      className={`perspective-1000 group fade-up`}
-      style={{ animationDelay: `${delay}s` }}
+      className="group fade-up"
+      style={{ animationDelay: `${delay}s`, perspective: "1000px" }}
     >
-      <div 
+      <div
         ref={cardRef}
         onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={e => { e.currentTarget.style.background = "#213D28"; }}
+        onMouseLeave={e => { handleMouseLeave(); e.currentTarget.style.background = "#1A3320"; }}
+        className="relative p-8 cursor-default overflow-hidden hover:z-10"
         style={{
-          transform: `translateY(${rotation.x === 0 ? 0 : -8}px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-          transition: rotation.x === 0 && rotation.y === 0 ? "transform 0.6s ease-out, box-shadow 0.6s ease" : "box-shadow 0.6s ease"
+          transform: `translateY(${isResting ? 0 : -8}px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+          transition: isResting ? "transform 0.6s ease-out" : "none",
+          transformStyle: "preserve-3d",
+          background: "#1A3320",
+          borderBottom: "1px solid rgba(61,122,82,0.2)",
+          borderRight: "1px solid rgba(61,122,82,0.2)",
         }}
-        className="relative p-8 cursor-default overflow-hidden transform-style-3d hover:shadow-premium hover:z-10 transition-all duration-300"
-        style={{ background: "#1A3320", borderBottom: "1px solid rgba(61,122,82,0.2)", borderRight: "1px solid rgba(61,122,82,0.2)" }}
-        onMouseEnter={e => e.currentTarget.style.background="#213D28"}
-        onMouseLeave={e => e.currentTarget.style.background="#1A3320"}
       >
         <div 
           className="absolute inset-0 pointer-events-none transition-opacity duration-300"
@@ -513,12 +517,12 @@ function ApplyNowModal({ onClose }) {
     setStatus("loading");
     setError("");
     try {
-      const fd = new FormData();
-      fd.append("name", form.name);
-      fd.append("email", form.email);
-      fd.append("phone", form.phone);
-      fd.append("resume", file);
-      const res = await fetch(`${API_BASE}/apply`, { method: "POST", body: fd });
+      const resumeData = await toBase64(file);
+      const res = await fetch(`${API_BASE}/apply`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.name, email: form.email, phone: form.phone, resumeFileName: file.name, resumeData, resumeMimeType: file.type }),
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Submission failed.");
       setStatus("success");
@@ -923,6 +927,33 @@ function ChatBot() {
   );
 }
 
+function BusinessHours() {
+  const [status, setStatus] = useState({ available: false, timeStr: "" });
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+      const ist = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 5.5 * 3600000);
+      const day = ist.getDay();
+      const hour = ist.getHours();
+      const timeStr = ist.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true });
+      setStatus({ available: day >= 1 && day <= 5 && hour >= 9 && hour < 19, timeStr });
+    };
+    update();
+    const id = setInterval(update, 30000);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="hidden lg:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full"
+      style={{ background: status.available ? "rgba(61,122,82,0.15)" : "rgba(255,255,255,0.05)", border: `1px solid ${status.available ? "rgba(61,122,82,0.35)" : "rgba(255,255,255,0.08)"}` }}
+    >
+      <span className={`w-1.5 h-1.5 rounded-full ${status.available ? "bg-emerald-400 animate-pulse" : "bg-gray-500"}`} />
+      <span style={{ color: status.available ? "#7FB38A" : "#6B7280" }}>
+        {status.available ? "Team available" : "Offline"} · {status.timeStr} IST
+      </span>
+    </div>
+  );
+}
+
 export default function App() {
   const [view, setView] = useState("Home");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -991,6 +1022,8 @@ export default function App() {
             </li>
           ))}
         </ul>
+
+        <BusinessHours />
 
         <button
           onClick={() => navigateTo("Contact")}
