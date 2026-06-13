@@ -375,6 +375,47 @@ function LeafDecor({ className = "" }) {
   );
 }
 
+function SuccessModal({ onClose, title, subtitle }) {
+  useEffect(() => {
+    const k = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", k);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", k); document.body.style.overflow = ""; };
+  }, [onClose]);
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      style={{ background: "rgba(5,10,15,0.88)", backdropFilter: "blur(14px)" }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div className="w-full max-w-sm rounded-2xl shadow-2xl animate-fadeIn overflow-hidden"
+        style={{ background: "#0F172A", border: "1px solid rgba(196,168,130,0.18)" }}
+      >
+        <div className="h-px w-full" style={{ background: "linear-gradient(90deg,transparent,#C4A882,transparent)" }} />
+        <div className="flex flex-col items-center gap-6 px-8 py-12 text-center">
+          <div className="w-16 h-16 rounded-full flex items-center justify-center"
+            style={{ background: "rgba(196,168,130,0.08)", border: "1.5px solid rgba(196,168,130,0.25)" }}
+          >
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="14" stroke="#C4A882" strokeWidth="1.5" strokeOpacity="0.4"/>
+              <path d="M8 15.5l5 5 9-10" stroke="#C4A882" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <p className="text-xl font-black text-white mb-2 tracking-tight">{title}</p>
+            <p className="text-sm leading-relaxed" style={{ color: "#64748B" }}>{subtitle}</p>
+          </div>
+          <button onClick={onClose}
+            className="font-bold text-sm px-10 py-3 rounded-full cursor-pointer transition-all duration-200 border-0"
+            style={{ background: "#C4A882", color: "#0F172A" }}
+            onMouseEnter={e => e.target.style.background="#D4B896"}
+            onMouseLeave={e => e.target.style.background="#C4A882"}
+          >Done</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function NatureModal({ onClose, children }) {
   useEffect(() => {
     const handleKey = (e) => { if (e.key === "Escape") onClose(); };
@@ -445,24 +486,7 @@ function StartProjectModal({ onClose }) {
     transition: "border-color 0.2s, background 0.2s",
   };
 
-  if (status === "success") {
-    return (
-      <NatureModal onClose={onClose}>
-        <div className="flex flex-col items-center gap-4 px-8 py-12 text-center relative z-10">
-          <div className="text-5xl">🌿</div>
-          <p className="text-xl font-bold text-white">Details received!</p>
-          <p className="text-sm" style={{ color: N.beigeLight }}>Our team will reach out to you shortly.</p>
-          <button
-            onClick={onClose}
-            className="mt-3 font-bold text-sm px-10 py-3 rounded-full transition-all duration-200 cursor-pointer"
-            style={{ background: N.beige, color: N.green }}
-          >
-            Done
-          </button>
-        </div>
-      </NatureModal>
-    );
-  }
+  if (status === "success") return <SuccessModal onClose={onClose} title="Details received!" subtitle="Our team will reach out to you shortly." />;
 
   return (
     <NatureModal onClose={onClose}>
@@ -578,24 +602,7 @@ function ApplyNowModal({ onClose }) {
     transition: "border-color 0.2s, background 0.2s",
   };
 
-  if (status === "success") {
-    return (
-      <NatureModal onClose={onClose}>
-        <div className="flex flex-col items-center gap-4 px-8 py-12 text-center relative z-10">
-          <div className="text-5xl">🌱</div>
-          <p className="text-xl font-bold text-white">Application received!</p>
-          <p className="text-sm" style={{ color: N.beigeLight }}>We'll review your profile and get back to you soon.</p>
-          <button
-            onClick={onClose}
-            className="mt-3 font-bold text-sm px-10 py-3 rounded-full transition-all duration-200 cursor-pointer"
-            style={{ background: N.beige, color: N.green }}
-          >
-            Done
-          </button>
-        </div>
-      </NatureModal>
-    );
-  }
+  if (status === "success") return <SuccessModal onClose={onClose} title="Application received!" subtitle="We'll review your profile and get back to you soon." />;
 
   return (
     <NatureModal onClose={onClose}>
@@ -767,14 +774,7 @@ function CareersApplyModal({ role, onClose }) {
         </div>
 
         {status === "success" ? (
-          <div className="flex flex-col items-center gap-4 px-7 py-12 text-center">
-            <div className="w-14 h-14 rounded-full flex items-center justify-center text-2xl" style={{ background: `${M.indigo}22` }}>🚀</div>
-            <p className="text-lg font-bold text-white">Application Submitted!</p>
-            <p className="text-sm" style={{ color: M.muted }}>We'll review your profile and get back to you soon.</p>
-            <button onClick={onClose} className="mt-2 font-bold text-sm px-10 py-3 rounded-full cursor-pointer transition-all"
-              style={{ background: `linear-gradient(135deg, ${M.indigo}, ${M.violet})`, color: "#fff" }}
-            >Done</button>
-          </div>
+          <SuccessModal onClose={onClose} title="Application Submitted!" subtitle="We'll review your profile and get back to you soon." />
         ) : (
           <form onSubmit={handleSubmit} className="px-7 py-6 flex flex-col gap-4">
             {[
