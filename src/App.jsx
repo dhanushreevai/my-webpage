@@ -205,14 +205,14 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
   };
 
   const THEMES = {
-    indigo:  { bar: "bg-[#0284C7]", tag: "rgba(2,132,199,0.18)",  tagText: "#BAE6FD" },
-    orange:  { bar: "bg-[#EA580C]", tag: "rgba(234,88,12,0.18)",  tagText: "#FED7AA" },
-    purple:  { bar: "bg-[#9333EA]", tag: "rgba(147,51,234,0.18)", tagText: "#E9D5FF" },
-    pink:    { bar: "bg-[#DB2777]", tag: "rgba(219,39,119,0.18)", tagText: "#FBCFE8" },
-    emerald: { bar: "bg-[#0F766E]", tag: "rgba(15,118,110,0.18)", tagText: "#99F6E4" },
-    amber:   { bar: "bg-[#B45309]", tag: "rgba(180,83,9,0.18)",   tagText: "#FDE68A" },
+    indigo:  { bar: "bg-[#0284C7]", tag: "#DBEAFE", tagText: "#1D4ED8" },
+    orange:  { bar: "bg-[#EA580C]", tag: "#FFEDD5", tagText: "#C2410C" },
+    purple:  { bar: "bg-[#9333EA]", tag: "#EDE9FE", tagText: "#7C3AED" },
+    pink:    { bar: "bg-[#DB2777]", tag: "#FCE7F3", tagText: "#BE185D" },
+    emerald: { bar: "bg-[#0F766E]", tag: "#D1FAE5", tagText: "#065F46" },
+    amber:   { bar: "bg-[#B45309]", tag: "#FEF3C7", tagText: "#92400E" },
   };
-  const theme = THEMES[color] || { bar: "bg-[#0284C7]", tag: "rgba(2,132,199,0.18)", tagText: "#BAE6FD" };
+  const theme = THEMES[color] || { bar: "bg-[#0284C7]", tag: "#DBEAFE", tagText: "#1D4ED8" };
 
   const isResting = rotation.x === 0 && rotation.y === 0;
 
@@ -1043,10 +1043,9 @@ export default function App() {
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-12 py-3 transition-all duration-300 mx-auto max-w-[1440px]"
         style={{
           backdropFilter: "blur(16px)",
-          background: scrolled ? "rgba(255,255,255,0.97)" : "rgba(255,255,255,0.85)",
-          borderBottom: "1px solid rgba(2,132,199,0.25)",
-          borderLeft: "1px solid rgba(2,132,199,0.1)",
-          borderRight: "1px solid rgba(2,132,199,0.1)",
+          background: scrolled ? "rgba(255,255,255,0.97)" : "rgba(255,255,255,0.90)",
+          borderBottom: scrolled ? "1px solid rgba(2,132,199,0.2)" : "none",
+          boxShadow: scrolled ? "0 2px 20px rgba(2,132,199,0.08)" : "none",
         }}
       >
         <Logo onClick={() => navigateTo("Home")} dark={true} />
@@ -1110,7 +1109,7 @@ export default function App() {
       <main key={view} className="page-transition">
       {view === "Home" && (
         <>
-        <section id="home" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 pt-28 pb-12 overflow-hidden mx-auto max-w-[1440px] z-10" style={{ background: "linear-gradient(160deg,#C5E8F7 0%,#E0F2FE 50%,#F0F9FF 100%)", borderLeft: "1px solid rgba(2,132,199,0.1)", borderRight: "1px solid rgba(2,132,199,0.1)" }}>
+        <section id="home" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 pt-28 pb-12 overflow-hidden z-10" style={{ background: "linear-gradient(160deg,#C5E8F7 0%,#E0F2FE 50%,#F0F9FF 100%)" }}>
         <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
 
         <p className="mono text-[11px] font-bold uppercase tracking-[0.15em] mb-7 flex items-center gap-3 fade-up d1" style={{ color: "#38BDF8" }}>
@@ -1172,7 +1171,7 @@ export default function App() {
       )}
 
       {view === "Services" && (
-        <section id="services" className="px-8 md:px-12 py-20 mx-auto max-w-[1440px]" style={{ background: "#FFFFFF", borderLeft: "1px solid rgba(2,132,199,0.15)", borderRight: "1px solid rgba(2,132,199,0.15)" }}>
+        <section id="services" className="px-8 md:px-12 py-20" style={{ background: "#FFFFFF" }}>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 fade-up d1">
           <div className="fade-up d2">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d3" style={{ color: "#334155" }}>// Our Solutions</p>
@@ -1193,7 +1192,7 @@ export default function App() {
       )}
 
       {view === "Careers" && (
-        <section id="careers" className="px-8 md:px-12 py-20 mx-auto max-w-[1440px]" style={{ background: "#EBF8FF", borderTop: "1px solid rgba(2,132,199,0.2)", borderLeft: "1px solid rgba(2,132,199,0.15)", borderRight: "1px solid rgba(2,132,199,0.15)" }}>
+        <section id="careers" className="px-8 md:px-12 py-20" style={{ background: "#EBF8FF", borderTop: "1px solid rgba(2,132,199,0.15)" }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-start">
           <div className="fade-up d1">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#334155" }}>// Careers</p>
