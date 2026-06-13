@@ -27,6 +27,13 @@
   0%, 100% { transform: rotate(-2deg); }
   50%       { transform: rotate(2deg);  }
 }
+@keyframes confettiFall {
+  to { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
 
 /* Page & utility */
 .page-transition  { animation: pageEnter 0.6s cubic-bezier(0.22,1,0.36,1) forwards; }
@@ -76,6 +83,7 @@
 
 /* Placeholder for nature / dark inputs */
 .nature-input::placeholder { color: rgba(255,255,255,0.35); }
+.typing-cursor { animation: blink 1s step-end infinite; color: #C4A882; -webkit-text-stroke: 0; }
 
 /* Scrollbar */
 ::-webkit-scrollbar       { width: 6px; }

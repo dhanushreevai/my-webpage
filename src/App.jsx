@@ -320,6 +320,37 @@ const toBase64 = (file) =>
     reader.readAsDataURL(file);
   });
 
+function launchConfetti() {
+  const colors = ["#2D5A3D", "#C4A882", "#7FB38A", "#F5EFE6", "#3D7A52", "#DEC49A"];
+  for (let i = 0; i < 80; i++) {
+    const el = document.createElement("div");
+    const size = 5 + Math.random() * 8;
+    el.style.cssText = `position:fixed;pointer-events:none;z-index:9999;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>0.5?"50%":"2px"};left:${5+Math.random()*90}%;top:-10px;animation:confettiFall ${1.5+Math.random()*1.5}s ease-in forwards;animation-delay:${Math.random()*0.6}s;transform:rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3500);
+  }
+}
+
+function TypingText({ words = [] }) {
+  const [idx, setIdx] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [deleting, setDeleting] = useState(false);
+  useEffect(() => {
+    const word = words[idx % words.length];
+    const timer = setTimeout(() => {
+      if (!deleting) {
+        if (displayed.length < word.length) setDisplayed(word.slice(0, displayed.length + 1));
+        else setTimeout(() => setDeleting(true), 1800);
+      } else {
+        if (displayed.length > 0) setDisplayed(displayed.slice(0, -1));
+        else { setDeleting(false); setIdx((i) => (i + 1) % words.length); }
+      }
+    }, deleting ? 60 : 110);
+    return () => clearTimeout(timer);
+  }, [displayed, deleting, idx, words]);
+  return <>{displayed}<span className="typing-cursor">|</span></>;
+}
+
 /* Nature palette */
 const N = {
   green:      "#2D5A3D",
@@ -394,6 +425,7 @@ function StartProjectModal({ onClose }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Submission failed.");
       setStatus("success");
+      launchConfetti();
     } catch (err) {
       setError(err.message);
       setStatus("idle");
@@ -526,6 +558,7 @@ function ApplyNowModal({ onClose }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Submission failed.");
       setStatus("success");
+      launchConfetti();
     } catch (err) {
       setError(err.message);
       setStatus("idle");
@@ -690,6 +723,7 @@ function CareersApplyModal({ role, onClose }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Submission failed.");
       setStatus("success");
+      launchConfetti();
     } catch (err) { setError(err.message); setStatus("idle"); }
   };
 
@@ -1079,7 +1113,9 @@ export default function App() {
         <h1 className="text-[clamp(3rem,10vw,8rem)] font-black leading-[0.85] tracking-[-0.06em] max-w-6xl mb-12 fade-up d2" style={{ color: "#F5EFE6" }}>
           Scale your
           <br />
-          <span className="text-stroke cursor-default inline-block" style={{ WebkitTextStroke: "2px #2D5A3D" }}>ambition</span>
+          <span className="text-stroke cursor-default inline-block" style={{ WebkitTextStroke: "2px #2D5A3D" }}>
+            <TypingText words={["ambition", "vision", "growth", "impact"]} />
+          </span>
           <br />
           with <span style={{ color: "#2D5A3D" }}>11x Square</span>
         </h1>

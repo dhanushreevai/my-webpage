@@ -22,17 +22,24 @@ export default async function handler(req, res) {
   <title>Applications — 11x Square</title>
   <style>
     body { font-family: sans-serif; background: #0C1A0E; color: #F5EFE6; padding: 2rem; }
-    h1 { color: #C4A882; }
+    h1 { color: #C4A882; margin-bottom: 0.25rem; }
     table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    th { background: #1A3320; color: #7FB38A; padding: 10px; text-align: left; }
-    td { padding: 10px; border-bottom: 1px solid #2D5A3D; }
-    a { color: #C4A882; }
-    .count { color: #7FB38A; margin-bottom: 1rem; }
+    th { background: #1A3320; color: #7FB38A; padding: 10px 14px; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 10px 14px; border-bottom: 1px solid #2D5A3D; font-size: 0.9rem; }
+    tr:hover td { background: #1A3320; }
+    a { color: #C4A882; text-decoration: none; margin-right: 0.75rem; }
+    a:hover { text-decoration: underline; }
+    .count { color: #7FB38A; margin-bottom: 1.5rem; font-size: 0.85rem; }
+    .nav { margin-bottom: 1.5rem; }
+    .nav a { font-size: 0.85rem; }
   </style>
 </head>
 <body>
-  <h1>Applications (${list.length})</h1>
-  <p class="count">Sorted by most recent first</p>
+  <div class="nav">
+    <a href="/api/contacts">→ View Project Inquiries</a>
+  </div>
+  <h1>Applications</h1>
+  <p class="count">${list.length} total · sorted by most recent</p>
   <table>
     <tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Resume</th><th>Submitted</th></tr>
     ${list.map((a, i) => `
@@ -41,7 +48,10 @@ export default async function handler(req, res) {
       <td>${a.name}</td>
       <td>${a.email}</td>
       <td>${a.phone}</td>
-      <td><a href="${a.downloadLink}" target="_blank">${a.resumeFileName || "Download"}</a></td>
+      <td>
+        <a href="/api/preview?id=${a.id}" target="_blank">Preview</a>
+        <a href="${a.downloadLink}" target="_blank">Download</a>
+      </td>
       <td>${new Date(a.submittedAt).toLocaleString()}</td>
     </tr>`).join("")}
   </table>
