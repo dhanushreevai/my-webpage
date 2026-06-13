@@ -1306,7 +1306,7 @@ export default function App() {
 
       {/* FOOTER */}
       <footer className="px-8 md:px-12 pt-10 pb-10 fade-up d1" style={{ background: "#0C1A0E", borderTop: "1px solid rgba(61,122,82,0.3)" }}>
-        <div className="flex flex-col lg:flex-row justify-between gap-16 mb-20 fade-up d2">
+        <div className="flex flex-col lg:flex-row justify-between gap-8 mb-8 fade-up d2">
           <div className="max-w-xs fade-up d3">
             <Logo onClick={() => navigateTo("Home")} className="mb-4" dark={true} />
             <p className="text-sm leading-relaxed" style={{ color: "#7A9E7E" }}>
