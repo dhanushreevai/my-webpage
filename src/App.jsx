@@ -303,17 +303,27 @@ function Logo({ onClick, className = "", size = "nav" }) {
   return (
     <div
       onClick={onClick}
-      className={`flex items-center gap-2 cursor-pointer transition-all duration-300 hover:opacity-80 active:scale-95 ${className}`}
+      className={`flex items-center gap-2.5 cursor-pointer active:scale-95 ${className}`}
+      style={{ transition: "opacity 0.2s" }}
+      onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
+      onMouseLeave={e => e.currentTarget.style.opacity = "1"}
     >
-      <img
-        src={logo}
-        alt="11x Logo Icon"
-        className={size === "footer" ? "h-14 w-auto rounded-xl" : "h-8 w-auto rounded-lg hidden sm:block"}
-        style={{ mixBlendMode: "multiply" }}
-      />
-      <span className={`font-black tracking-tighter ${size === "footer" ? "text-3xl" : "text-xl"}`} style={{ color: "#0C2340" }}>
-        11x<span style={{ color: "#0284C7" }}>Square</span>
-      </span>
+      {size === "footer" && (
+        <img
+          src={logo}
+          alt="11x Logo"
+          className="h-12 w-auto rounded-xl"
+          style={{ mixBlendMode: "multiply" }}
+        />
+      )}
+      <div className="flex flex-col leading-none">
+        <span className={`font-black tracking-tighter ${size === "footer" ? "text-3xl" : "text-[22px]"}`} style={{ color: "#0C2340", lineHeight: 1 }}>
+          11x<span style={{ color: "#0284C7" }}>Square</span>
+        </span>
+        {size === "footer" && (
+          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: "#6B8EA8", marginTop: 2 }}>Consulting · Talent</span>
+        )}
+      </div>
     </div>
   );
 }
@@ -1000,14 +1010,25 @@ export default function App() {
   const [view, setView] = useState("Home");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
   const [statsVisible, setStatsVisible] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
   const [careersApplyRole, setCareersApplyRole] = useState(null);
   const statsRef = useRef(null);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      if (y > lastScrollY.current && y > 80) {
+        setNavHidden(true);   // scrolling down → hide
+      } else {
+        setNavHidden(false);  // scrolling up → show
+      }
+      lastScrollY.current = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -1028,7 +1049,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#FFFFFF", color: "#0C2340" }}>
-      <ScrollProgress />
       <MouseSpotlight />
       
       {/* Floating Background Blobs */}
@@ -1040,12 +1060,14 @@ export default function App() {
 
       {/* NAV */}
       <nav
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-12 py-3 transition-all duration-300 mx-auto max-w-[1440px]"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 md:px-12 py-3"
         style={{
-          backdropFilter: "blur(16px)",
-          background: scrolled ? "rgba(255,255,255,0.97)" : "rgba(255,255,255,0.90)",
-          borderBottom: scrolled ? "1px solid rgba(2,132,199,0.2)" : "none",
-          boxShadow: scrolled ? "0 2px 20px rgba(2,132,199,0.08)" : "none",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          background: scrolled ? "#ffffff" : "rgba(255,255,255,0.75)",
+          boxShadow: scrolled ? "0 1px 24px rgba(2,132,199,0.10)" : "none",
+          transform: navHidden ? "translateY(-100%)" : "translateY(0)",
+          transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.3s, box-shadow 0.3s",
         }}
       >
         <Logo onClick={() => navigateTo("Home")} dark={true} />
