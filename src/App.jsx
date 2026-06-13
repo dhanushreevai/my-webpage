@@ -70,17 +70,17 @@ const ROLES = [
 ];
 
 const STEPS = [
-  { num: "01", title: "Discovery", desc: "We audit your stack, team, and goals to understand what's holding you back and what's possible.", color: "text-[#7C3AED]" },
+  { num: "01", title: "Discovery", desc: "We audit your stack, team, and goals to understand what's holding you back and what's possible.", color: "text-[#E11D48]" },
   { num: "02", title: "Strategy", desc: "A clear, actionable roadmap with milestones, owners, and measurable success criteria.", color: "text-[#7A5230]" },
-  { num: "03", title: "Execution", desc: "Embedded consultants and curated talent work alongside your team to ship results.", color: "text-[#8B5CF6]" },
+  { num: "03", title: "Execution", desc: "Embedded consultants and curated talent work alongside your team to ship results.", color: "text-[#FB7185]" },
   { num: "04", title: "Scale", desc: "We hand off with documentation, playbooks, and a team ready to multiply the wins.", color: "text-[#5C3D2E]" },
 ];
 
 const STATS = [
-  { val: "120", unit: "+", label: "Projects Delivered", color: "text-[#F59E0B]" },
-  { val: "48",  unit: "+", label: "Interns Placed",     color: "text-[#94A3B8]" },
-  { val: "11",  unit: "x", label: "Average ROI",        color: "text-[#F1F5F9]" },
-  { val: "32",  unit: "+", label: "Partner Companies",  color: "text-[#FDE68A]" },
+  { val: "120", unit: "+", label: "Projects Delivered", color: "text-[#E11D48]" },
+  { val: "48",  unit: "+", label: "Interns Placed",     color: "text-[#FDA4AF]" },
+  { val: "11",  unit: "x", label: "Average ROI",        color: "text-[#FFF1F2]" },
+  { val: "32",  unit: "+", label: "Partner Companies",  color: "text-[#FFE4E8]" },
 ];
 
 const MARQUEE_ITEMS = [
@@ -106,7 +106,7 @@ function useCountUp(target, duration = 1500, start = false) {
   return count;
 }
 
-function MagneticButton({ children, className = "", onClick }) {
+function MagneticButton({ children, className = "", onClick, style: customStyle = {} }) {
   const buttonRef = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -125,7 +125,11 @@ function MagneticButton({ children, className = "", onClick }) {
       <button
         ref={buttonRef}
         onClick={onClick}
-        style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0)`, transition: position.x === 0 ? "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)" : "none" }}
+        style={{
+          transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
+          transition: position.x === 0 ? "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)" : "none",
+          ...customStyle
+        }}
         className={className}
       >
         {children}
@@ -145,7 +149,7 @@ function ScrollProgress() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  return <div className="fixed top-0 left-0 h-1 z-[60] transition-all duration-100" style={{ width: `${width}%`, background: "linear-gradient(90deg,#7C3AED,#F59E0B)" }} />;
+  return <div className="fixed top-0 left-0 h-1 z-[60] transition-all duration-100" style={{ width: `${width}%`, background: "linear-gradient(90deg,#E11D48,#E11D48)" }} />;
 }
 
 function MouseSpotlight() {
@@ -157,7 +161,7 @@ function MouseSpotlight() {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[1] opacity-50" style={{ background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(139,92,246,0.07), transparent 80%)` }} />
+    <div className="fixed inset-0 pointer-events-none z-[1] opacity-50" style={{ background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(225,29,72,0.07), transparent 80%)` }} />
   );
 }
 
@@ -169,7 +173,7 @@ function StatCard({ val, unit, label, animate, color, delay }) {
         {animate ? num : val}
         <span className="opacity-60">{unit}</span>
       </div>
-      <div className="text-xs uppercase tracking-wide font-medium" style={{ color: "#94A3B8" }}>{label}</div>
+      <div className="text-xs uppercase tracking-wide font-medium" style={{ color: "#FDA4AF" }}>{label}</div>
     </div>
   );
 }
@@ -201,14 +205,14 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
   };
 
   const THEMES = {
-    indigo:  { bar: "bg-[#7C3AED]", tag: "rgba(124,58,237,0.18)",  tagText: "#A78BFA" },
-    orange:  { bar: "bg-[#D97706]", tag: "rgba(217,119,6,0.18)",   tagText: "#FCD34D" },
-    purple:  { bar: "bg-[#6D28D9]", tag: "rgba(109,40,217,0.18)",  tagText: "#C4B5FD" },
-    pink:    { bar: "bg-[#BE185D]", tag: "rgba(190,24,93,0.18)",   tagText: "#F9A8D4" },
-    emerald: { bar: "bg-[#0E7490]", tag: "rgba(14,116,144,0.18)",  tagText: "#67E8F9" },
-    amber:   { bar: "bg-[#F59E0B]", tag: "rgba(245,158,11,0.18)",  tagText: "#FDE68A" },
+    indigo:  { bar: "bg-[#E11D48]", tag: "rgba(225,29,72,0.18)",  tagText: "#FECDD3" },
+    orange:  { bar: "bg-[#EA580C]", tag: "rgba(234,88,12,0.18)",  tagText: "#FED7AA" },
+    purple:  { bar: "bg-[#9333EA]", tag: "rgba(147,51,234,0.18)", tagText: "#E9D5FF" },
+    pink:    { bar: "bg-[#DB2777]", tag: "rgba(219,39,119,0.18)", tagText: "#FBCFE8" },
+    emerald: { bar: "bg-[#0F766E]", tag: "rgba(15,118,110,0.18)", tagText: "#99F6E4" },
+    amber:   { bar: "bg-[#B45309]", tag: "rgba(180,83,9,0.18)",   tagText: "#FDE68A" },
   };
-  const theme = THEMES[color] || { bar: "bg-[#7C3AED]", tag: "rgba(124,58,237,0.18)", tagText: "#A78BFA" };
+  const theme = THEMES[color] || { bar: "bg-[#E11D48]", tag: "rgba(225,29,72,0.18)", tagText: "#FECDD3" };
 
   const isResting = rotation.x === 0 && rotation.y === 0;
 
@@ -220,16 +224,16 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
       <div
         ref={cardRef}
         onMouseMove={handleMouseMove}
-        onMouseEnter={e => { e.currentTarget.style.background = "#1A1A35"; }}
-        onMouseLeave={e => { handleMouseLeave(); e.currentTarget.style.background = "#131325"; }}
+        onMouseEnter={e => { e.currentTarget.style.background = "#231515"; }}
+        onMouseLeave={e => { handleMouseLeave(); e.currentTarget.style.background = "#1A1010"; }}
         className="relative p-8 cursor-default overflow-hidden hover:z-10"
         style={{
           transform: `translateY(${isResting ? 0 : -8}px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
           transition: isResting ? "transform 0.6s ease-out" : "none",
           transformStyle: "preserve-3d",
-          background: "#131325",
-          borderBottom: "1px solid rgba(139,92,246,0.2)",
-          borderRight: "1px solid rgba(139,92,246,0.2)",
+          background: "#1A1010",
+          borderBottom: "1px solid rgba(225,29,72,0.2)",
+          borderRight: "1px solid rgba(225,29,72,0.2)",
         }}
       >
         <div 
@@ -245,9 +249,9 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
         {image && (
           <img src={image} alt={title} className="w-full h-32 object-cover mb-6 rounded-md translate-z-10" />
         )}
-        <div className="font-mono text-[11px] tracking-wider mb-4 translate-z-10" style={{ color: "#4F46E5" }}>{num}</div>
-        <h3 className="text-2xl font-black mb-4 tracking-tighter leading-none group-hover:translate-z-30 transition-transform duration-500" style={{ color: "#F1F5F9" }}>{title}</h3>
-        <p className="text-[15px] font-medium leading-relaxed max-w-[280px] group-hover:translate-z-20 transition-transform duration-500" style={{ color: "#94A3B8" }}>{desc}</p>
+        <div className="font-mono text-[11px] tracking-wider mb-4 translate-z-10" style={{ color: "#BE123C" }}>{num}</div>
+        <h3 className="text-2xl font-black mb-4 tracking-tighter leading-none group-hover:translate-z-30 transition-transform duration-500" style={{ color: "#FFF1F2" }}>{title}</h3>
+        <p className="text-[15px] font-medium leading-relaxed max-w-[280px] group-hover:translate-z-20 transition-transform duration-500" style={{ color: "#FDA4AF" }}>{desc}</p>
         <div className="flex flex-wrap gap-2 mt-5 group-hover:translate-z-10 transition-transform duration-500">
           {tags.map((t, i) => (
             <span key={i} className="font-mono text-[10px] px-3 py-1 rounded-full uppercase tracking-wider font-bold"
@@ -266,13 +270,13 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
     <div
       onClick={onApply}
       className="flex items-center justify-between px-8 py-5 transition-all duration-300 cursor-pointer group"
-      style={{ background: "#131325", borderBottom: "1px solid rgba(139,92,246,0.2)" }}
-      onMouseEnter={e => e.currentTarget.style.background="#1A1A35"}
-      onMouseLeave={e => e.currentTarget.style.background="#131325"}
+      style={{ background: "#1A1010", borderBottom: "1px solid rgba(225,29,72,0.2)" }}
+      onMouseEnter={e => e.currentTarget.style.background="#231515"}
+      onMouseLeave={e => e.currentTarget.style.background="#1A1010"}
     >
       <div className="flex flex-col gap-1.5">
-        <span className="text-sm font-bold" style={{ color: "#F1F5F9" }}>{title}</span>
-        <div className="flex gap-4 font-mono text-[11px]" style={{ color: "#4F46E5" }}>
+        <span className="text-sm font-bold" style={{ color: "#FFF1F2" }}>{title}</span>
+        <div className="flex gap-4 font-mono text-[11px]" style={{ color: "#BE123C" }}>
           <span>{location}</span>
           <span>{period}</span>
         </div>
@@ -281,14 +285,13 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
         <span
           className="font-mono text-[10px] px-2.5 py-1 rounded-sm uppercase tracking-normal"
           style={type === "intern"
-            ? { background: "rgba(139,92,246,0.12)", color: "#7C3AED", border: "1px solid rgba(139,92,246,0.3)" }
-            : { background: "rgba(245,158,11,0.08)", color: "#D97706", border: "1px solid rgba(245,158,11,0.2)" }
+            ? { background: "rgba(225,29,72,0.12)", color: "#E11D48", border: "1px solid rgba(225,29,72,0.3)" }
+            : { background: "rgba(251,113,133,0.08)", color: "#FB7185", border: "1px solid rgba(251,113,133,0.25)" }
           }
-          style={{ animationDelay: `${delay}s` }}
         >
           {type === "intern" ? "Intern" : "Full-time"}
         </span>
-        <span className="text-2xl transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" style={{ color: "#F59E0B" }}>
+        <span className="text-2xl transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" style={{ color: "#E11D48" }}>
           ↗
         </span>
       </div>
@@ -302,9 +305,14 @@ function Logo({ onClick, className = "", dark = false }) {
       onClick={onClick}
       className={`flex items-center gap-2 cursor-pointer transition-all duration-300 hover:opacity-80 active:scale-95 ${className}`}
     >
-      <img src={logo} alt="11x Logo Icon" className="h-20 w-auto filter invert" />
-      <span className="hidden sm:block text-2xl font-black tracking-tighter" style={{ color: dark ? "#F1F5F9" : "#131325" }}>
-        11x<span style={{ color: dark ? "#F59E0B" : "#8B5CF6" }}>Square</span>
+      <img
+        src={logo}
+        alt="11x Logo Icon"
+        className="h-9 w-auto rounded-lg"
+        style={{ filter: "invert(1) sepia(1) saturate(2.5) hue-rotate(300deg) brightness(1.1)", mixBlendMode: "screen" }}
+      />
+      <span className="hidden sm:block text-2xl font-black tracking-tighter" style={{ color: dark ? "#FFF1F2" : "#1A1010" }}>
+        11x<span style={{ color: dark ? "#E11D48" : "#FB7185" }}>Square</span>
       </span>
     </div>
   );
@@ -321,7 +329,7 @@ const toBase64 = (file) =>
   });
 
 function launchConfetti() {
-  const colors = ["#7C3AED", "#F59E0B", "#94A3B8", "#F1F5F9", "#8B5CF6", "#FDE68A"];
+  const colors = ["#E11D48", "#E11D48", "#FDA4AF", "#FFF1F2", "#FB7185", "#FFE4E8"];
   for (let i = 0; i < 80; i++) {
     const el = document.createElement("div");
     const size = 5 + Math.random() * 8;
@@ -353,14 +361,14 @@ function TypingText({ words = [] }) {
 
 /* Nature palette */
 const N = {
-  green:      "#7C3AED",
-  greenLight: "#8B5CF6",
+  green:      "#E11D48",
+  greenLight: "#FB7185",
   greenMid:   "#4E8C62",
   brown:      "#6B4C35",
   brownLight: "#8B6448",
-  beige:      "#F59E0B",
-  beigeLight: "#FDE68A",
-  cream:      "#F1F5F9",
+  beige:      "#E11D48",
+  beigeLight: "#FFE4E8",
+  cream:      "#FFF1F2",
   leaf:       "rgba(255,255,255,0.08)",
 };
 
@@ -388,27 +396,27 @@ function SuccessModal({ onClose, title, subtitle }) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className="w-full max-w-sm rounded-2xl shadow-2xl animate-fadeIn overflow-hidden"
-        style={{ background: "#0F172A", border: "1px solid rgba(245,158,11,0.18)" }}
+        style={{ background: "#0F172A", border: "1px solid rgba(225,29,72,0.18)" }}
       >
-        <div className="h-px w-full" style={{ background: "linear-gradient(90deg,transparent,#F59E0B,transparent)" }} />
+        <div className="h-px w-full" style={{ background: "linear-gradient(90deg,transparent,#E11D48,transparent)" }} />
         <div className="flex flex-col items-center gap-6 px-8 py-12 text-center">
           <div className="w-16 h-16 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(245,158,11,0.08)", border: "1.5px solid rgba(245,158,11,0.25)" }}
+            style={{ background: "rgba(225,29,72,0.08)", border: "1.5px solid rgba(225,29,72,0.25)" }}
           >
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-              <circle cx="15" cy="15" r="14" stroke="#F59E0B" strokeWidth="1.5" strokeOpacity="0.4"/>
-              <path d="M8 15.5l5 5 9-10" stroke="#F59E0B" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="15" cy="15" r="14" stroke="#E11D48" strokeWidth="1.5" strokeOpacity="0.4"/>
+              <path d="M8 15.5l5 5 9-10" stroke="#E11D48" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <div>
             <p className="text-xl font-black text-white mb-2 tracking-tight">{title}</p>
-            <p className="text-sm leading-relaxed" style={{ color: "#64748B" }}>{subtitle}</p>
+            <p className="text-sm leading-relaxed" style={{ color: "#9D6673" }}>{subtitle}</p>
           </div>
           <button onClick={onClose}
             className="font-bold text-sm px-10 py-3 rounded-full cursor-pointer transition-all duration-200 border-0"
-            style={{ background: "#F59E0B", color: "#0F172A" }}
-            onMouseEnter={e => e.target.style.background="#FCD34D"}
-            onMouseLeave={e => e.target.style.background="#F59E0B"}
+            style={{ background: "#E11D48", color: "#0F172A" }}
+            onMouseEnter={e => e.target.style.background="#FECDD3"}
+            onMouseLeave={e => e.target.style.background="#E11D48"}
           >Done</button>
         </div>
       </div>
@@ -430,7 +438,7 @@ function NatureModal({ onClose, children }) {
   return (
     <div
       className="fixed inset-0 z-[200] flex items-center justify-center p-4"
-      style={{ background: "rgba(5,5,15,0.88)", backdropFilter: "blur(12px)" }}
+      style={{ background: "rgba(13,5,5,0.88)", backdropFilter: "blur(12px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
@@ -695,7 +703,7 @@ const M = {
   border:  "rgba(99,102,241,0.25)",
   indigo:  "#6366F1",
   violet:  "#818CF8",
-  muted:   "#94A3B8",
+  muted:   "#FDA4AF",
   text:    "#E2E8F0",
 };
 
@@ -860,21 +868,21 @@ function ChatBot() {
     }
   };
 
-  const C = { bg: "#131325", header: "#07070F", accent: "#F59E0B", moss: "#94A3B8", text: "#F1F5F9", muted: "#4F46E5" };
+  const C = { bg: "#1A1010", header: "#0D0808", accent: "#E11D48", moss: "#FDA4AF", text: "#FFF1F2", muted: "#BE123C" };
 
   return (
     <div className="fixed bottom-6 right-6 z-[300] flex flex-col items-end gap-3">
       {isOpen && (
         <div className="rounded-2xl overflow-hidden shadow-2xl animate-fadeIn flex flex-col"
-          style={{ width: 340, height: 480, background: C.bg, border: "1px solid rgba(245,158,11,0.2)" }}
+          style={{ width: 340, height: 480, background: C.bg, border: "1px solid rgba(225,29,72,0.2)" }}
         >
           {/* header */}
-          <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: C.header, borderBottom: "1px solid rgba(245,158,11,0.15)" }}>
+          <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: C.header, borderBottom: "1px solid rgba(225,29,72,0.15)" }}>
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#7C3AED" }}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#E11D48" }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#7C3AED" stroke="#F59E0B" strokeWidth="1.5"/>
-                  <circle cx="8.5" cy="11" r="1.1" fill="#F59E0B"/><circle cx="12" cy="11" r="1.1" fill="#F59E0B"/><circle cx="15.5" cy="11" r="1.1" fill="#F59E0B"/>
+                  <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#E11D48" stroke="#E11D48" strokeWidth="1.5"/>
+                  <circle cx="8.5" cy="11" r="1.1" fill="#E11D48"/><circle cx="12" cy="11" r="1.1" fill="#E11D48"/><circle cx="15.5" cy="11" r="1.1" fill="#E11D48"/>
                 </svg>
               </div>
               <div>
@@ -895,11 +903,11 @@ function ChatBot() {
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}>
                 {msg.from === "bot" && (
-                  <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs mr-2 shrink-0 mt-0.5" style={{ background: "#7C3AED" }}>🌿</div>
+                  <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs mr-2 shrink-0 mt-0.5" style={{ background: "#E11D48", color: "#fff", fontWeight: 700, fontSize: 10 }}>11x</div>
                 )}
                 <div className="max-w-[78%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-line"
                   style={msg.from === "user"
-                    ? { background: "linear-gradient(135deg,#7C3AED,#8B5CF6)", color: "#F1F5F9", borderBottomRightRadius: 4 }
+                    ? { background: "linear-gradient(135deg,#E11D48,#FB7185)", color: "#FFF1F2", borderBottomRightRadius: 4 }
                     : { background: "rgba(255,255,255,0.07)", color: C.text, borderBottomLeftRadius: 4 }
                   }
                 >{msg.text}</div>
@@ -907,7 +915,7 @@ function ChatBot() {
             ))}
             {isTyping && (
               <div className="flex justify-start items-end gap-2">
-                <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0" style={{ background: "#7C3AED" }}>🌿</div>
+                <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0" style={{ background: "#E11D48", color: "#fff", fontWeight: 700, fontSize: 10 }}>11x</div>
                 <div className="px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1" style={{ background: "rgba(255,255,255,0.07)" }}>
                   {[0,1,2].map((j) => <span key={j} className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: C.moss, animationDelay: `${j*0.15}s` }} />)}
                 </div>
@@ -917,20 +925,20 @@ function ChatBot() {
           </div>
 
           {/* input */}
-          <div className="px-4 py-3 shrink-0 flex gap-2" style={{ borderTop: "1px solid rgba(245,158,11,0.12)" }}>
+          <div className="px-4 py-3 shrink-0 flex gap-2" style={{ borderTop: "1px solid rgba(225,29,72,0.12)" }}>
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
               placeholder="Type a message…"
               className="nature-input flex-1 rounded-xl px-4 py-2.5 text-sm outline-none"
-              style={{ background: "rgba(255,255,255,0.06)", border: "1.5px solid rgba(245,158,11,0.2)", color: C.text, fontWeight: 500 }}
+              style={{ background: "rgba(255,255,255,0.06)", border: "1.5px solid rgba(225,29,72,0.2)", color: C.text, fontWeight: 500 }}
             />
             <button onClick={sendMessage} disabled={!input.trim()} className="w-10 h-10 rounded-xl flex items-center justify-center transition-all cursor-pointer disabled:opacity-40 border-0 shrink-0"
-              style={{ background: "linear-gradient(135deg,#7C3AED,#8B5CF6)" }}
+              style={{ background: "linear-gradient(135deg,#E11D48,#FB7185)" }}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M2 8h12M9 3l5 5-5 5" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 8h12M9 3l5 5-5 5" stroke="#E11D48" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
           </div>
@@ -941,19 +949,19 @@ function ChatBot() {
       <button
         onClick={() => setIsOpen((o) => !o)}
         className="w-14 h-14 rounded-2xl shadow-2xl flex items-center justify-center border-0 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-green-900/40"
-        style={{ background: "linear-gradient(135deg, #131325, #7C3AED)", border: "1px solid rgba(245,158,11,0.3)" }}
+        style={{ background: "linear-gradient(135deg, #1A1010, #E11D48)", border: "1px solid rgba(225,29,72,0.3)" }}
         aria-label="Open chat"
       >
         {isOpen ? (
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M2 2L16 16M16 2L2 16" stroke="#F59E0B" strokeWidth="2.2" strokeLinecap="round"/>
+            <path d="M2 2L16 16M16 2L2 16" stroke="#E11D48" strokeWidth="2.2" strokeLinecap="round"/>
           </svg>
         ) : (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#7C3AED" stroke="#F59E0B" strokeWidth="1.5" strokeLinejoin="round"/>
-            <circle cx="8.5" cy="11" r="1.2" fill="#F59E0B"/>
-            <circle cx="12" cy="11" r="1.2" fill="#F59E0B"/>
-            <circle cx="15.5" cy="11" r="1.2" fill="#F59E0B"/>
+            <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#E11D48" stroke="#E11D48" strokeWidth="1.5" strokeLinejoin="round"/>
+            <circle cx="8.5" cy="11" r="1.2" fill="#E11D48"/>
+            <circle cx="12" cy="11" r="1.2" fill="#E11D48"/>
+            <circle cx="15.5" cy="11" r="1.2" fill="#E11D48"/>
           </svg>
         )}
       </button>
@@ -978,10 +986,10 @@ function BusinessHours() {
   }, []);
   return (
     <div className="hidden lg:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full"
-      style={{ background: status.available ? "rgba(139,92,246,0.15)" : "rgba(255,255,255,0.05)", border: `1px solid ${status.available ? "rgba(139,92,246,0.35)" : "rgba(255,255,255,0.08)"}` }}
+      style={{ background: status.available ? "rgba(225,29,72,0.15)" : "rgba(255,255,255,0.05)", border: `1px solid ${status.available ? "rgba(225,29,72,0.35)" : "rgba(255,255,255,0.08)"}` }}
     >
       <span className={`w-1.5 h-1.5 rounded-full ${status.available ? "bg-emerald-400 animate-pulse" : "bg-gray-500"}`} />
-      <span style={{ color: status.available ? "#94A3B8" : "#6B7280" }}>
+      <span style={{ color: status.available ? "#FDA4AF" : "#6B7280" }}>
         {status.available ? "Team available" : "Offline"} · {status.timeStr} IST
       </span>
     </div>
@@ -1019,15 +1027,15 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#07070F", color: "#F1F5F9" }}>
+    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#0D0808", color: "#FFF1F2" }}>
       <ScrollProgress />
       <MouseSpotlight />
       
       {/* Floating Background Blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] animate-pulse" style={{ background: "rgba(139,92,246,0.12)" }} />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] animate-pulse" style={{ background: "rgba(109,40,217,0.10)", animationDelay: "2s" }} />
-        <div className="absolute top-[50%] left-[60%] w-[25%] h-[25%] rounded-full blur-[100px] animate-pulse" style={{ background: "rgba(245,158,11,0.08)", animationDelay: "4s" }} />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] animate-pulse" style={{ background: "rgba(225,29,72,0.12)" }} />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] animate-pulse" style={{ background: "rgba(159,18,57,0.10)", animationDelay: "2s" }} />
+        <div className="absolute top-[50%] left-[60%] w-[25%] h-[25%] rounded-full blur-[100px] animate-pulse" style={{ background: "rgba(225,29,72,0.08)", animationDelay: "4s" }} />
       </div>
 
       {/* NAV */}
@@ -1035,10 +1043,10 @@ export default function App() {
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-12 py-3 transition-all duration-300 mx-auto max-w-[1440px]"
         style={{
           backdropFilter: "blur(16px)",
-          background: scrolled ? "rgba(7,7,15,0.97)" : "rgba(7,7,15,0.85)",
-          borderBottom: "1px solid rgba(139,92,246,0.25)",
-          borderLeft: "1px solid rgba(139,92,246,0.1)",
-          borderRight: "1px solid rgba(139,92,246,0.1)",
+          background: scrolled ? "rgba(13,8,8,0.97)" : "rgba(13,8,8,0.85)",
+          borderBottom: "1px solid rgba(225,29,72,0.25)",
+          borderLeft: "1px solid rgba(225,29,72,0.1)",
+          borderRight: "1px solid rgba(225,29,72,0.1)",
         }}
       >
         <Logo onClick={() => navigateTo("Home")} dark={true} />
@@ -1049,7 +1057,7 @@ export default function App() {
               <button
                 onClick={() => navigateTo(l)}
                 className="text-[14px] font-bold tracking-tight transition-all duration-200 bg-transparent border-0 cursor-pointer"
-                style={{ color: view === l ? "#F59E0B" : "#94A3B8" }}
+                style={{ color: view === l ? "#E11D48" : "#FDA4AF" }}
               >
                 {l}
               </button>
@@ -1062,16 +1070,16 @@ export default function App() {
         <button
           onClick={() => navigateTo("Contact")}
           className="hidden md:block text-[14px] font-bold px-6 py-2.5 rounded-full transition-all duration-200"
-          style={{ background: "#F59E0B", color: "#07070F" }}
-          onMouseEnter={e => { e.target.style.background = "#FCD34D"; }}
-          onMouseLeave={e => { e.target.style.background = "#F59E0B"; }}
+          style={{ background: "#E11D48", color: "#0D0808" }}
+          onMouseEnter={e => { e.target.style.background = "#FECDD3"; }}
+          onMouseLeave={e => { e.target.style.background = "#E11D48"; }}
         >
           Get Started
         </button>
 
         <button
           className="md:hidden bg-transparent border-0 cursor-pointer text-2xl"
-          style={{ color: "#F59E0B" }}
+          style={{ color: "#E11D48" }}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation"
           aria-expanded={menuOpen}
@@ -1083,15 +1091,15 @@ export default function App() {
 
       {/* MOBILE MENU */}
       {menuOpen && (
-        <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "rgba(7,7,15,0.97)" }}>
+        <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "rgba(13,8,8,0.97)" }}>
           {NAV_LINKS.map((l) => (
             <button
               key={l}
               onClick={() => navigateTo(l)}
               className="text-2xl font-bold transition-colors duration-200 bg-transparent border-0 cursor-pointer"
-              style={{ color: "#94A3B8" }}
-              onMouseEnter={e => e.target.style.color="#F59E0B"}
-              onMouseLeave={e => e.target.style.color="#94A3B8"}
+              style={{ color: "#FDA4AF" }}
+              onMouseEnter={e => e.target.style.color="#E11D48"}
+              onMouseLeave={e => e.target.style.color="#FDA4AF"}
             >
               {l}
             </button>
@@ -1102,25 +1110,25 @@ export default function App() {
       <main key={view} className="page-transition">
       {view === "Home" && (
         <>
-        <section id="home" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 pt-28 pb-12 overflow-hidden mx-auto max-w-[1440px] z-10" style={{ background: "#07070F", borderLeft: "1px solid rgba(139,92,246,0.15)", borderRight: "1px solid rgba(139,92,246,0.15)" }}>
+        <section id="home" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 pt-28 pb-12 overflow-hidden mx-auto max-w-[1440px] z-10" style={{ background: "#0D0808", borderLeft: "1px solid rgba(225,29,72,0.15)", borderRight: "1px solid rgba(225,29,72,0.15)" }}>
         <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
 
-        <p className="mono text-[11px] font-bold uppercase tracking-[0.15em] mb-7 flex items-center gap-3 fade-up d1" style={{ color: "#8B5CF6" }}>
-          <span className="block w-12 h-[2px]" style={{ background: "#F59E0B" }} />
+        <p className="mono text-[11px] font-bold uppercase tracking-[0.15em] mb-7 flex items-center gap-3 fade-up d1" style={{ color: "#FB7185" }}>
+          <span className="block w-12 h-[2px]" style={{ background: "#E11D48" }} />
           Consulting · Talent · Technology
         </p>
 
-        <h1 className="text-[clamp(3rem,10vw,8rem)] font-black leading-[0.85] tracking-[-0.06em] max-w-6xl mb-12 fade-up d2" style={{ color: "#F1F5F9" }}>
+        <h1 className="text-[clamp(3rem,10vw,8rem)] font-black leading-[0.85] tracking-[-0.06em] max-w-6xl mb-12 fade-up d2" style={{ color: "#FFF1F2" }}>
           Scale your
           <br />
-          <span className="text-stroke cursor-default inline-block" style={{ WebkitTextStroke: "2px #7C3AED" }}>
+          <span className="text-stroke cursor-default inline-block" style={{ WebkitTextStroke: "2px #E11D48" }}>
             <TypingText words={["ambition", "vision", "growth", "impact"]} />
           </span>
           <br />
-          with <span style={{ color: "#7C3AED" }}>11x Square</span>
+          with <span style={{ color: "#E11D48" }}>11x Square</span>
         </h1>
 
-        <p className="text-[clamp(1rem,2vw,1.3rem)] font-medium leading-[1.5] max-w-2xl mb-14 fade-up d3" style={{ color: "#94A3B8" }}>
+        <p className="text-[clamp(1rem,2vw,1.3rem)] font-medium leading-[1.5] max-w-2xl mb-14 fade-up d3" style={{ color: "#FDA4AF" }}>
           Bridging the gap between elite engineering and strategic growth with a platform-first approach.
         </p>
 
@@ -1128,21 +1136,21 @@ export default function App() {
           <MagneticButton
             onClick={() => navigateTo("Services")}
             className="font-bold text-[clamp(14px,1.5vw,16px)] px-10 py-4 rounded-full shadow-xl transition-all duration-200"
-            style={{ background: "#F59E0B", color: "#07070F" }}
+            style={{ background: "#E11D48", color: "#0D0808" }}
           >
             Start Building
           </MagneticButton>
           <MagneticButton
             onClick={() => navigateTo("Careers")}
             className="font-bold text-[clamp(14px,1.5vw,16px)] px-10 py-4 rounded-full shadow-sm transition-all duration-200"
-            style={{ background: "transparent", border: "1.5px solid rgba(245,158,11,0.4)", color: "#F59E0B" }}
+            style={{ background: "transparent", border: "1.5px solid rgba(225,29,72,0.4)", color: "#E11D48" }}
           >
             Explore Roles
           </MagneticButton>
         </div>
 
         {/* Stats */}
-        <div ref={statsRef} className="mt-12 pt-8 flex flex-wrap gap-12 fade-up d5" style={{ borderTop: "1px solid rgba(245,158,11,0.15)" }}>
+        <div ref={statsRef} className="mt-12 pt-8 flex flex-wrap gap-12 fade-up d5" style={{ borderTop: "1px solid rgba(225,29,72,0.15)" }}>
           {STATS.map((s) => (
             <StatCard key={s.label} {...s} animate={statsVisible} />
           ))}
@@ -1150,12 +1158,12 @@ export default function App() {
         </section>
 
         {/* MARQUEE - Now part of Home View only */}
-        <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#131325", borderTop: "1px solid rgba(139,92,246,0.3)", borderBottom: "1px solid rgba(139,92,246,0.3)" }}>
+        <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#1A1010", borderTop: "1px solid rgba(225,29,72,0.3)", borderBottom: "1px solid rgba(225,29,72,0.3)" }}>
           <div className="marquee-track flex gap-14 w-max">
             {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-              <span key={i} className="mono text-[12px] font-bold uppercase tracking-wider whitespace-nowrap flex items-center gap-4" style={{ color: "#F59E0B" }}>
+              <span key={i} className="mono text-[12px] font-bold uppercase tracking-wider whitespace-nowrap flex items-center gap-4" style={{ color: "#E11D48" }}>
                 {item}
-                <span className="text-[10px]" style={{ color: "#8B5CF6" }}>✦</span>
+                <span className="text-[10px]" style={{ color: "#FB7185" }}>✦</span>
               </span>
             ))}
           </div>
@@ -1164,19 +1172,19 @@ export default function App() {
       )}
 
       {view === "Services" && (
-        <section id="services" className="px-8 md:px-12 py-20 mx-auto max-w-[1440px]" style={{ background: "#07070F", borderLeft: "1px solid rgba(139,92,246,0.15)", borderRight: "1px solid rgba(139,92,246,0.15)" }}>
+        <section id="services" className="px-8 md:px-12 py-20 mx-auto max-w-[1440px]" style={{ background: "#0D0808", borderLeft: "1px solid rgba(225,29,72,0.15)", borderRight: "1px solid rgba(225,29,72,0.15)" }}>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 fade-up d1">
           <div className="fade-up d2">
-            <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d3" style={{ color: "#94A3B8" }}>// Our Solutions</p>
-            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9] fade-up d4" style={{ color: "#F1F5F9" }}>
+            <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d3" style={{ color: "#FDA4AF" }}>// Our Solutions</p>
+            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9] fade-up d4" style={{ color: "#FFF1F2" }}>
               Consulting for the<br />bold & ambitious
             </h2>
           </div>
-          <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md fade-up d5" style={{ color: "#94A3B8" }}>
+          <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md fade-up d5" style={{ color: "#FDA4AF" }}>
             Platform-driven consulting that solves deep engineering and product problems in record time.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 fade-up d6" style={{ borderTop: "1px solid rgba(139,92,246,0.15)", borderLeft: "1px solid rgba(139,92,246,0.15)" }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 fade-up d6" style={{ borderTop: "1px solid rgba(225,29,72,0.15)", borderLeft: "1px solid rgba(225,29,72,0.15)" }}>
           {SERVICES.map((s, i) => (
             <ServiceCard key={s.num} {...s} delay={0.1 * i} />
           ))}
@@ -1185,19 +1193,19 @@ export default function App() {
       )}
 
       {view === "Careers" && (
-        <section id="careers" className="px-8 md:px-12 py-20 mx-auto max-w-[1440px]" style={{ background: "#0A0A18", borderTop: "1px solid rgba(139,92,246,0.2)", borderLeft: "1px solid rgba(139,92,246,0.15)", borderRight: "1px solid rgba(139,92,246,0.15)" }}>
+        <section id="careers" className="px-8 md:px-12 py-20 mx-auto max-w-[1440px]" style={{ background: "#110909", borderTop: "1px solid rgba(225,29,72,0.2)", borderLeft: "1px solid rgba(225,29,72,0.15)", borderRight: "1px solid rgba(225,29,72,0.15)" }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-start">
           <div className="fade-up d1">
-            <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#94A3B8" }}>// Careers</p>
-            <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6 fade-up d3" style={{ color: "#F1F5F9" }}>
-              Find your next<br />challenge at <span style={{ color: "#F59E0B" }}>11x</span>
+            <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#FDA4AF" }}>// Careers</p>
+            <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6 fade-up d3" style={{ color: "#FFF1F2" }}>
+              Find your next<br />challenge at <span style={{ color: "#E11D48" }}>11x</span>
             </h2>
-            <p className="text-lg font-medium leading-relaxed mb-10 max-w-md fade-up d4" style={{ color: "#94A3B8" }}>
+            <p className="text-lg font-medium leading-relaxed mb-10 max-w-md fade-up d4" style={{ color: "#FDA4AF" }}>
               Whether you're a seasoned consultant or a fresh grad ready to make your mark — we have a seat for you.
             </p>
 
-            <div className="p-7 rounded-xl shadow-sm fade-up d5" style={{ background: "#131325", border: "1px solid rgba(139,92,246,0.3)" }}>
-              <p className="mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "#7C3AED" }}>Intern Program Highlights</p>
+            <div className="p-7 rounded-xl shadow-sm fade-up d5" style={{ background: "#1A1010", border: "1px solid rgba(225,29,72,0.3)" }}>
+              <p className="mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "#E11D48" }}>Intern Program Highlights</p>
               <ul className="flex flex-col gap-3">
                 {[
                   "3-month structured cohort program",
@@ -1205,8 +1213,8 @@ export default function App() {
                   "Mentorship from senior consultants",
                   "Full-time conversion for top performers",
                 ].map((item) => (
-                  <li key={item} className="flex gap-3 text-sm font-medium" style={{ color: "#94A3B8" }}>
-                    <span className="flex-shrink-0 text-xl" style={{ color: "#8B5CF6" }}>→</span> {item}
+                  <li key={item} className="flex gap-3 text-sm font-medium" style={{ color: "#FDA4AF" }}>
+                    <span className="flex-shrink-0 text-xl" style={{ color: "#FB7185" }}>→</span> {item}
                   </li>
                 ))}
               </ul>
@@ -1226,26 +1234,26 @@ export default function App() {
       )}
 
       {view === "Process" && (
-        <section id="process" className="px-8 md:px-12 py-24 fade-up d1" style={{ background: "#07070F" }}>
-        <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#94A3B8" }}>// The Process</p>
-        <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-16 max-w-xl fade-up d3" style={{ color: "#F1F5F9" }}>
+        <section id="process" className="px-8 md:px-12 py-24 fade-up d1" style={{ background: "#0D0808" }}>
+        <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#FDA4AF" }}>// The Process</p>
+        <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-16 max-w-xl fade-up d3" style={{ color: "#FFF1F2" }}>
           From discovery to results in weeks
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden shadow-sm fade-up d4" style={{ border: "1px solid rgba(139,92,246,0.2)" }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden shadow-sm fade-up d4" style={{ border: "1px solid rgba(225,29,72,0.2)" }}>
           {STEPS.map((s, i) => (
             <div
               key={s.num}
-              style={{ animationDelay: `${0.1 * i}s`, background: "#131325", borderRight: i < STEPS.length - 1 ? "1px solid rgba(139,92,246,0.2)" : undefined, borderBottom: "1px solid rgba(139,92,246,0.2)" }}
+              style={{ animationDelay: `${0.1 * i}s`, background: "#1A1010", borderRight: i < STEPS.length - 1 ? "1px solid rgba(225,29,72,0.2)" : undefined, borderBottom: "1px solid rgba(225,29,72,0.2)" }}
               className="p-8 relative group transition-all duration-500 fade-up"
-              onMouseEnter={e => e.currentTarget.style.background="#1A1A35"}
-              onMouseLeave={e => e.currentTarget.style.background="#131325"}
+              onMouseEnter={e => e.currentTarget.style.background="#231515"}
+              onMouseLeave={e => e.currentTarget.style.background="#1A1010"}
             >
-              <div className="text-[80px] font-black leading-none mb-6 tracking-tighter group-hover:scale-110 transition-all duration-700" style={{ color: "rgba(245,158,11,0.15)" }}>
+              <div className="text-[80px] font-black leading-none mb-6 tracking-tighter group-hover:scale-110 transition-all duration-700" style={{ color: "rgba(225,29,72,0.15)" }}>
                 {s.num}
               </div>
-              <h4 className="text-base font-bold mb-3" style={{ color: "#F1F5F9" }}>{s.title}</h4>
-              <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{s.desc}</p>
+              <h4 className="text-base font-bold mb-3" style={{ color: "#FFF1F2" }}>{s.title}</h4>
+              <p className="text-sm leading-relaxed" style={{ color: "#FDA4AF" }}>{s.desc}</p>
             </div>
           ))}
         </div>
@@ -1253,7 +1261,7 @@ export default function App() {
       )}
 
       {view === "Contact" && (
-        <section id="contact" className="px-8 md:px-12 py-24 fade-up d1 relative overflow-hidden" style={{ background: "#131325" }}>
+        <section id="contact" className="px-8 md:px-12 py-24 fade-up d1 relative overflow-hidden" style={{ background: "#1A1010" }}>
           {/* decorative leaves */}
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
@@ -1263,11 +1271,11 @@ export default function App() {
           </div>
           <div className="flex flex-col lg:flex-row items-center justify-between gap-16 fade-up d2 relative z-10">
           <div className="fade-up d3">
-            <p className="mono text-[11px] font-bold uppercase tracking-widest mb-3" style={{ color: "#94A3B8" }}>// Get In Touch</p>
-            <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl fade-up d4" style={{ color: "#F1F5F9" }}>
+            <p className="mono text-[11px] font-bold uppercase tracking-widest mb-3" style={{ color: "#FDA4AF" }}>// Get In Touch</p>
+            <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl fade-up d4" style={{ color: "#FFF1F2" }}>
               Accelerate your team's potential today.
             </h2>
-            <p className="text-[18px] font-medium mt-4 max-w-md fade-up d5" style={{ color: "#94A3B8" }}>
+            <p className="text-[18px] font-medium mt-4 max-w-md fade-up d5" style={{ color: "#FDA4AF" }}>
               Connect with our leadership to explore high-impact consulting or talent solutions.
             </p>
           </div>
@@ -1275,16 +1283,16 @@ export default function App() {
             <button
               onClick={() => setActiveModal("project")}
               className="font-bold text-lg px-12 py-5 rounded-xl transition-all duration-200 cursor-pointer"
-              style={{ background: "#F59E0B", color: "#131325" }}
-              onMouseEnter={e => e.target.style.background="#FCD34D"}
-              onMouseLeave={e => e.target.style.background="#F59E0B"}
+              style={{ background: "#E11D48", color: "#1A1010" }}
+              onMouseEnter={e => e.target.style.background="#FECDD3"}
+              onMouseLeave={e => e.target.style.background="#E11D48"}
             >
               Start a Project
             </button>
             <button
               onClick={() => setActiveModal("apply")}
               className="font-bold text-lg px-12 py-5 rounded-xl transition-all duration-200 cursor-pointer"
-              style={{ background: "transparent", color: "#F1F5F9", border: "2px solid rgba(245,239,230,0.3)" }}
+              style={{ background: "transparent", color: "#FFF1F2", border: "2px solid rgba(245,239,230,0.3)" }}
               onMouseEnter={e => { e.target.style.background="rgba(245,239,230,0.1)"; }}
               onMouseLeave={e => { e.target.style.background="transparent"; }}
             >
@@ -1305,11 +1313,11 @@ export default function App() {
       <ChatBot />
 
       {/* FOOTER */}
-      <footer className="px-8 md:px-12 pt-14 pb-10 fade-up d1" style={{ background: "#07070F", borderTop: "1px solid rgba(139,92,246,0.3)" }}>
+      <footer className="px-8 md:px-12 pt-14 pb-10 fade-up d1" style={{ background: "#0D0808", borderTop: "1px solid rgba(225,29,72,0.3)" }}>
         <div className="flex flex-col lg:flex-row justify-between gap-16 mb-10 fade-up d2">
           <div className="max-w-xs fade-up d3">
             <Logo onClick={() => navigateTo("Home")} className="mb-4" dark={true} />
-            <p className="text-sm leading-relaxed" style={{ color: "#64748B" }}>
+            <p className="text-sm leading-relaxed" style={{ color: "#9D6673" }}>
               Bridging elite consulting with the next generation of tech talent.
             </p>
           </div>
@@ -1321,14 +1329,14 @@ export default function App() {
               { heading: "Contact", links: ["hello@11xsquare.com", "Chennai, India", "LinkedIn", "Twitter"] },
             ].map((col) => (
               <div key={col.heading}>
-                <h5 className="mono text-[10px] font-bold uppercase tracking-[0.18em] mb-5" style={{ color: "#F59E0B" }}>{col.heading}</h5>
+                <h5 className="mono text-[10px] font-bold uppercase tracking-[0.18em] mb-5" style={{ color: "#E11D48" }}>{col.heading}</h5>
                 <ul className="flex flex-col gap-1.5 list-none">
                   {col.links.map((l) => (
                     <li key={l}>
                       <a href="#" onClick={(e) => { e.preventDefault(); navigateTo("Home"); }}
-                        className="text-sm transition-colors duration-200 no-underline" style={{ color: "#64748B" }}
-                        onMouseEnter={e => e.target.style.color="#F59E0B"}
-                        onMouseLeave={e => e.target.style.color="#64748B"}
+                        className="text-sm transition-colors duration-200 no-underline" style={{ color: "#9D6673" }}
+                        onMouseEnter={e => e.target.style.color="#E11D48"}
+                        onMouseLeave={e => e.target.style.color="#9D6673"}
                       >{l}</a>
                     </li>
                   ))}
@@ -1338,11 +1346,11 @@ export default function App() {
           </div>
         </div>
 
-        <div className="pt-7 flex flex-col sm:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(139,92,246,0.2)" }}>
-          <p className="mono text-[11px]" style={{ color: "#475569" }}>
-            © 2025 <span style={{ color: "#F59E0B" }}>11x Square</span>. All rights reserved.
+        <div className="pt-7 flex flex-col sm:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(225,29,72,0.2)" }}>
+          <p className="mono text-[11px]" style={{ color: "#6B3744" }}>
+            © 2025 <span style={{ color: "#E11D48" }}>11x Square</span>. All rights reserved.
           </p>
-          <p className="mono text-[11px]" style={{ color: "#475569" }}>🌿 Built for the bold.</p>
+          <p className="mono text-[11px]" style={{ color: "#6B3744" }}>✦ Built for the bold.</p>
         </div>
       </footer>
     </div>
