@@ -1385,7 +1385,7 @@ export default function App() {
                   { label: "Freelance",   dest: "Careers" },
               ]},
               { heading: "Contact", links: [
-                  { label: "hello@11xsquare.com", dest: "Contact" },
+                  { label: "11xsquarebusiness@gmail.com", dest: "Contact" },
                   { label: "United Kingdom",       dest: "Contact" },
                   { label: "LinkedIn",             dest: "Contact" },
                   { label: "Twitter",              dest: "Contact" },
