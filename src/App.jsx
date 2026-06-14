@@ -448,8 +448,8 @@ function NatureModal({ onClose, children }) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
-        className="w-full max-w-md rounded-3xl shadow-2xl animate-fadeIn relative flex flex-col"
-        style={{ background: "#0D1B2E", maxHeight: "92dvh", overflow: "hidden" }}
+        className="modal-container w-full max-w-md rounded-3xl shadow-2xl animate-fadeIn relative flex flex-col"
+        style={{ background: "#0D1B2E" }}
       >
         {/* decorative leaves */}
         <LeafDecor className="w-32 h-32 -top-6 -right-6 rotate-45" />
@@ -523,7 +523,7 @@ function StartProjectModal({ onClose }) {
 
       {/* form */}
       <form onSubmit={handleSubmit} className="relative z-10 flex flex-col flex-1 min-h-0">
-        <div className="px-8 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1" style={{ WebkitOverflowScrolling: "touch" }}>
+        <div className="px-8 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1 min-h-0" style={{ WebkitOverflowScrolling: "touch" }}>
           {[
             { label: "Full Name", name: "name", type: "text", placeholder: "Jane Doe" },
             { label: "Email Address", name: "email", type: "email", placeholder: "jane@company.com" },
@@ -641,7 +641,7 @@ function ApplyNowModal({ onClose }) {
 
       {/* form */}
       <form onSubmit={handleSubmit} className="relative z-10 flex flex-col flex-1 min-h-0">
-        <div className="px-8 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1" style={{ WebkitOverflowScrolling: "touch" }}>
+        <div className="px-8 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1 min-h-0" style={{ WebkitOverflowScrolling: "touch" }}>
           {[
             { label: "Full Name", name: "name", type: "text", placeholder: "Jane Doe" },
             { label: "Email Address", name: "email", type: "email", placeholder: "jane@company.com" },
@@ -771,7 +771,7 @@ function CareersApplyModal({ role, onClose }) {
       style={{ background: "rgba(5,8,20,0.80)", backdropFilter: "blur(10px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col" style={{ background: M.bg, border: `1px solid ${M.border}`, maxHeight: "92dvh", overflow: "hidden" }}>
+      <div className="modal-container w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col" style={{ background: M.bg, border: `1px solid ${M.border}` }}>
         {/* top accent bar */}
         <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${M.indigo}, ${M.violet})` }} />
 
@@ -795,7 +795,7 @@ function CareersApplyModal({ role, onClose }) {
           <SuccessModal onClose={onClose} title="Application Submitted!" subtitle="We'll review your profile and get back to you soon." />
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
-            <div className="px-7 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1" style={{ WebkitOverflowScrolling: "touch" }}>
+            <div className="px-7 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1 min-h-0" style={{ WebkitOverflowScrolling: "touch" }}>
               {[
                 { label: "Full Name", name: "name", type: "text", placeholder: "Jane Doe" },
                 { label: "Email Address", name: "email", type: "email", placeholder: "jane@company.com" },
