@@ -438,29 +438,23 @@ function NatureModal({ onClose, children }) {
   useEffect(() => {
     const handleKey = (e) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", handleKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", handleKey);
-      document.body.style.overflow = "";
-    };
+    return () => { document.removeEventListener("keydown", handleKey); };
   }, [onClose]);
 
   return (
     <div
-      className="fixed inset-0 z-[200]"
-      style={{ background: "rgba(12,35,64,0.88)", backdropFilter: "blur(12px)", overflowY: "auto", WebkitOverflowScrolling: "touch" }}
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      style={{ background: "rgba(12,35,64,0.88)", backdropFilter: "blur(12px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="flex items-center justify-center min-h-full p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div
         className="w-full max-w-md rounded-3xl shadow-2xl animate-fadeIn relative flex flex-col"
-        style={{ background: "#0D1B2E" }}
+        style={{ background: "#0D1B2E", maxHeight: "92dvh", overflowY: "auto", WebkitOverflowScrolling: "touch" }}
       >
         {/* decorative leaves */}
         <LeafDecor className="w-32 h-32 -top-6 -right-6 rotate-45" />
         <LeafDecor className="w-20 h-20 -bottom-4 -left-4 -rotate-12" />
         {children}
-      </div>
       </div>
     </div>
   );
@@ -769,12 +763,11 @@ function CareersApplyModal({ role, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-[200]"
-      style={{ background: "rgba(5,8,20,0.80)", backdropFilter: "blur(10px)", overflowY: "auto", WebkitOverflowScrolling: "touch" }}
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      style={{ background: "rgba(5,8,20,0.80)", backdropFilter: "blur(10px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="flex items-center justify-center min-h-full p-4" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col" style={{ background: M.bg, border: `1px solid ${M.border}` }}>
+      <div className="w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col" style={{ background: M.bg, border: `1px solid ${M.border}`, maxHeight: "92dvh", overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
         {/* top accent bar */}
         <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${M.indigo}, ${M.violet})` }} />
 
@@ -842,7 +835,6 @@ function CareersApplyModal({ role, onClose }) {
             </button>
           </form>
         )}
-      </div>
       </div>
     </div>
   );
