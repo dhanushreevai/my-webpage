@@ -447,13 +447,13 @@ function NatureModal({ onClose, children }) {
 
   return (
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[200] flex items-start justify-center p-4 overflow-y-auto"
       style={{ background: "rgba(12,35,64,0.88)", backdropFilter: "blur(12px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
-        className="w-full max-w-md rounded-3xl shadow-2xl animate-fadeIn relative flex flex-col"
-        style={{ background: "#0D1B2E", maxHeight: "90vh", overflowY: "auto" }}
+        className="w-full max-w-md rounded-3xl shadow-2xl animate-fadeIn relative flex flex-col my-auto"
+        style={{ background: "#0D1B2E" }}
       >
         {/* decorative leaves */}
         <LeafDecor className="w-32 h-32 -top-6 -right-6 rotate-45" />
@@ -767,11 +767,11 @@ function CareersApplyModal({ role, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[200] flex items-start justify-center p-4 overflow-y-auto"
       style={{ background: "rgba(5,8,20,0.80)", backdropFilter: "blur(10px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col" style={{ background: M.bg, border: `1px solid ${M.border}`, maxHeight: "90vh", overflowY: "auto" }}>
+      <div className="w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col my-auto" style={{ background: M.bg, border: `1px solid ${M.border}` }}>
         {/* top accent bar */}
         <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${M.indigo}, ${M.violet})` }} />
 
