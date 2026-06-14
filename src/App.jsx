@@ -552,7 +552,7 @@ function StartProjectModal({ onClose }) {
             type="submit"
             disabled={status === "loading"}
             className="w-full font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ background: N.beige, color: N.green }}
+            style={{ background: "#0EA5E9", color: "#FFFFFF" }}
           >
             {status === "loading" ? "Submitting…" : "Submit →"}
           </button>
@@ -696,7 +696,7 @@ function ApplyNowModal({ onClose }) {
             type="submit"
             disabled={status === "loading"}
             className="w-full font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ background: N.beige, color: N.green }}
+            style={{ background: "#0EA5E9", color: "#FFFFFF" }}
           >
             {status === "loading" ? "Submitting…" : "Submit Application →"}
           </button>
