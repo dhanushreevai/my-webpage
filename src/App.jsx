@@ -1134,47 +1134,73 @@ export default function App() {
         <section id="home" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 pt-28 pb-12 overflow-hidden z-10" style={{ background: "linear-gradient(135deg,#EBF5FF 0%,#DBEAFE 60%,#EBF5FF 100%)" }}>
         <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
 
-        <p className="mono text-[11px] font-bold uppercase tracking-[0.15em] mb-7 flex items-center gap-3 fade-up d1" style={{ color: "#0369A1" }}>
-          <span className="block w-12 h-[2px]" style={{ background: "#0EA5E9" }} />
-          Consulting · Talent · Technology
-        </p>
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
 
-        <h1 className="text-[clamp(3rem,10vw,8rem)] font-black leading-[0.85] tracking-[-0.06em] max-w-6xl mb-12 fade-up d2" style={{ color: "#0F172A" }}>
-          Scale your
-          <br />
-          <span className="text-stroke cursor-default inline-block" style={{ WebkitTextStroke: "2px #0EA5E9" }}>
-            <TypingText words={["ambition", "vision", "growth", "impact"]} />
-          </span>
-          <br />
-          with <span className="gradient-text">11x Square</span>
-        </h1>
+          {/* Left: text content */}
+          <div className="flex-1 min-w-0">
+            <p className="mono text-[11px] font-bold uppercase tracking-[0.15em] mb-7 flex items-center gap-3 fade-up d1" style={{ color: "#0369A1" }}>
+              <span className="block w-12 h-[2px]" style={{ background: "#0EA5E9" }} />
+              Consulting · Talent · Technology
+            </p>
 
-        <p className="text-[clamp(1rem,2vw,1.3rem)] font-medium leading-[1.5] max-w-2xl mb-14 fade-up d3" style={{ color: "#475569" }}>
-          Bridging the gap between elite engineering and strategic growth with a platform-first approach.
-        </p>
+            <h1 className="text-[clamp(2.6rem,7vw,6.5rem)] font-black leading-[0.88] tracking-[-0.06em] mb-10 fade-up d2" style={{ color: "#0F172A" }}>
+              Scale your
+              <br />
+              <span className="text-stroke cursor-default inline-block" style={{ WebkitTextStroke: "2px #0EA5E9" }}>
+                <TypingText words={["ambition", "vision", "growth", "impact"]} />
+              </span>
+              <br />
+              with <span className="gradient-text">11x Square</span>
+            </h1>
 
-        <div className="flex flex-wrap gap-4 items-center fade-up d4">
-          <MagneticButton
-            onClick={() => navigateTo("Services")}
-            className="font-bold text-[clamp(14px,1.5vw,16px)] px-10 py-4 rounded-full shadow-xl transition-all duration-200"
-            style={{ background: "linear-gradient(135deg,#0EA5E9,#0284C7)", color: "#FFFFFF" }}
-          >
-            Start Building
-          </MagneticButton>
-          <MagneticButton
-            onClick={() => navigateTo("Careers")}
-            className="font-bold text-[clamp(14px,1.5vw,16px)] px-10 py-4 rounded-full shadow-sm transition-all duration-200"
-            style={{ background: "transparent", border: "1.5px solid rgba(14,165,233,0.6)", color: "#0284C7" }}
-          >
-            Explore Roles
-          </MagneticButton>
-        </div>
+            <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 fade-up d3" style={{ color: "#475569" }}>
+              Bridging the gap between elite engineering and strategic growth with a platform-first approach.
+            </p>
 
-        {/* Stats */}
-        <div ref={statsRef} className="mt-12 pt-8 flex flex-wrap gap-12 fade-up d5" style={{ borderTop: "1px solid rgba(14,165,233,0.15)" }}>
-          {STATS.map((s) => (
-            <StatCard key={s.label} {...s} animate={statsVisible} />
-          ))}
+            <div className="flex flex-wrap gap-4 items-center fade-up d4">
+              <MagneticButton
+                onClick={() => navigateTo("Services")}
+                className="font-bold text-[clamp(14px,1.4vw,16px)] px-9 py-4 rounded-full shadow-xl transition-all duration-200"
+                style={{ background: "linear-gradient(135deg,#0EA5E9,#0284C7)", color: "#FFFFFF" }}
+              >
+                Start Building
+              </MagneticButton>
+              <MagneticButton
+                onClick={() => navigateTo("Careers")}
+                className="font-bold text-[clamp(14px,1.4vw,16px)] px-9 py-4 rounded-full shadow-sm transition-all duration-200"
+                style={{ background: "transparent", border: "1.5px solid rgba(14,165,233,0.6)", color: "#0284C7" }}
+              >
+                Explore Roles
+              </MagneticButton>
+            </div>
+
+            <div ref={statsRef} className="mt-10 pt-8 flex flex-wrap gap-10 fade-up d5" style={{ borderTop: "1px solid rgba(14,165,233,0.15)" }}>
+              {STATS.map((s) => (
+                <StatCard key={s.label} {...s} animate={statsVisible} />
+              ))}
+            </div>
+          </div>
+
+          {/* Right: large logo */}
+          <div className="flex-shrink-0 flex items-center justify-center fade-up d3">
+            <div className="relative">
+              {/* outer glow ring */}
+              <div className="absolute -inset-4 rounded-[2.5rem] blur-2xl opacity-40" style={{ background: "linear-gradient(135deg,#BAE6FD,#0EA5E9)" }} />
+              <img
+                src={logo}
+                alt="11x Square"
+                className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem] object-cover rounded-[2rem] shadow-2xl"
+                style={{ mixBlendMode: "multiply", border: "4px solid rgba(14,165,233,0.15)" }}
+              />
+              {/* label badge */}
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-5 py-2 rounded-full shadow-lg whitespace-nowrap"
+                style={{ background: "#0EA5E9", color: "#FFFFFF" }}>
+                <span className="font-black text-sm tracking-tight">11x Square</span>
+                <span className="font-medium text-xs ml-2 opacity-80">Consulting · Talent</span>
+              </div>
+            </div>
+          </div>
+
         </div>
         </section>
 
