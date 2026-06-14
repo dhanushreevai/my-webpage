@@ -449,7 +449,7 @@ function NatureModal({ onClose, children }) {
     >
       <div
         className="w-full max-w-md rounded-3xl shadow-2xl animate-fadeIn relative flex flex-col"
-        style={{ background: "#0D1B2E", maxHeight: "92dvh", overflowY: "auto", WebkitOverflowScrolling: "touch" }}
+        style={{ background: "#0D1B2E", maxHeight: "92dvh", overflow: "hidden" }}
       >
         {/* decorative leaves */}
         <LeafDecor className="w-32 h-32 -top-6 -right-6 rotate-45" />
@@ -522,39 +522,41 @@ function StartProjectModal({ onClose }) {
       </div>
 
       {/* form */}
-      <form onSubmit={handleSubmit} className="relative z-10 px-8 py-6 flex flex-col gap-4">
-        {[
-          { label: "Full Name", name: "name", type: "text", placeholder: "Jane Doe" },
-          { label: "Email Address", name: "email", type: "email", placeholder: "jane@company.com" },
-          { label: "Phone Number", name: "phone", type: "tel", placeholder: "+91 98765 43210" },
-        ].map(({ label, name, type, placeholder }) => (
-          <div key={name}>
-            <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: N.beigeLight }}>{label}</label>
-            <input
-              name={name}
-              type={type}
-              value={form[name]}
-              onChange={handleChange}
-              required
-              placeholder={placeholder}
-              style={inputStyle}
-              className="nature-input"
-              onFocus={(e) => { e.target.style.border = `1.5px solid ${N.beige}`; e.target.style.background = "rgba(255,255,255,0.18)"; }}
-              onBlur={(e) => { e.target.style.border = "1.5px solid rgba(255,255,255,0.2)"; e.target.style.background = "rgba(255,255,255,0.12)"; }}
-            />
-          </div>
-        ))}
-
-        {error && <p className="text-sm font-medium" style={{ color: "#ffb3a7" }}>{error}</p>}
-
-        <button
-          type="submit"
-          disabled={status === "loading"}
-          className="mt-2 font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-          style={{ background: N.beige, color: N.green }}
-        >
-          {status === "loading" ? "Submitting…" : "Submit →"}
-        </button>
+      <form onSubmit={handleSubmit} className="relative z-10 flex flex-col flex-1 min-h-0">
+        <div className="px-8 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1" style={{ WebkitOverflowScrolling: "touch" }}>
+          {[
+            { label: "Full Name", name: "name", type: "text", placeholder: "Jane Doe" },
+            { label: "Email Address", name: "email", type: "email", placeholder: "jane@company.com" },
+            { label: "Phone Number", name: "phone", type: "tel", placeholder: "+91 98765 43210" },
+          ].map(({ label, name, type, placeholder }) => (
+            <div key={name}>
+              <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: N.beigeLight }}>{label}</label>
+              <input
+                name={name}
+                type={type}
+                value={form[name]}
+                onChange={handleChange}
+                required
+                placeholder={placeholder}
+                style={inputStyle}
+                className="nature-input"
+                onFocus={(e) => { e.target.style.border = `1.5px solid ${N.beige}`; e.target.style.background = "rgba(255,255,255,0.18)"; }}
+                onBlur={(e) => { e.target.style.border = "1.5px solid rgba(255,255,255,0.2)"; e.target.style.background = "rgba(255,255,255,0.12)"; }}
+              />
+            </div>
+          ))}
+          {error && <p className="text-sm font-medium" style={{ color: "#ffb3a7" }}>{error}</p>}
+        </div>
+        <div className="px-8 pb-6 pt-3 shrink-0">
+          <button
+            type="submit"
+            disabled={status === "loading"}
+            className="w-full font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+            style={{ background: N.beige, color: N.green }}
+          >
+            {status === "loading" ? "Submitting…" : "Submit →"}
+          </button>
+        </div>
       </form>
     </NatureModal>
   );
@@ -638,65 +640,67 @@ function ApplyNowModal({ onClose }) {
       </div>
 
       {/* form */}
-      <form onSubmit={handleSubmit} className="relative z-10 px-8 py-6 flex flex-col gap-4">
-        {[
-          { label: "Full Name", name: "name", type: "text", placeholder: "Jane Doe" },
-          { label: "Email Address", name: "email", type: "email", placeholder: "jane@company.com" },
-          { label: "Phone Number", name: "phone", type: "tel", placeholder: "+91 98765 43210" },
-        ].map(({ label, name, type, placeholder }) => (
-          <div key={name}>
-            <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: N.beigeLight }}>{label}</label>
-            <input
-              name={name}
-              type={type}
-              value={form[name]}
-              onChange={handleChange}
-              required
-              placeholder={placeholder}
-              style={inputStyle}
-              className="nature-input"
-              onFocus={(e) => { e.target.style.border = `1.5px solid ${N.beige}`; e.target.style.background = "rgba(255,255,255,0.18)"; }}
-              onBlur={(e) => { e.target.style.border = "1.5px solid rgba(255,255,255,0.2)"; e.target.style.background = "rgba(255,255,255,0.12)"; }}
-            />
-          </div>
-        ))}
+      <form onSubmit={handleSubmit} className="relative z-10 flex flex-col flex-1 min-h-0">
+        <div className="px-8 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1" style={{ WebkitOverflowScrolling: "touch" }}>
+          {[
+            { label: "Full Name", name: "name", type: "text", placeholder: "Jane Doe" },
+            { label: "Email Address", name: "email", type: "email", placeholder: "jane@company.com" },
+            { label: "Phone Number", name: "phone", type: "tel", placeholder: "+91 98765 43210" },
+          ].map(({ label, name, type, placeholder }) => (
+            <div key={name}>
+              <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: N.beigeLight }}>{label}</label>
+              <input
+                name={name}
+                type={type}
+                value={form[name]}
+                onChange={handleChange}
+                required
+                placeholder={placeholder}
+                style={inputStyle}
+                className="nature-input"
+                onFocus={(e) => { e.target.style.border = `1.5px solid ${N.beige}`; e.target.style.background = "rgba(255,255,255,0.18)"; }}
+                onBlur={(e) => { e.target.style.border = "1.5px solid rgba(255,255,255,0.2)"; e.target.style.background = "rgba(255,255,255,0.12)"; }}
+              />
+            </div>
+          ))}
 
-        {/* resume upload */}
-        <div>
-          <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: N.beigeLight }}>Resume</label>
-          <div
-            onClick={() => fileInputRef.current?.click()}
-            className="rounded-2xl p-5 text-center cursor-pointer transition-all duration-200"
-            style={{
-              border: `2px dashed ${file ? N.beige : "rgba(255,255,255,0.25)"}`,
-              background: file ? "rgba(200,169,122,0.12)" : "rgba(255,255,255,0.06)",
-            }}
-          >
-            {file ? (
-              <div className="flex items-center justify-center gap-2">
-                <span style={{ color: N.beige }}>📄</span>
-                <p className="text-sm font-semibold text-white truncate max-w-[220px]">{file.name}</p>
-              </div>
-            ) : (
-              <>
-                <p className="text-sm font-medium text-white opacity-70">Click to upload resume</p>
-                <p className="text-xs mt-1 opacity-40 text-white">PDF, Word (.doc/.docx), TXT — max 10 MB</p>
-              </>
-            )}
+          {/* resume upload */}
+          <div>
+            <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: N.beigeLight }}>Resume</label>
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              className="rounded-2xl p-5 text-center cursor-pointer transition-all duration-200"
+              style={{
+                border: `2px dashed ${file ? N.beige : "rgba(255,255,255,0.25)"}`,
+                background: file ? "rgba(200,169,122,0.12)" : "rgba(255,255,255,0.06)",
+              }}
+            >
+              {file ? (
+                <div className="flex items-center justify-center gap-2">
+                  <span style={{ color: N.beige }}>📄</span>
+                  <p className="text-sm font-semibold text-white truncate max-w-[220px]">{file.name}</p>
+                </div>
+              ) : (
+                <>
+                  <p className="text-sm font-medium text-white opacity-70">Click to upload resume</p>
+                  <p className="text-xs mt-1 opacity-40 text-white">PDF, Word (.doc/.docx), TXT — max 10 MB</p>
+                </>
+              )}
+            </div>
+            <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFile} className="hidden" />
           </div>
-          <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFile} className="hidden" />
+          {error && <p className="text-sm font-medium" style={{ color: "#ffb3a7" }}>{error}</p>}
         </div>
-
-        {error && <p className="text-sm font-medium" style={{ color: "#ffb3a7" }}>{error}</p>}
-
-        <button
-          type="submit"
-          disabled={status === "loading"}
-          className="mt-2 font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-          style={{ background: N.beige, color: N.green }}
-        >
-          {status === "loading" ? "Submitting…" : "Submit Application →"}
-        </button>
+        <div className="px-8 pb-6 pt-3 shrink-0">
+          <button
+            type="submit"
+            disabled={status === "loading"}
+            className="w-full font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+            style={{ background: N.beige, color: N.green }}
+          >
+            {status === "loading" ? "Submitting…" : "Submit Application →"}
+          </button>
+        </div>
       </form>
     </NatureModal>
   );
@@ -767,7 +771,7 @@ function CareersApplyModal({ role, onClose }) {
       style={{ background: "rgba(5,8,20,0.80)", backdropFilter: "blur(10px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col" style={{ background: M.bg, border: `1px solid ${M.border}`, maxHeight: "92dvh", overflowY: "auto", WebkitOverflowScrolling: "touch" }}>
+      <div className="w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col" style={{ background: M.bg, border: `1px solid ${M.border}`, maxHeight: "92dvh", overflow: "hidden" }}>
         {/* top accent bar */}
         <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${M.indigo}, ${M.violet})` }} />
 
@@ -790,49 +794,51 @@ function CareersApplyModal({ role, onClose }) {
         {status === "success" ? (
           <SuccessModal onClose={onClose} title="Application Submitted!" subtitle="We'll review your profile and get back to you soon." />
         ) : (
-          <form onSubmit={handleSubmit} className="px-7 py-6 flex flex-col gap-4">
-            {[
-              { label: "Full Name", name: "name", type: "text", placeholder: "Jane Doe" },
-              { label: "Email Address", name: "email", type: "email", placeholder: "jane@company.com" },
-              { label: "Phone Number", name: "phone", type: "tel", placeholder: "+91 98765 43210" },
-            ].map(({ label, name, type, placeholder }) => (
-              <div key={name}>
-                <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: M.violet }}>{label}</label>
-                <input name={name} type={type} value={form[name]} onChange={handleChange} required placeholder={placeholder}
-                  style={inputSt} className="nature-input"
-                  onFocus={(e) => { e.target.style.border = `1.5px solid ${M.indigo}`; e.target.style.background = "rgba(14,165,233,0.12)"; }}
-                  onBlur={(e) => { e.target.style.border = `1.5px solid ${M.border}`; e.target.style.background = "rgba(255,255,255,0.06)"; }}
-                />
-              </div>
-            ))}
+          <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+            <div className="px-7 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1" style={{ WebkitOverflowScrolling: "touch" }}>
+              {[
+                { label: "Full Name", name: "name", type: "text", placeholder: "Jane Doe" },
+                { label: "Email Address", name: "email", type: "email", placeholder: "jane@company.com" },
+                { label: "Phone Number", name: "phone", type: "tel", placeholder: "+91 98765 43210" },
+              ].map(({ label, name, type, placeholder }) => (
+                <div key={name}>
+                  <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: M.violet }}>{label}</label>
+                  <input name={name} type={type} value={form[name]} onChange={handleChange} required placeholder={placeholder}
+                    style={inputSt} className="nature-input"
+                    onFocus={(e) => { e.target.style.border = `1.5px solid ${M.indigo}`; e.target.style.background = "rgba(14,165,233,0.12)"; }}
+                    onBlur={(e) => { e.target.style.border = `1.5px solid ${M.border}`; e.target.style.background = "rgba(255,255,255,0.06)"; }}
+                  />
+                </div>
+              ))}
 
-            <div>
-              <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: M.violet }}>Resume</label>
-              <div onClick={() => fileInputRef.current?.click()} className="rounded-xl p-5 text-center cursor-pointer transition-all duration-200"
-                style={{ border: `2px dashed ${file ? M.indigo : M.border}`, background: file ? `${M.indigo}12` : "rgba(255,255,255,0.03)" }}
-              >
-                {file ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <span style={{ color: M.violet }}>📄</span>
-                    <p className="text-sm font-semibold text-white truncate max-w-[220px]">{file.name}</p>
-                  </div>
-                ) : (
-                  <>
-                    <p className="text-sm font-medium" style={{ color: M.muted }}>Click to upload resume</p>
-                    <p className="text-xs mt-1" style={{ color: `${M.muted}99` }}>PDF, Word (.doc/.docx), TXT — max 10 MB</p>
-                  </>
-                )}
+              <div>
+                <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: M.violet }}>Resume</label>
+                <div onClick={() => fileInputRef.current?.click()} className="rounded-xl p-5 text-center cursor-pointer transition-all duration-200"
+                  style={{ border: `2px dashed ${file ? M.indigo : M.border}`, background: file ? `${M.indigo}12` : "rgba(255,255,255,0.03)" }}
+                >
+                  {file ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <span style={{ color: M.violet }}>📄</span>
+                      <p className="text-sm font-semibold text-white truncate max-w-[220px]">{file.name}</p>
+                    </div>
+                  ) : (
+                    <>
+                      <p className="text-sm font-medium" style={{ color: M.muted }}>Click to upload resume</p>
+                      <p className="text-xs mt-1" style={{ color: `${M.muted}99` }}>PDF, Word (.doc/.docx), TXT — max 10 MB</p>
+                    </>
+                  )}
+                </div>
+                <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFile} className="hidden" />
               </div>
-              <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFile} className="hidden" />
+              {error && <p className="text-sm font-medium" style={{ color: "#f87171" }}>{error}</p>}
             </div>
-
-            {error && <p className="text-sm font-medium" style={{ color: "#f87171" }}>{error}</p>}
-
-            <button type="submit" disabled={status === "loading"} className="mt-1 font-bold text-sm px-8 py-3.5 rounded-full cursor-pointer disabled:opacity-50 transition-all"
-              style={{ background: `linear-gradient(135deg, ${M.indigo}, ${M.violet})`, color: "#fff" }}
-            >
-              {status === "loading" ? "Submitting…" : "Submit Application →"}
-            </button>
+            <div className="px-7 pb-6 pt-3 shrink-0">
+              <button type="submit" disabled={status === "loading"} className="w-full font-bold text-sm px-8 py-3.5 rounded-full cursor-pointer disabled:opacity-50 transition-all"
+                style={{ background: `linear-gradient(135deg, ${M.indigo}, ${M.violet})`, color: "#fff" }}
+              >
+                {status === "loading" ? "Submitting…" : "Submit Application →"}
+              </button>
+            </div>
           </form>
         )}
       </div>
