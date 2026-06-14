@@ -1386,7 +1386,7 @@ export default function App() {
               ]},
               { heading: "Contact", links: [
                   { label: "hello@11xsquare.com", dest: "Contact" },
-                  { label: "Chennai, India",       dest: "Contact" },
+                  { label: "United Kingdom",       dest: "Contact" },
                   { label: "LinkedIn",             dest: "Contact" },
                   { label: "Twitter",              dest: "Contact" },
               ]},
