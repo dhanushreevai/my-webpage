@@ -1371,20 +1371,34 @@ export default function App() {
 
           <div className="flex flex-wrap gap-16 fade-up d4">
             {[
-              { heading: "Company", links: ["About", "Services", "Process", "Blog"] },
-              { heading: "Careers", links: ["Internships", "Full-time", "Freelance"] },
-              { heading: "Contact", links: ["hello@11xsquare.com", "Chennai, India", "LinkedIn", "Twitter"] },
+              { heading: "Company", links: [
+                  { label: "About",    dest: "Home" },
+                  { label: "Services", dest: "Services" },
+                  { label: "Process",  dest: "Process" },
+                  { label: "Blog",     dest: "Home" },
+              ]},
+              { heading: "Careers", links: [
+                  { label: "Internships", dest: "Careers" },
+                  { label: "Full-time",   dest: "Careers" },
+                  { label: "Freelance",   dest: "Careers" },
+              ]},
+              { heading: "Contact", links: [
+                  { label: "hello@11xsquare.com", dest: "Contact" },
+                  { label: "Chennai, India",       dest: "Contact" },
+                  { label: "LinkedIn",             dest: "Contact" },
+                  { label: "Twitter",              dest: "Contact" },
+              ]},
             ].map((col) => (
               <div key={col.heading}>
                 <h5 className="mono text-[10px] font-bold uppercase tracking-[0.18em] mb-5" style={{ color: "#0EA5E9" }}>{col.heading}</h5>
                 <ul className="flex flex-col gap-1.5 list-none">
-                  {col.links.map((l) => (
-                    <li key={l}>
-                      <a href="#" onClick={(e) => { e.preventDefault(); navigateTo("Home"); }}
+                  {col.links.map(({ label, dest }) => (
+                    <li key={label}>
+                      <a href="#" onClick={(e) => { e.preventDefault(); navigateTo(dest); }}
                         className="text-sm transition-colors duration-200 no-underline" style={{ color: "#64748B" }}
                         onMouseEnter={e => e.target.style.color="#0EA5E9"}
                         onMouseLeave={e => e.target.style.color="#64748B"}
-                      >{l}</a>
+                      >{label}</a>
                     </li>
                   ))}
                 </ul>
