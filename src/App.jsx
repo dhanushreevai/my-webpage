@@ -547,7 +547,7 @@ function StartProjectModal({ onClose }) {
           ))}
           {error && <p className="text-sm font-medium" style={{ color: "#ffb3a7" }}>{error}</p>}
         </div>
-        <div className="px-8 pb-6 pt-3 shrink-0">
+        <div className="px-8 pb-4 pt-2 shrink-0">
           <button
             type="submit"
             disabled={status === "loading"}
@@ -691,7 +691,7 @@ function ApplyNowModal({ onClose }) {
           </div>
           {error && <p className="text-sm font-medium" style={{ color: "#ffb3a7" }}>{error}</p>}
         </div>
-        <div className="px-8 pb-6 pt-3 shrink-0">
+        <div className="px-8 pb-4 pt-2 shrink-0">
           <button
             type="submit"
             disabled={status === "loading"}
@@ -832,7 +832,7 @@ function CareersApplyModal({ role, onClose }) {
               </div>
               {error && <p className="text-sm font-medium" style={{ color: "#f87171" }}>{error}</p>}
             </div>
-            <div className="px-7 pb-6 pt-3 shrink-0">
+            <div className="px-7 pb-4 pt-2 shrink-0">
               <button type="submit" disabled={status === "loading"} className="w-full font-bold text-sm px-8 py-3.5 rounded-full cursor-pointer disabled:opacity-50 transition-all"
                 style={{ background: `linear-gradient(135deg, ${M.indigo}, ${M.violet})`, color: "#fff" }}
               >
