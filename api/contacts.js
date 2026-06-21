@@ -1,7 +1,11 @@
 import { connectDB, Contact } from "./_db.js";
+import { requireAdminAuth, setSecurityHeaders } from "./_security.js";
 
 export default async function handler(req, res) {
+  setSecurityHeaders(res);
+  if (!requireAdminAuth(req, res)) return;
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
+
   try {
     await connectDB();
     const contacts = await Contact.find({}).sort({ createdAt: -1 });
@@ -35,9 +39,9 @@ export default async function handler(req, res) {
     ${contacts.map((c, i) => `
     <tr>
       <td>${i + 1}</td>
-      <td>${c.name}</td>
-      <td>${c.email}</td>
-      <td>${c.phone}</td>
+      <td>${escHtml(c.name)}</td>
+      <td>${escHtml(c.email)}</td>
+      <td>${escHtml(c.phone)}</td>
       <td>${new Date(c.createdAt).toLocaleString()}</td>
     </tr>`).join("")}
   </table>
@@ -46,4 +50,12 @@ export default async function handler(req, res) {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+}
+
+function escHtml(str) {
+  return String(str ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }

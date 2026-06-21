@@ -1,10 +1,15 @@
 import { connectDB, Application } from "./_db.js";
+import { requireAdminAuth, setSecurityHeaders } from "./_security.js";
 
 export default async function handler(req, res) {
+  setSecurityHeaders(res);
+  if (!requireAdminAuth(req, res)) return;
+
   if (req.method === "DELETE") {
     try {
       await connectDB();
       const { id } = req.query;
+      if (!id || !/^[a-f\d]{24}$/i.test(id)) return res.status(400).json({ error: "Invalid id." });
       await Application.findByIdAndDelete(id);
       return res.status(200).json({ message: "Deleted" });
     } catch (err) {
