@@ -61,10 +61,10 @@ export function requireAdminAuth(req, res) {
   const user = decoded.slice(0, colon);
   const pass = decoded.slice(colon + 1);
 
-  const validUser = process.env.ADMIN_USER;
-  const validPass = process.env.ADMIN_PASS;
+  const validUser = (process.env.ADMIN_USER || "").trim();
+  const validPass = (process.env.ADMIN_PASS || "").trim();
 
-  if (!validUser || !validPass || user !== validUser || pass !== validPass) {
+  if (!validUser || !validPass || user.trim() !== validUser || pass.trim() !== validPass) {
     res.setHeader("WWW-Authenticate", 'Basic realm="11x Admin"');
     res.status(401).send("Unauthorized");
     return false;
