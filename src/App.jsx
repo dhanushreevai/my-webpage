@@ -269,7 +269,7 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
   return (
     <div
       onClick={onApply}
-      className="flex items-center justify-between px-8 py-5 transition-all duration-300 cursor-pointer group"
+      className="flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 transition-all duration-300 cursor-pointer group"
       style={{ background: "#0D1117", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
       onMouseEnter={e => e.currentTarget.style.background="#1E293B"}
       onMouseLeave={e => e.currentTarget.style.background="#0D1117"}
@@ -1155,7 +1155,7 @@ export default function App() {
       <main key={view} className="page-transition">
       {view === "Home" && (
         <>
-        <section id="home" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 pt-28 pb-12 overflow-hidden z-10">
+        <section id="home" className="relative min-h-screen flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10">
         {/* Wolf howling video background */}
         <video
           src="/wolf_howling_in_moon_202606211229.mp4"
@@ -1176,7 +1176,7 @@ export default function App() {
               Consulting · Talent · Technology
             </p>
 
-            <h1 className="text-[clamp(2.6rem,7vw,6.5rem)] font-black leading-[0.88] tracking-[-0.06em] mb-10 fade-up d2" style={{ color: "#FFFFFF" }}>
+            <h1 className="text-[clamp(2rem,7vw,6.5rem)] font-black leading-[0.9] tracking-[-0.04em] mb-6 md:mb-10 fade-up d2" style={{ color: "#FFFFFF" }}>
               Scale your
               <br />
               <span className="text-stroke cursor-default inline-block" style={{ WebkitTextStroke: "2px #0EA5E9" }}>
@@ -1190,32 +1190,32 @@ export default function App() {
               Bridging the gap between elite engineering and strategic growth with a platform-first approach.
             </p>
 
-            <div className="flex flex-wrap gap-4 items-center fade-up d4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center fade-up d4">
               <MagneticButton
                 onClick={() => navigateTo("Services")}
-                className="font-bold text-[clamp(14px,1.4vw,16px)] px-9 py-4 rounded-full shadow-xl transition-all duration-200"
+                className="font-bold text-[15px] px-9 py-4 rounded-full shadow-xl transition-all duration-200 text-center"
                 style={{ background: "linear-gradient(135deg,#0EA5E9,#0284C7)", color: "#FFFFFF" }}
               >
                 Start Building
               </MagneticButton>
               <MagneticButton
                 onClick={() => navigateTo("Careers")}
-                className="font-bold text-[clamp(14px,1.4vw,16px)] px-9 py-4 rounded-full shadow-sm transition-all duration-200"
+                className="font-bold text-[15px] px-9 py-4 rounded-full shadow-sm transition-all duration-200 text-center"
                 style={{ background: "transparent", border: "1.5px solid rgba(14,165,233,0.6)", color: "#0EA5E9" }}
               >
                 Explore Roles
               </MagneticButton>
             </div>
 
-            <div ref={statsRef} className="mt-10 pt-8 flex flex-wrap gap-10 fade-up d5" style={{ borderTop: "1px solid rgba(14,165,233,0.15)" }}>
+            <div ref={statsRef} className="mt-8 md:mt-10 pt-7 md:pt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10 fade-up d5" style={{ borderTop: "1px solid rgba(14,165,233,0.15)" }}>
               {STATS.map((s) => (
                 <StatCard key={s.label} {...s} animate={statsVisible} />
               ))}
             </div>
           </div>
 
-          {/* Right: large logo */}
-          <div className="flex-shrink-0 flex items-center justify-center fade-up d3">
+          {/* Right: large logo — hidden on mobile */}
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center fade-up d3">
             <div className="relative">
               {/* outer glow ring */}
               <div className="absolute -inset-4 rounded-[2.5rem] blur-2xl opacity-40" style={{ background: "linear-gradient(135deg,#BAE6FD,#0EA5E9)" }} />
@@ -1252,7 +1252,7 @@ export default function App() {
       )}
 
       {view === "Services" && (
-        <section id="services" className="px-8 md:px-12 py-20" style={{ background: "#080B12" }}>
+        <section id="services" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#080B12" }}>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 fade-up d1">
           <div className="fade-up d2">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d3" style={{ color: "#888888" }}>// Our Solutions</p>
@@ -1273,8 +1273,8 @@ export default function App() {
       )}
 
       {view === "Careers" && (
-        <section id="careers" className="px-8 md:px-12 py-20" style={{ background: "#080B12", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-start">
+        <section id="careers" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#080B12", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
           <div className="fade-up d1">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#888888" }}>// Careers</p>
             <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6 fade-up d3" style={{ color: "#FFFFFF" }}>
@@ -1314,7 +1314,7 @@ export default function App() {
       )}
 
       {view === "Process" && (
-        <section id="process" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 py-28 overflow-hidden">
+        <section id="process" className="relative min-h-screen flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden">
           {/* Fire wolf video background */}
           <video
             src="/Wolf_mouth_fire_video_202606211302.mp4"
@@ -1336,11 +1336,11 @@ export default function App() {
                 <div
                   key={s.num}
                   style={{ animationDelay: `${0.1 * i}s`, background: "rgba(17,24,39,0.75)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", borderRight: i < STEPS.length - 1 ? "1px solid rgba(14,165,233,0.2)" : undefined, borderBottom: "1px solid rgba(14,165,233,0.2)" }}
-                  className="p-8 relative group transition-all duration-500 fade-up"
+                  className="p-5 sm:p-8 relative group transition-all duration-500 fade-up"
                   onMouseEnter={e => e.currentTarget.style.background="rgba(30,41,59,0.85)"}
                   onMouseLeave={e => e.currentTarget.style.background="rgba(17,24,39,0.75)"}
                 >
-                  <div className="text-[80px] font-black leading-none mb-6 tracking-tighter group-hover:scale-110 transition-all duration-700" style={{ color: "rgba(14,165,233,0.20)" }}>
+                  <div className="text-[56px] sm:text-[80px] font-black leading-none mb-4 sm:mb-6 tracking-tighter group-hover:scale-110 transition-all duration-700" style={{ color: "rgba(14,165,233,0.20)" }}>
                     {s.num}
                   </div>
                   <h4 className="text-base font-bold mb-3" style={{ color: "#FFFFFF" }}>{s.title}</h4>
@@ -1353,7 +1353,7 @@ export default function App() {
       )}
 
       {view === "Contact" && (
-        <section id="contact" className="px-8 md:px-12 py-24 fade-up d1 relative overflow-hidden" style={{ background: "#080B12" }}>
+        <section id="contact" className="px-5 md:px-12 py-16 md:py-24 fade-up d1 relative overflow-hidden" style={{ background: "#080B12" }}>
           {/* decorative leaves */}
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
@@ -1361,7 +1361,7 @@ export default function App() {
           <div className="absolute -bottom-8 -left-8 w-48 h-48 opacity-10" style={{ transform: "rotate(45deg)" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/></svg>
           </div>
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-16 fade-up d2 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 fade-up d2 relative z-10">
           <div className="fade-up d3">
             <p className="mono text-[11px] font-bold uppercase tracking-widest mb-3" style={{ color: "#0EA5E9" }}>// Get In Touch</p>
             <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl fade-up d4" style={{ color: "#FFFFFF" }}>
@@ -1405,8 +1405,8 @@ export default function App() {
       <ChatBot />
 
       {/* FOOTER */}
-      <footer className="px-8 md:px-12 pt-14 pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)" }}>
-        <div className="flex flex-col lg:flex-row justify-between gap-16 mb-10 fade-up d2">
+      <footer className="px-5 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)" }}>
+        <div className="flex flex-col lg:flex-row justify-between gap-10 lg:gap-16 mb-8 md:mb-10 fade-up d2">
           <div className="max-w-xs fade-up d3">
             <Logo onClick={() => navigateTo("Home")} className="mb-4" size="footer" dark={false} />
             <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>
@@ -1414,7 +1414,7 @@ export default function App() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-16 fade-up d4">
+          <div className="flex flex-wrap gap-8 sm:gap-16 fade-up d4">
             {[
               { heading: "Company", links: [
                   { label: "About",    dest: "Home" },
