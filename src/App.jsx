@@ -11,7 +11,7 @@ const SERVICES = [
     desc: "Architecture reviews, tech stack decisions, and digital transformation roadmaps tailored to your growth stage.",
     tags: ["Cloud", "AI/ML", "Infra"],
     color: "indigo",
-    image: "https://picsum.photos/seed/tech/400/300",
+    image: "/tech-consulting.png",
   },
   {
     num: "02",
