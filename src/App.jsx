@@ -1154,7 +1154,7 @@ export default function App() {
       <main key={view} className="page-transition">
       {view === "Home" && (
         <>
-        <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ height: "100svh" }}>
+        <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ minHeight: "100svh" }}>
         {/* Wolf howling video background */}
         <video
           src="/wolf_howling_in_moon_202606211229.mp4"
