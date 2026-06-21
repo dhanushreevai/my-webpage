@@ -1110,7 +1110,6 @@ export default function App() {
           ))}
         </ul>
 
-        <BusinessHours />
 
         <button
           onClick={() => navigateTo("Contact")}
@@ -1322,43 +1321,45 @@ export default function App() {
       )}
 
       {view === "Process" && (
-        <section id="process" className="relative px-5 md:px-12 py-24 md:py-28 overflow-hidden" style={{ height: "100svh" }}>
+        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh" }}>
           {/* Fire wolf video background */}
           <video
             src="/Wolf_mouth_fire_video_202606211302.mp4"
             autoPlay muted playsInline loop
-            style={{ position: "absolute", top: "50%", left: "50%", minWidth: "100%", minHeight: "100%", width: "auto", height: "auto", transform: "translate(-50%,-50%)", objectFit: "cover", objectPosition: "60% center", opacity: 0.80 }}
+            className="absolute inset-0 w-full h-full"
+            style={{ objectFit: "cover", objectPosition: "center center", opacity: 0.80 }}
           />
           {/* Dark overlay */}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(8,11,18,0.25) 45%, rgba(8,11,18,0.70) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.65) 0%, rgba(8,11,18,0.30) 50%, rgba(8,11,18,0.70) 100%)" }} />
 
-          <div className="relative z-10 overflow-y-auto" style={{ maxHeight: "calc(100svh - 8rem)" }}>
+          <div className="relative z-10">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-3 fade-up d1" style={{ color: "#94A3B8" }}>// The Process</p>
-            <h2 className="text-[clamp(1.6rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-8 md:mb-14 max-w-xl fade-up d2" style={{ color: "#FFFFFF", textShadow: "0 2px 20px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,1)" }}>
+            <h2 className="text-[clamp(1.5rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-6 md:mb-14 max-w-xl fade-up d2"
+              style={{ color: "#FFFFFF", textShadow: "0 2px 20px rgba(0,0,0,0.95), 0 1px 4px rgba(0,0,0,1)" }}>
               From discovery<br />to results in weeks
             </h2>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden fade-up d3" style={{ border: "1px solid rgba(14,165,233,0.25)" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden fade-up d3" style={{ border: "1px solid rgba(14,165,233,0.25)" }}>
               {STEPS.map((s, i) => (
                 <div
                   key={s.num}
                   style={{
                     animationDelay: `${0.1 * i}s`,
-                    background: "rgba(17,24,39,0.80)",
-                    backdropFilter: "blur(14px)",
-                    WebkitBackdropFilter: "blur(14px)",
-                    borderRight: (i % 2 === 0) ? "1px solid rgba(14,165,233,0.2)" : undefined,
-                    borderBottom: i < 2 ? "1px solid rgba(14,165,233,0.2)" : undefined,
+                    background: "rgba(8,11,18,0.82)",
+                    backdropFilter: "blur(16px)",
+                    WebkitBackdropFilter: "blur(16px)",
+                    borderRight: i < STEPS.length - 1 ? "1px solid rgba(14,165,233,0.2)" : undefined,
+                    borderBottom: "1px solid rgba(14,165,233,0.15)",
                   }}
-                  className="p-4 sm:p-6 lg:p-8 relative group transition-all duration-500"
+                  className="p-5 sm:p-6 lg:p-8 relative group transition-all duration-500"
                   onMouseEnter={e => e.currentTarget.style.background="rgba(30,41,59,0.88)"}
-                  onMouseLeave={e => e.currentTarget.style.background="rgba(17,24,39,0.80)"}
+                  onMouseLeave={e => e.currentTarget.style.background="rgba(8,11,18,0.82)"}
                 >
-                  <div className="text-[44px] sm:text-[64px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(14,165,233,0.25)" }}>
+                  <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(14,165,233,0.30)" }}>
                     {s.num}
                   </div>
                   <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#FFFFFF" }}>{s.title}</h4>
-                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{s.desc}</p>
+                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#CBD5E1" }}>{s.desc}</p>
                 </div>
               ))}
             </div>
