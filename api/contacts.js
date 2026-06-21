@@ -1,9 +1,8 @@
 import { connectDB, Contact } from "./_db.js";
-import { requireAdminAuth, setSecurityHeaders } from "./_security.js";
+import { setSecurityHeaders } from "./_security.js";
 
 export default async function handler(req, res) {
   setSecurityHeaders(res);
-  if (!requireAdminAuth(req, res)) return;
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
 
   try {
