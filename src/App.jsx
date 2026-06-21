@@ -1161,10 +1161,10 @@ export default function App() {
           src="/wolf_howling_in_moon_202606211229.mp4"
           autoPlay muted playsInline loop
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ opacity: 0.45 }}
+          style={{ opacity: 0.75 }}
         />
         {/* Dark overlay so text stays readable */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg,rgba(8,11,18,0.82) 0%,rgba(13,24,38,0.70) 50%,rgba(8,11,18,0.82) 100%)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg,rgba(8,11,18,0.55) 0%,rgba(13,24,38,0.40) 50%,rgba(8,11,18,0.55) 100%)" }} />
         <div className="absolute inset-0 grid-bg opacity-25 pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
@@ -1320,10 +1320,10 @@ export default function App() {
             src="/Wolf_mouth_fire_video_202606211302.mp4"
             autoPlay muted playsInline loop
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 0.55 }}
+            style={{ opacity: 0.80 }}
           />
           {/* Dark overlay */}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.75) 0%, rgba(8,11,18,0.60) 50%, rgba(8,11,18,0.85) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.55) 0%, rgba(8,11,18,0.35) 50%, rgba(8,11,18,0.65) 100%)" }} />
 
           <div className="relative z-10">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d1" style={{ color: "#94A3B8" }}>// The Process</p>
