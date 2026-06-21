@@ -1314,37 +1314,44 @@ export default function App() {
       )}
 
       {view === "Process" && (
-        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh" }}>
+        <section id="process" className="relative px-5 md:px-12 py-24 md:py-28 overflow-hidden" style={{ minHeight: "100svh" }}>
           {/* Fire wolf video background */}
           <video
             src="/Wolf_mouth_fire_video_202606211302.mp4"
             autoPlay muted playsInline loop
             className="absolute inset-0 w-full h-full"
-            style={{ opacity: 0.80, objectFit: "cover", objectPosition: "center center" }}
+            style={{ opacity: 0.80, objectFit: "cover", objectPosition: "60% center" }}
           />
           {/* Dark overlay */}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.55) 0%, rgba(8,11,18,0.30) 50%, rgba(8,11,18,0.65) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(8,11,18,0.25) 45%, rgba(8,11,18,0.70) 100%)" }} />
 
           <div className="relative z-10">
-            <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d1" style={{ color: "#94A3B8" }}>// The Process</p>
-            <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-16 max-w-xl fade-up d2" style={{ color: "#FFFFFF", textShadow: "0 2px 20px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,1)" }}>
+            <p className="mono text-[11px] uppercase tracking-[0.18em] mb-3 fade-up d1" style={{ color: "#94A3B8" }}>// The Process</p>
+            <h2 className="text-[clamp(1.6rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-8 md:mb-14 max-w-xl fade-up d2" style={{ color: "#FFFFFF", textShadow: "0 2px 20px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,1)" }}>
               From discovery<br />to results in weeks
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden shadow-sm fade-up d3" style={{ border: "1px solid rgba(14,165,233,0.25)" }}>
+            <div className="grid grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden fade-up d3" style={{ border: "1px solid rgba(14,165,233,0.25)" }}>
               {STEPS.map((s, i) => (
                 <div
                   key={s.num}
-                  style={{ animationDelay: `${0.1 * i}s`, background: "rgba(17,24,39,0.75)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", borderRight: i < STEPS.length - 1 ? "1px solid rgba(14,165,233,0.2)" : undefined, borderBottom: "1px solid rgba(14,165,233,0.2)" }}
-                  className="p-5 sm:p-8 relative group transition-all duration-500 fade-up"
-                  onMouseEnter={e => e.currentTarget.style.background="rgba(30,41,59,0.85)"}
-                  onMouseLeave={e => e.currentTarget.style.background="rgba(17,24,39,0.75)"}
+                  style={{
+                    animationDelay: `${0.1 * i}s`,
+                    background: "rgba(17,24,39,0.80)",
+                    backdropFilter: "blur(14px)",
+                    WebkitBackdropFilter: "blur(14px)",
+                    borderRight: (i % 2 === 0) ? "1px solid rgba(14,165,233,0.2)" : undefined,
+                    borderBottom: i < 2 ? "1px solid rgba(14,165,233,0.2)" : undefined,
+                  }}
+                  className="p-4 sm:p-6 lg:p-8 relative group transition-all duration-500"
+                  onMouseEnter={e => e.currentTarget.style.background="rgba(30,41,59,0.88)"}
+                  onMouseLeave={e => e.currentTarget.style.background="rgba(17,24,39,0.80)"}
                 >
-                  <div className="text-[56px] sm:text-[80px] font-black leading-none mb-4 sm:mb-6 tracking-tighter group-hover:scale-110 transition-all duration-700" style={{ color: "rgba(14,165,233,0.20)" }}>
+                  <div className="text-[44px] sm:text-[64px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(14,165,233,0.25)" }}>
                     {s.num}
                   </div>
-                  <h4 className="text-base font-bold mb-3" style={{ color: "#FFFFFF" }}>{s.title}</h4>
-                  <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{s.desc}</p>
+                  <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#FFFFFF" }}>{s.title}</h4>
+                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{s.desc}</p>
                 </div>
               ))}
             </div>
