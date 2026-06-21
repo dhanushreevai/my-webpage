@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import logo from "./image/11x-logo.jpeg";
 
-const NAV_LINKS = ["Services", "Careers", "Process", "Contact", "Space"];
+const NAV_LINKS = ["Services", "Careers", "Process", "Contact"];
 
 const SERVICES = [
   {
@@ -980,169 +980,26 @@ function ChatBot() {
   );
 }
 
-function SpaceView() {
-  const heroVidRef = useRef(null);
-  const capVidRef  = useRef(null);
-  const headlineRef = useRef(null);
-
-  const initVideo = useCallback((vid) => {
-    if (!vid) return () => {};
-    let raf = null; let fadingOut = false;
-    const FADE = 500, LEAD = 0.55;
-    function fadeTo(target, ms) {
-      if (raf) cancelAnimationFrame(raf);
-      const t0 = performance.now();
-      const from = parseFloat(vid.style.opacity) || 0;
-      (function step(now) {
-        const p = Math.min((now - t0) / ms, 1);
-        vid.style.opacity = from + (target - from) * p;
-        if (p < 1) raf = requestAnimationFrame(step);
-      })(t0);
-    }
-    const onLoad = () => { vid.style.opacity = 0; vid.play().catch(() => {}); fadeTo(1, FADE); };
-    const onTime = () => { if (!vid.duration) return; const r = vid.duration - vid.currentTime; if (!fadingOut && r <= LEAD && r > 0) { fadingOut = true; fadeTo(0, FADE); } };
-    const onEnd  = () => { vid.style.opacity = 0; fadingOut = false; vid.currentTime = 0; vid.play().catch(() => {}); fadeTo(1, FADE); };
-    vid.addEventListener('loadeddata', onLoad);
-    vid.addEventListener('timeupdate', onTime);
-    vid.addEventListener('ended',      onEnd);
-    if (vid.readyState >= 3) onLoad();
-    return () => { if (raf) cancelAnimationFrame(raf); vid.removeEventListener('loadeddata', onLoad); vid.removeEventListener('timeupdate', onTime); vid.removeEventListener('ended', onEnd); };
-  }, []);
-
-  useEffect(() => {
-    const c1 = initVideo(heroVidRef.current);
-    const c2 = initVideo(capVidRef.current);
-    return () => { c1(); c2(); };
-  }, [initVideo]);
-
-  useEffect(() => {
-    const el = headlineRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        el.querySelectorAll('.sp-word').forEach((s, i) => { s.style.animationDelay = i * 0.1 + 's'; s.classList.add('go'); });
-        obs.disconnect();
-      }
-    }, { threshold: 0.1 });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const els = document.querySelectorAll('.sp-fade');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.style.animationDelay = (e.target.dataset.delay || 0) + 's';
-          e.target.classList.add('go');
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.05 });
-    els.forEach(el => obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
-
-  const CAP_CARDS = [
-    { title: 'AI Scenery',       tags: ['Natural Context','Photo Realism','Infinite Settings','Eco-Vibe'],         desc: 'AI analyzes your product to create indistinguishable natural environments — from Icelandic cliffs to misty forests.' },
-    { title: 'Batch Production', tags: ['Scale Fast','Visual Consistency','Time Saver','Ready to Post'],            desc: 'Style your entire product line in minutes. Create a unified visual identity for catalogues and social media.' },
-    { title: 'Smart Lighting',   tags: ['Ray Tracing','Physical Shadows','Studio Quality','Sunlight Sync'],         desc: 'Automatic lighting and material adjustment. Achieve flawless integration with realistic shadows and sunlight.' },
-  ];
-
+function WolfSection({ src, heading, sub }) {
   return (
-    <div style={{ fontFamily: "'Barlow', sans-serif" }}>
-      {/* ── Hero ── */}
-      <section style={{ position: 'relative', minHeight: '100vh', background: '#000', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        <video ref={heroVidRef} src="/wolf_howling_in_moon_202606211229.mp4" autoPlay muted playsInline preload="auto"
-          style={{ position: 'absolute', left: '50%', top: 0, transform: 'translateX(-50%)', width: '120%', height: '120%', objectFit: 'cover', objectPosition: 'top', zIndex: 0, opacity: 0 }} />
-
-        <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', flex: 1, minHeight: '100vh' }}>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '7rem 1rem 2rem', textAlign: 'center' }}>
-
-            {/* Badge */}
-            <div className="sp-glass sp-fade" data-delay="0.4" style={{ borderRadius: 9999, padding: 4, display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
-              <span style={{ background: '#fff', color: '#000', borderRadius: 9999, fontWeight: 600, fontSize: '0.7rem', padding: '0.2rem 0.7rem' }}>New</span>
-              <span style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.9)', paddingRight: '0.75rem' }}>Maiden Crewed Voyage to Mars Arrives 2026</span>
-            </div>
-
-            {/* Headline */}
-            <div ref={headlineRef} style={{ maxWidth: '50rem', fontFamily: "'Cinzel', serif", fontWeight: 700, color: '#fff', fontSize: 'clamp(1.8rem,4vw,3.2rem)', lineHeight: 1.15, letterSpacing: '0.06em', textTransform: 'uppercase', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', rowGap: '0.1em', marginBottom: '1.25rem', textShadow: '0 1px 3px rgba(0,0,0,1), 0 4px 18px rgba(0,0,0,0.95)' }}>
-              {'Venture Past Our Sky Across the Universe'.split(' ').map((word, i) => (
-                <span key={i} className="sp-word" style={{ display: 'inline-block', marginRight: '0.25em', opacity: 0 }}>{word}</span>
-              ))}
-            </div>
-
-            {/* Subheading */}
-            <p className="sp-fade" data-delay="0.9" style={{ fontWeight: 400, fontSize: '0.9375rem', color: '#fff', maxWidth: '38rem', lineHeight: 1.65, marginBottom: '1.75rem', textShadow: '0 1px 4px rgba(0,0,0,1)' }}>
-              Discover the universe in ways once unimaginable. Our pioneering vessels and breakthrough engineering bring deep-space exploration within reach—secure and extraordinary.
-            </p>
-
-            {/* CTAs */}
-            <div className="sp-fade" data-delay="1.15" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2.25rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <button className="sp-glass-strong" style={{ borderRadius: 9999, padding: '0.625rem 1.375rem', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 500, fontSize: '0.875rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                Start Your Voyage ↗
-              </button>
-              <button style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 500, fontSize: '0.875rem', color: '#A8C4DC', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                View Liftoff ▶
-              </button>
-            </div>
-
-            {/* Stats */}
-            <div className="sp-fade" data-delay="1.35" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {[{ label: 'Average Videos Watch Time', value: '34.5 Min' }, { label: 'Users Across the Globe', value: '2.8B+' }].map(({ label, value }) => (
-                <div key={label} className="sp-glass" style={{ borderRadius: '1.25rem', padding: '1.25rem', width: 208, display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                  <div style={{ fontFamily: "'Cinzel', serif", fontWeight: 700, color: '#C8A440', fontSize: '2.4rem', letterSpacing: '-1px', lineHeight: 1 }}>{value}</div>
-                  <div style={{ fontWeight: 300, fontSize: '0.72rem', color: '#6A8AAA', marginTop: '0.4rem' }}>{label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Partners */}
-          <div className="sp-fade" data-delay="1.5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', paddingBottom: '2.5rem' }}>
-            <div className="sp-glass" style={{ borderRadius: 9999, padding: '0.25rem 1.125rem' }}>
-              <span style={{ fontWeight: 500, fontSize: '0.72rem', color: 'rgba(255,255,255,0.9)' }}>Collaborating with top aerospace pioneers globally</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '3.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              {['Aeon','Vela','Apex','Orbit','Zeno'].map(name => (
-                <span key={name} style={{ fontFamily: "'Cinzel', serif", fontWeight: 700, color: '#A8C0DC', fontSize: '1.75rem' }}>{name}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Capabilities ── */}
-      <section style={{ position: 'relative', minHeight: '100vh', background: '#000', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        <video ref={capVidRef}
-          src="/Wolf_mouth_fire_video_202606211302.mp4"
-          autoPlay muted playsInline preload="auto"
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0, opacity: 0 }} />
-        <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', minHeight: '100vh', padding: '6rem 5rem 3rem' }}>
-          <div style={{ marginBottom: 'auto' }}>
-            <p style={{ fontSize: '0.875rem', color: '#5A7A9A', marginBottom: '1.5rem' }}>// Capabilities</p>
-            <h2 style={{ fontFamily: "'Cinzel', serif", fontWeight: 700, color: '#C8E0F8', fontSize: 'clamp(2.8rem,6vw,4.5rem)', lineHeight: 1.1, letterSpacing: '0.05em', textTransform: 'uppercase', textShadow: '0 2px 20px rgba(0,0,0,0.8)' }}>
-              Production<br />Evolved
-            </h2>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', marginTop: '4rem' }}>
-            {CAP_CARDS.map(card => (
-              <div key={card.title} className="sp-glass" style={{ borderRadius: '1.25rem', padding: '1.5rem', minHeight: 340, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end', gap: '0.35rem' }}>
-                  {card.tags.map(tag => (
-                    <span key={tag} className="sp-glass" style={{ borderRadius: 9999, padding: '0.2rem 0.65rem', fontSize: 11, color: 'rgba(255,255,255,0.9)', whiteSpace: 'nowrap' }}>{tag}</span>
-                  ))}
-                </div>
-                <div style={{ marginTop: 'auto', paddingTop: '1.5rem' }}>
-                  <h3 style={{ fontFamily: "'Cinzel', serif", fontWeight: 600, color: '#B8D4F0', fontSize: '1.5rem', letterSpacing: '0.04em', textTransform: 'uppercase', lineHeight: 1.1, marginBottom: '0.75rem' }}>{card.title}</h3>
-                  <p style={{ fontWeight: 300, fontSize: '0.875rem', color: '#7A9AB8', lineHeight: 1.55 }}>{card.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
+    <section className="relative overflow-hidden flex items-center justify-center" style={{ height: "100vh" }}>
+      <video
+        src={src} autoPlay muted playsInline loop
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: 0.88 }}
+      />
+      <div className="relative z-10 text-center px-6 max-w-3xl">
+        <h2
+          className="font-black tracking-tighter leading-none mb-6 text-white"
+          style={{ fontSize: "clamp(3rem,8vw,6rem)", textShadow: "0 2px 24px rgba(0,0,0,0.85), 0 1px 4px rgba(0,0,0,1)", fontFamily: "'Cinzel', serif", textTransform: "uppercase", letterSpacing: "0.04em" }}
+        >
+          {heading}
+        </h2>
+        <p className="text-lg font-medium max-w-md mx-auto" style={{ color: "rgba(255,255,255,0.85)", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
+          {sub}
+        </p>
+      </div>
+    </section>
   );
 }
 
@@ -1371,6 +1228,13 @@ export default function App() {
         </div>
         </section>
 
+        {/* WOLF MOON — cinematic break */}
+        <WolfSection
+          src="/wolf_howling_in_moon_202606211229.mp4"
+          heading="Unleash Your Potential"
+          sub="Bridging elite consulting with breakthrough technology to multiply your impact 11x."
+        />
+
         {/* MARQUEE - Now part of Home View only */}
         <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)", borderBottom: "1px solid rgba(14,165,233,0.2)" }}>
           <div className="marquee-track flex gap-14 w-max">
@@ -1448,6 +1312,12 @@ export default function App() {
       )}
 
       {view === "Process" && (
+        <WolfSection
+          src="/Wolf_mouth_fire_video_202606211302.mp4"
+          heading="Forged in Fire"
+          sub="Every strategy we build is stress-tested to perform under pressure and deliver results that last."
+        />
+
         <section id="process" className="px-8 md:px-12 py-24 fade-up d1" style={{ background: "#080B12" }}>
         <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#94A3B8" }}>// The Process</p>
         <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-16 max-w-xl fade-up d3" style={{ color: "#FFFFFF" }}>
@@ -1473,8 +1343,6 @@ export default function App() {
         </div>
         </section>
       )}
-
-      {view === "Space" && <SpaceView />}
 
       {view === "Contact" && (
         <section id="contact" className="px-8 md:px-12 py-24 fade-up d1 relative overflow-hidden" style={{ background: "#080B12" }}>
@@ -1529,7 +1397,7 @@ export default function App() {
       <ChatBot />
 
       {/* FOOTER */}
-      {view === "Space" ? null : <footer className="px-8 md:px-12 pt-14 pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)" }}>
+      <footer className="px-8 md:px-12 pt-14 pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)" }}>
         <div className="flex flex-col lg:flex-row justify-between gap-16 mb-10 fade-up d2">
           <div className="max-w-xs fade-up d3">
             <Logo onClick={() => navigateTo("Home")} className="mb-4" size="footer" dark={false} />
@@ -1582,7 +1450,7 @@ export default function App() {
           </p>
           <p className="mono text-[11px]" style={{ color: "#94A3B8" }}>✦ Built for the bold.</p>
         </div>
-      </footer>}
+      </footer>
     </div>
   );
 }
