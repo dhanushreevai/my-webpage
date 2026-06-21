@@ -47,7 +47,7 @@ const SERVICES = [
     desc: "We source, vet, and deploy high-performing engineering squads — full-time, contract, or project-based.",
     tags: ["Hiring", "Remote", "Teams"],
     color: "emerald", 
-    image: "https://picsum.photos/seed/engineering/400/300",
+    image: "/engineering-teams.png",
   },
   {
     num: "06",
