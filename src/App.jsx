@@ -38,7 +38,7 @@ const SERVICES = [
     desc: "Hands-on support for early-stage founders — from MVP to investor-ready product and pitch decks.",
     tags: ["MVP", "Pitch", "Scale"],
     color: "pink", 
-    image: "https://picsum.photos/seed/startup/400/300",
+    image: "/startup-acceleration.png",
   },
   {
     num: "05",
