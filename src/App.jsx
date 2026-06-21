@@ -1155,13 +1155,12 @@ export default function App() {
       <main key={view} className="page-transition">
       {view === "Home" && (
         <>
-        <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ minHeight: "100svh" }}>
+        <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ height: "100svh" }}>
         {/* Wolf howling video background */}
         <video
           src="/wolf_howling_in_moon_202606211229.mp4"
           autoPlay muted playsInline loop
-          className="absolute inset-0 w-full h-full"
-          style={{ opacity: 0.75, objectFit: "cover", objectPosition: "center 30%" }}
+          style={{ position: "absolute", top: "50%", left: "50%", minWidth: "100%", minHeight: "100%", width: "auto", height: "auto", transform: "translate(-50%,-50%)", objectFit: "cover", objectPosition: "center 30%", opacity: 0.75 }}
         />
         {/* Dark overlay — stronger at edges for text legibility */}
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(13,24,38,0.30) 40%, rgba(8,11,18,0.65) 100%)" }} />
@@ -1314,18 +1313,17 @@ export default function App() {
       )}
 
       {view === "Process" && (
-        <section id="process" className="relative px-5 md:px-12 py-24 md:py-28 overflow-hidden" style={{ minHeight: "100svh" }}>
+        <section id="process" className="relative px-5 md:px-12 py-24 md:py-28 overflow-hidden" style={{ height: "100svh" }}>
           {/* Fire wolf video background */}
           <video
             src="/Wolf_mouth_fire_video_202606211302.mp4"
             autoPlay muted playsInline loop
-            className="absolute inset-0 w-full h-full"
-            style={{ opacity: 0.80, objectFit: "cover", objectPosition: "60% center" }}
+            style={{ position: "absolute", top: "50%", left: "50%", minWidth: "100%", minHeight: "100%", width: "auto", height: "auto", transform: "translate(-50%,-50%)", objectFit: "cover", objectPosition: "60% center", opacity: 0.80 }}
           />
           {/* Dark overlay */}
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(8,11,18,0.25) 45%, rgba(8,11,18,0.70) 100%)" }} />
 
-          <div className="relative z-10">
+          <div className="relative z-10 overflow-y-auto" style={{ maxHeight: "calc(100svh - 8rem)" }}>
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-3 fade-up d1" style={{ color: "#94A3B8" }}>// The Process</p>
             <h2 className="text-[clamp(1.6rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-8 md:mb-14 max-w-xl fade-up d2" style={{ color: "#FFFFFF", textShadow: "0 2px 20px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,1)" }}>
               From discovery<br />to results in weeks
