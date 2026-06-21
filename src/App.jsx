@@ -1155,8 +1155,17 @@ export default function App() {
       <main key={view} className="page-transition">
       {view === "Home" && (
         <>
-        <section id="home" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 pt-28 pb-12 overflow-hidden z-10" style={{ background: "linear-gradient(135deg,#080B12 0%,#0D1826 50%,#080B12 100%)" }}>
-        <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
+        <section id="home" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 pt-28 pb-12 overflow-hidden z-10">
+        {/* Wolf howling video background */}
+        <video
+          src="/wolf_howling_in_moon_202606211229.mp4"
+          autoPlay muted playsInline loop
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ opacity: 0.45 }}
+        />
+        {/* Dark overlay so text stays readable */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg,rgba(8,11,18,0.82) 0%,rgba(13,24,38,0.70) 50%,rgba(8,11,18,0.82) 100%)" }} />
+        <div className="absolute inset-0 grid-bg opacity-25 pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
 
@@ -1227,13 +1236,6 @@ export default function App() {
 
         </div>
         </section>
-
-        {/* WOLF MOON — cinematic break */}
-        <WolfSection
-          src="/wolf_howling_in_moon_202606211229.mp4"
-          heading="Unleash Your Potential"
-          sub="Bridging elite consulting with breakthrough technology to multiply your impact 11x."
-        />
 
         {/* MARQUEE - Now part of Home View only */}
         <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)", borderBottom: "1px solid rgba(14,165,233,0.2)" }}>
