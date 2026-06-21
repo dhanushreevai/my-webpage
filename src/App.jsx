@@ -73,14 +73,14 @@ const STEPS = [
   { num: "01", title: "Discovery", desc: "We audit your stack, team, and goals to understand what's holding you back and what's possible.", color: "text-[#0EA5E9]" },
   { num: "02", title: "Strategy", desc: "A clear, actionable roadmap with milestones, owners, and measurable success criteria.", color: "text-[#0284C7]" },
   { num: "03", title: "Execution", desc: "Embedded consultants and curated talent work alongside your team to ship results.", color: "text-[#0284C7]" },
-  { num: "04", title: "Scale", desc: "We hand off with documentation, playbooks, and a team ready to multiply the wins.", color: "text-[#5C3D2E]" },
+  { num: "04", title: "Scale", desc: "We hand off with documentation, playbooks, and a team ready to multiply the wins.", color: "text-[#38BDF8]" },
 ];
 
 const STATS = [
-  { val: "120", unit: "+", label: "Projects Delivered", color: "text-[#0EA5E9]" },
-  { val: "48",  unit: "+", label: "Interns Placed",     color: "text-[#475569]" },
-  { val: "11",  unit: "x", label: "Average ROI",        color: "text-[#0F172A]" },
-  { val: "32",  unit: "+", label: "Partner Companies",  color: "text-[#0369A1]" },
+  { val: "120", unit: "+", label: "Projects Delivered", color: "text-[#38BDF8]" },
+  { val: "48",  unit: "+", label: "Interns Placed",     color: "text-[#E2E8F0]" },
+  { val: "11",  unit: "x", label: "Average ROI",        color: "text-[#FFFFFF]" },
+  { val: "32",  unit: "+", label: "Partner Companies",  color: "text-[#0EA5E9]" },
 ];
 
 const MARQUEE_ITEMS = [
@@ -173,7 +173,7 @@ function StatCard({ val, unit, label, animate, color, delay }) {
         {animate ? num : val}
         <span className="opacity-60">{unit}</span>
       </div>
-      <div className="text-xs uppercase tracking-wide font-medium" style={{ color: "#64748B" }}>{label}</div>
+      <div className="text-xs uppercase tracking-wide font-medium" style={{ color: "#94A3B8" }}>{label}</div>
     </div>
   );
 }
@@ -224,16 +224,16 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
       <div
         ref={cardRef}
         onMouseMove={handleMouseMove}
-        onMouseEnter={e => { e.currentTarget.style.background = "#E0F2FE"; }}
-        onMouseLeave={e => { handleMouseLeave(); e.currentTarget.style.background = "#FFFFFF"; }}
+        onMouseEnter={e => { e.currentTarget.style.background = "#1E293B"; }}
+        onMouseLeave={e => { handleMouseLeave(); e.currentTarget.style.background = "#111827"; }}
         className="relative p-8 cursor-default overflow-hidden hover:z-10"
         style={{
           transform: `translateY(${isResting ? 0 : -8}px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
           transition: isResting ? "transform 0.6s ease-out" : "none",
           transformStyle: "preserve-3d",
-          background: "#FFFFFF",
-          borderBottom: "1px solid rgba(0,0,0,0.07)",
-          borderRight: "1px solid rgba(0,0,0,0.07)",
+          background: "#111827",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          borderRight: "1px solid rgba(255,255,255,0.08)",
         }}
       >
         <div 
@@ -249,9 +249,9 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
         {image && (
           <img src={image} alt={title} className="w-full h-32 object-cover mb-6 rounded-md translate-z-10" />
         )}
-        <div className="font-mono text-[11px] tracking-wider mb-4 translate-z-10" style={{ color: "#0369A1" }}>{num}</div>
-        <h3 className="text-2xl font-black mb-4 tracking-tighter leading-none group-hover:translate-z-30 transition-transform duration-500" style={{ color: "#1A1A1A" }}>{title}</h3>
-        <p className="text-[15px] font-medium leading-relaxed max-w-[280px] group-hover:translate-z-20 transition-transform duration-500" style={{ color: "#888888" }}>{desc}</p>
+        <div className="font-mono text-[11px] tracking-wider mb-4 translate-z-10" style={{ color: "#0EA5E9" }}>{num}</div>
+        <h3 className="text-2xl font-black mb-4 tracking-tighter leading-none group-hover:translate-z-30 transition-transform duration-500" style={{ color: "#FFFFFF" }}>{title}</h3>
+        <p className="text-[15px] font-medium leading-relaxed max-w-[280px] group-hover:translate-z-20 transition-transform duration-500" style={{ color: "#94A3B8" }}>{desc}</p>
         <div className="flex flex-wrap gap-2 mt-5 group-hover:translate-z-10 transition-transform duration-500">
           {tags.map((t, i) => (
             <span key={i} className="font-mono text-[10px] px-3 py-1 rounded-full uppercase tracking-wider font-bold"
@@ -270,13 +270,13 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
     <div
       onClick={onApply}
       className="flex items-center justify-between px-8 py-5 transition-all duration-300 cursor-pointer group"
-      style={{ background: "#FFFFFF", borderBottom: "1px solid rgba(14,165,233,0.2)" }}
-      onMouseEnter={e => e.currentTarget.style.background="#E0F2FE"}
-      onMouseLeave={e => e.currentTarget.style.background="#FFFFFF"}
+      style={{ background: "#0D1117", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+      onMouseEnter={e => e.currentTarget.style.background="#1E293B"}
+      onMouseLeave={e => e.currentTarget.style.background="#0D1117"}
     >
       <div className="flex flex-col gap-1.5">
-        <span className="text-sm font-bold" style={{ color: "#1A1A1A" }}>{title}</span>
-        <div className="flex gap-4 font-mono text-[11px]" style={{ color: "#0369A1" }}>
+        <span className="text-sm font-bold" style={{ color: "#FFFFFF" }}>{title}</span>
+        <div className="flex gap-4 font-mono text-[11px]" style={{ color: "#0EA5E9" }}>
           <span>{location}</span>
           <span>{period}</span>
         </div>
@@ -313,7 +313,6 @@ function Logo({ onClick, className = "", size = "nav", dark = false }) {
           src={logo}
           alt="11x Logo"
           className="h-12 w-auto rounded-xl"
-          style={{ mixBlendMode: "multiply" }}
         />
       )}
       <div className="flex flex-col leading-none">
@@ -998,7 +997,7 @@ function BusinessHours() {
   }, []);
   return (
     <div className="hidden lg:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full"
-      style={{ background: status.available ? "rgba(14,165,233,0.10)" : "rgba(0,0,0,0.05)", border: `1px solid ${status.available ? "rgba(14,165,233,0.30)" : "rgba(0,0,0,0.10)"}` }}
+      style={{ background: status.available ? "rgba(14,165,233,0.10)" : "rgba(255,255,255,0.05)", border: `1px solid ${status.available ? "rgba(14,165,233,0.30)" : "rgba(255,255,255,0.10)"}` }}
     >
       <span className={`w-1.5 h-1.5 rounded-full ${status.available ? "bg-emerald-400 animate-pulse" : "bg-gray-500"}`} />
       <span style={{ color: status.available ? "#888888" : "#6B7280" }}>
@@ -1050,7 +1049,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#F0F7FF", color: "#1A1A1A" }}>
+    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#080B12", color: "#F0F7FF" }}>
       <MouseSpotlight />
       
       {/* Floating Background Blobs */}
@@ -1066,13 +1065,13 @@ export default function App() {
         style={{
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
-          background: scrolled ? "#ffffff" : "rgba(255,255,255,0.75)",
-          boxShadow: scrolled ? "0 1px 24px rgba(14,165,233,0.10)" : "none",
+          background: scrolled ? "rgba(8,11,18,0.98)" : "rgba(8,11,18,0.70)",
+          boxShadow: scrolled ? "0 1px 24px rgba(14,165,233,0.15)" : "none",
           transform: navHidden ? "translateY(-100%)" : "translateY(0)",
           transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.3s, box-shadow 0.3s",
         }}
       >
-        <Logo onClick={() => navigateTo("Home")} dark={true} />
+        <Logo onClick={() => navigateTo("Home")} dark={false} />
 
         <ul className="hidden md:flex gap-9 list-none">
           {NAV_LINKS.map((l) => (
@@ -1080,7 +1079,7 @@ export default function App() {
               <button
                 onClick={() => navigateTo(l)}
                 className="text-[14px] font-bold tracking-tight transition-all duration-200 bg-transparent border-0 cursor-pointer"
-                style={{ color: view === l ? "#0EA5E9" : "#888888" }}
+                style={{ color: view === l ? "#0EA5E9" : "#94A3B8" }}
               >
                 {l}
               </button>
@@ -1114,15 +1113,15 @@ export default function App() {
 
       {/* MOBILE MENU */}
       {menuOpen && (
-        <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "rgba(255,255,255,0.97)" }}>
+        <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "rgba(8,11,18,0.98)" }}>
           {NAV_LINKS.map((l) => (
             <button
               key={l}
               onClick={() => navigateTo(l)}
               className="text-2xl font-bold transition-colors duration-200 bg-transparent border-0 cursor-pointer"
-              style={{ color: "#888888" }}
+              style={{ color: "#94A3B8" }}
               onMouseEnter={e => e.target.style.color="#0EA5E9"}
-              onMouseLeave={e => e.target.style.color="#888888"}
+              onMouseLeave={e => e.target.style.color="#94A3B8"}
             >
               {l}
             </button>
@@ -1133,7 +1132,7 @@ export default function App() {
       <main key={view} className="page-transition">
       {view === "Home" && (
         <>
-        <section id="home" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 pt-28 pb-12 overflow-hidden z-10" style={{ background: "linear-gradient(135deg,#EBF5FF 0%,#DBEAFE 60%,#EBF5FF 100%)" }}>
+        <section id="home" className="relative min-h-screen flex flex-col justify-center px-8 md:px-12 pt-28 pb-12 overflow-hidden z-10" style={{ background: "linear-gradient(135deg,#080B12 0%,#0D1826 50%,#080B12 100%)" }}>
         <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
@@ -1145,7 +1144,7 @@ export default function App() {
               Consulting · Talent · Technology
             </p>
 
-            <h1 className="text-[clamp(2.6rem,7vw,6.5rem)] font-black leading-[0.88] tracking-[-0.06em] mb-10 fade-up d2" style={{ color: "#0F172A" }}>
+            <h1 className="text-[clamp(2.6rem,7vw,6.5rem)] font-black leading-[0.88] tracking-[-0.06em] mb-10 fade-up d2" style={{ color: "#FFFFFF" }}>
               Scale your
               <br />
               <span className="text-stroke cursor-default inline-block" style={{ WebkitTextStroke: "2px #0EA5E9" }}>
@@ -1155,7 +1154,7 @@ export default function App() {
               with <span className="gradient-text">11x Square</span>
             </h1>
 
-            <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 fade-up d3" style={{ color: "#475569" }}>
+            <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 fade-up d3" style={{ color: "#94A3B8" }}>
               Bridging the gap between elite engineering and strategic growth with a platform-first approach.
             </p>
 
@@ -1170,7 +1169,7 @@ export default function App() {
               <MagneticButton
                 onClick={() => navigateTo("Careers")}
                 className="font-bold text-[clamp(14px,1.4vw,16px)] px-9 py-4 rounded-full shadow-sm transition-all duration-200"
-                style={{ background: "transparent", border: "1.5px solid rgba(14,165,233,0.6)", color: "#0284C7" }}
+                style={{ background: "transparent", border: "1.5px solid rgba(14,165,233,0.6)", color: "#0EA5E9" }}
               >
                 Explore Roles
               </MagneticButton>
@@ -1192,7 +1191,7 @@ export default function App() {
                 src={logo}
                 alt="11x Square"
                 className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem] object-cover rounded-[2rem] shadow-2xl"
-                style={{ mixBlendMode: "multiply", border: "4px solid rgba(14,165,233,0.15)" }}
+                style={{ border: "4px solid rgba(14,165,233,0.35)" }}
               />
               {/* label badge */}
               <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-5 py-2 rounded-full shadow-lg whitespace-nowrap"
@@ -1207,7 +1206,7 @@ export default function App() {
         </section>
 
         {/* MARQUEE - Now part of Home View only */}
-        <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#FFFFFF", borderTop: "1px solid rgba(14,165,233,0.3)", borderBottom: "1px solid rgba(14,165,233,0.3)" }}>
+        <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)", borderBottom: "1px solid rgba(14,165,233,0.2)" }}>
           <div className="marquee-track flex gap-14 w-max">
             {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
               <span key={i} className="mono text-[12px] font-bold uppercase tracking-wider whitespace-nowrap flex items-center gap-4" style={{ color: "#0EA5E9" }}>
@@ -1221,19 +1220,19 @@ export default function App() {
       )}
 
       {view === "Services" && (
-        <section id="services" className="px-8 md:px-12 py-20" style={{ background: "#F0F7FF" }}>
+        <section id="services" className="px-8 md:px-12 py-20" style={{ background: "#080B12" }}>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 fade-up d1">
           <div className="fade-up d2">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d3" style={{ color: "#888888" }}>// Our Solutions</p>
-            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9] fade-up d4" style={{ color: "#1A1A1A" }}>
+            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9] fade-up d4" style={{ color: "#FFFFFF" }}>
               Consulting for the<br />bold & ambitious
             </h2>
           </div>
-          <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md fade-up d5" style={{ color: "#888888" }}>
+          <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md fade-up d5" style={{ color: "#94A3B8" }}>
             Platform-driven consulting that solves deep engineering and product problems in record time.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 fade-up d6" style={{ borderTop: "1px solid rgba(0,0,0,0.07)", borderLeft: "1px solid rgba(0,0,0,0.07)" }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 fade-up d6" style={{ borderTop: "1px solid rgba(255,255,255,0.08)", borderLeft: "1px solid rgba(255,255,255,0.08)" }}>
           {SERVICES.map((s, i) => (
             <ServiceCard key={s.num} {...s} delay={0.1 * i} />
           ))}
@@ -1242,18 +1241,18 @@ export default function App() {
       )}
 
       {view === "Careers" && (
-        <section id="careers" className="px-8 md:px-12 py-20" style={{ background: "#FFFFFF", borderTop: "1px solid rgba(14,165,233,0.15)" }}>
+        <section id="careers" className="px-8 md:px-12 py-20" style={{ background: "#080B12", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-start">
           <div className="fade-up d1">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#888888" }}>// Careers</p>
-            <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6 fade-up d3" style={{ color: "#1A1A1A" }}>
+            <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6 fade-up d3" style={{ color: "#FFFFFF" }}>
               Find your next<br />challenge at <span style={{ color: "#0EA5E9" }}>11x</span>
             </h2>
-            <p className="text-lg font-medium leading-relaxed mb-10 max-w-md fade-up d4" style={{ color: "#888888" }}>
+            <p className="text-lg font-medium leading-relaxed mb-10 max-w-md fade-up d4" style={{ color: "#94A3B8" }}>
               Whether you're a seasoned consultant or a fresh grad ready to make your mark — we have a seat for you.
             </p>
 
-            <div className="p-7 rounded-xl shadow-sm fade-up d5" style={{ background: "#FFFFFF", border: "1px solid rgba(14,165,233,0.3)" }}>
+            <div className="p-7 rounded-xl shadow-sm fade-up d5" style={{ background: "#111827", border: "1px solid rgba(14,165,233,0.25)" }}>
               <p className="mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "#0EA5E9" }}>Intern Program Highlights</p>
               <ul className="flex flex-col gap-3">
                 {[
@@ -1270,7 +1269,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex flex-col border-t border-zinc-200 fade-up d6">
+          <div className="flex flex-col fade-up d6" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
             {ROLES.map((r, i) => (
               <RoleItem
                 key={r.title} {...r} delay={0.1 * i}
@@ -1283,9 +1282,9 @@ export default function App() {
       )}
 
       {view === "Process" && (
-        <section id="process" className="px-8 md:px-12 py-24 fade-up d1" style={{ background: "#F0F7FF" }}>
-        <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#888888" }}>// The Process</p>
-        <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-16 max-w-xl fade-up d3" style={{ color: "#1A1A1A" }}>
+        <section id="process" className="px-8 md:px-12 py-24 fade-up d1" style={{ background: "#080B12" }}>
+        <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#94A3B8" }}>// The Process</p>
+        <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-16 max-w-xl fade-up d3" style={{ color: "#FFFFFF" }}>
           From discovery to results in weeks
         </h2>
 
@@ -1293,16 +1292,16 @@ export default function App() {
           {STEPS.map((s, i) => (
             <div
               key={s.num}
-              style={{ animationDelay: `${0.1 * i}s`, background: "#FFFFFF", borderRight: i < STEPS.length - 1 ? "1px solid rgba(14,165,233,0.2)" : undefined, borderBottom: "1px solid rgba(14,165,233,0.2)" }}
+              style={{ animationDelay: `${0.1 * i}s`, background: "#111827", borderRight: i < STEPS.length - 1 ? "1px solid rgba(14,165,233,0.2)" : undefined, borderBottom: "1px solid rgba(14,165,233,0.2)" }}
               className="p-8 relative group transition-all duration-500 fade-up"
-              onMouseEnter={e => e.currentTarget.style.background="#E0F2FE"}
-              onMouseLeave={e => e.currentTarget.style.background="#FFFFFF"}
+              onMouseEnter={e => e.currentTarget.style.background="#1E293B"}
+              onMouseLeave={e => e.currentTarget.style.background="#111827"}
             >
               <div className="text-[80px] font-black leading-none mb-6 tracking-tighter group-hover:scale-110 transition-all duration-700" style={{ color: "rgba(14,165,233,0.15)" }}>
                 {s.num}
               </div>
-              <h4 className="text-base font-bold mb-3" style={{ color: "#1A1A1A" }}>{s.title}</h4>
-              <p className="text-sm leading-relaxed" style={{ color: "#888888" }}>{s.desc}</p>
+              <h4 className="text-base font-bold mb-3" style={{ color: "#FFFFFF" }}>{s.title}</h4>
+              <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{s.desc}</p>
             </div>
           ))}
         </div>
@@ -1310,7 +1309,7 @@ export default function App() {
       )}
 
       {view === "Contact" && (
-        <section id="contact" className="px-8 md:px-12 py-24 fade-up d1 relative overflow-hidden" style={{ background: "#DBEAFE" }}>
+        <section id="contact" className="px-8 md:px-12 py-24 fade-up d1 relative overflow-hidden" style={{ background: "#080B12" }}>
           {/* decorative leaves */}
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
@@ -1320,11 +1319,11 @@ export default function App() {
           </div>
           <div className="flex flex-col lg:flex-row items-center justify-between gap-16 fade-up d2 relative z-10">
           <div className="fade-up d3">
-            <p className="mono text-[11px] font-bold uppercase tracking-widest mb-3" style={{ color: "#0369A1" }}>// Get In Touch</p>
-            <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl fade-up d4" style={{ color: "#0F172A" }}>
+            <p className="mono text-[11px] font-bold uppercase tracking-widest mb-3" style={{ color: "#0EA5E9" }}>// Get In Touch</p>
+            <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl fade-up d4" style={{ color: "#FFFFFF" }}>
               Accelerate your team's potential today.
             </h2>
-            <p className="text-[18px] font-medium mt-4 max-w-md fade-up d5" style={{ color: "#475569" }}>
+            <p className="text-[18px] font-medium mt-4 max-w-md fade-up d5" style={{ color: "#94A3B8" }}>
               Connect with our leadership to explore high-impact consulting or talent solutions.
             </p>
           </div>
@@ -1362,11 +1361,11 @@ export default function App() {
       <ChatBot />
 
       {/* FOOTER */}
-      <footer className="px-8 md:px-12 pt-14 pb-10 fade-up d1" style={{ background: "linear-gradient(135deg,#EBF5FF 0%,#DBEAFE 100%)", borderTop: "1px solid rgba(14,165,233,0.2)" }}>
+      <footer className="px-8 md:px-12 pt-14 pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)" }}>
         <div className="flex flex-col lg:flex-row justify-between gap-16 mb-10 fade-up d2">
           <div className="max-w-xs fade-up d3">
-            <Logo onClick={() => navigateTo("Home")} className="mb-4" size="footer" dark={true} />
-            <p className="text-sm leading-relaxed" style={{ color: "#64748B" }}>
+            <Logo onClick={() => navigateTo("Home")} className="mb-4" size="footer" dark={false} />
+            <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>
               Bridging elite consulting with the next generation of tech talent.
             </p>
           </div>
@@ -1397,9 +1396,9 @@ export default function App() {
                   {col.links.map(({ label, dest }) => (
                     <li key={label}>
                       <a href="#" onClick={(e) => { e.preventDefault(); navigateTo(dest); }}
-                        className="text-sm transition-colors duration-200 no-underline" style={{ color: "#64748B" }}
+                        className="text-sm transition-colors duration-200 no-underline" style={{ color: "#94A3B8" }}
                         onMouseEnter={e => e.target.style.color="#0EA5E9"}
-                        onMouseLeave={e => e.target.style.color="#64748B"}
+                        onMouseLeave={e => e.target.style.color="#94A3B8"}
                       >{label}</a>
                     </li>
                   ))}
@@ -1410,10 +1409,10 @@ export default function App() {
         </div>
 
         <div className="pt-7 flex flex-col sm:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(14,165,233,0.2)" }}>
-          <p className="mono text-[11px]" style={{ color: "#64748B" }}>
+          <p className="mono text-[11px]" style={{ color: "#94A3B8" }}>
             © 2025 <span style={{ color: "#0EA5E9" }}>11x Square</span>. All rights reserved.
           </p>
-          <p className="mono text-[11px]" style={{ color: "#64748B" }}>✦ Built for the bold.</p>
+          <p className="mono text-[11px]" style={{ color: "#94A3B8" }}>✦ Built for the bold.</p>
         </div>
       </footer>
     </div>

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=DM+Mono:wght@300;400&display=swap');
 @import "tailwindcss";
 
-html, body { background: #F0F7FF; margin: 0; padding: 0; }
+html, body { background: #080B12; margin: 0; padding: 0; }
 
 * { font-family: 'Archivo', sans-serif; letter-spacing: -0.01em; }
 .mono { font-family: 'DM Mono', monospace; }
@@ -90,7 +90,7 @@ html, body { background: #F0F7FF; margin: 0; padding: 0; }
 .typing-cursor { animation: blink 1s step-end infinite; color: #38BDF8; -webkit-text-stroke: 0; }
 
 ::-webkit-scrollbar       { width: 6px; }
-::-webkit-scrollbar-track { background: #F0F7FF; }
+::-webkit-scrollbar-track { background: #080B12; }
 ::-webkit-scrollbar-thumb { background: linear-gradient(#0EA5E9,#0284C7); border-radius: 3px; }
 
 .modal-container {
