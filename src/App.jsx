@@ -1155,17 +1155,17 @@ export default function App() {
       <main key={view} className="page-transition">
       {view === "Home" && (
         <>
-        <section id="home" className="relative min-h-screen flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10">
+        <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ minHeight: "100svh" }}>
         {/* Wolf howling video background */}
         <video
           src="/wolf_howling_in_moon_202606211229.mp4"
           autoPlay muted playsInline loop
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ opacity: 0.75 }}
+          className="absolute inset-0 w-full h-full"
+          style={{ opacity: 0.75, objectFit: "cover", objectPosition: "center 30%" }}
         />
-        {/* Dark overlay so text stays readable */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg,rgba(8,11,18,0.55) 0%,rgba(13,24,38,0.40) 50%,rgba(8,11,18,0.55) 100%)" }} />
-        <div className="absolute inset-0 grid-bg opacity-25 pointer-events-none" />
+        {/* Dark overlay — stronger at edges for text legibility */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(13,24,38,0.30) 40%, rgba(8,11,18,0.65) 100%)" }} />
+        <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
 
@@ -1314,16 +1314,16 @@ export default function App() {
       )}
 
       {view === "Process" && (
-        <section id="process" className="relative min-h-screen flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden">
+        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh" }}>
           {/* Fire wolf video background */}
           <video
             src="/Wolf_mouth_fire_video_202606211302.mp4"
             autoPlay muted playsInline loop
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 0.80 }}
+            className="absolute inset-0 w-full h-full"
+            style={{ opacity: 0.80, objectFit: "cover", objectPosition: "center center" }}
           />
           {/* Dark overlay */}
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.55) 0%, rgba(8,11,18,0.35) 50%, rgba(8,11,18,0.65) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.55) 0%, rgba(8,11,18,0.30) 50%, rgba(8,11,18,0.65) 100%)" }} />
 
           <div className="relative z-10">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d1" style={{ color: "#94A3B8" }}>// The Process</p>
