@@ -20,7 +20,7 @@ const SERVICES = [
     desc: "Market positioning, product-market fit analysis, and go-to-market strategies that build lasting competitive advantage.",
     tags: ["GTM", "Research", "OKRs"],
     color: "orange", 
-    image: "https://picsum.photos/seed/product/400/300",
+    image: "/product-strategy.png",
   },
   {
     num: "03",
