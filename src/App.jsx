@@ -270,9 +270,9 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
     <div
       onClick={onApply}
       className="flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 transition-all duration-300 cursor-pointer group"
-      style={{ background: "#0D1117", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
-      onMouseEnter={e => e.currentTarget.style.background="#1E293B"}
-      onMouseLeave={e => e.currentTarget.style.background="#0D1117"}
+      style={{ background: "rgba(13,17,23,0.80)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+      onMouseEnter={e => e.currentTarget.style.background="rgba(30,41,59,0.88)"}
+      onMouseLeave={e => e.currentTarget.style.background="rgba(13,17,23,0.80)"}
     >
       <div className="flex flex-col gap-1.5">
         <span className="text-sm font-bold" style={{ color: "#FFFFFF" }}>{title}</span>
@@ -1272,8 +1272,17 @@ export default function App() {
       )}
 
       {view === "Careers" && (
-        <section id="careers" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#080B12", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ height: "100svh" }}>
+          {/* Group of wolves video background */}
+          <video
+            src="/Group_of_wolves_on_path_202606211412.mp4"
+            autoPlay muted playsInline loop
+            style={{ position: "absolute", top: "50%", left: "50%", minWidth: "100%", minHeight: "100%", width: "auto", height: "auto", transform: "translate(-50%,-50%)", objectFit: "cover", objectPosition: "center center", opacity: 0.75 }}
+          />
+          {/* Dark overlay */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.65) 0%, rgba(8,11,18,0.35) 50%, rgba(8,11,18,0.70) 100%)" }} />
+
+        <div className="relative z-10 h-full overflow-y-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start" style={{ maxHeight: "calc(100svh - 8rem)" }}>
           <div className="fade-up d1">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d2" style={{ color: "#888888" }}>// Careers</p>
             <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6 fade-up d3" style={{ color: "#FFFFFF" }}>
@@ -1283,7 +1292,7 @@ export default function App() {
               Whether you're a seasoned consultant or a fresh grad ready to make your mark — we have a seat for you.
             </p>
 
-            <div className="p-7 rounded-xl shadow-sm fade-up d5" style={{ background: "#111827", border: "1px solid rgba(14,165,233,0.25)" }}>
+            <div className="p-7 rounded-xl shadow-sm fade-up d5" style={{ background: "rgba(17,24,39,0.80)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(14,165,233,0.25)" }}>
               <p className="mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "#0EA5E9" }}>Intern Program Highlights</p>
               <ul className="flex flex-col gap-3">
                 {[
@@ -1300,7 +1309,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex flex-col fade-up d6" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+          <div className="flex flex-col fade-up d6 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(14,165,233,0.20)" }}>
             {ROLES.map((r, i) => (
               <RoleItem
                 key={r.title} {...r} delay={0.1 * i}
