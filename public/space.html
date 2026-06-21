@@ -9,662 +9,381 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            heading: ["'Instrument Serif'", 'serif'],
-            body: ['Barlow', 'sans-serif'],
-          },
-          borderRadius: {
-            DEFAULT: '9999px',
-          },
-        },
-      },
-    };
-  </script>
-
   <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; background: #000; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #000; font-family: 'Barlow', sans-serif; color: #fff; }
 
-    .liquid-glass {
-      background: rgba(255,255,255,0.01);
-      background-blend-mode: luminosity;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: none;
-      box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+    /* ── Liquid glass ── */
+    .glass {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       position: relative;
-      overflow: hidden;
     }
-    .liquid-glass::before {
-      content: "";
-      position: absolute; inset: 0;
-      border-radius: inherit;
-      padding: 1.4px;
-      background: linear-gradient(180deg,
-        rgba(255,255,255,0.45) 0%,
-        rgba(255,255,255,0.15) 20%,
-        rgba(255,255,255,0)    40%,
-        rgba(255,255,255,0)    60%,
-        rgba(255,255,255,0.15) 80%,
-        rgba(255,255,255,0.45) 100%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    .liquid-glass-strong {
-      background: rgba(255,255,255,0.01);
-      background-blend-mode: luminosity;
+    .glass-strong {
+      background: rgba(255,255,255,0.03);
       backdrop-filter: blur(50px);
       -webkit-backdrop-filter: blur(50px);
-      border: none;
-      box-shadow: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.15);
       position: relative;
-      overflow: hidden;
     }
-    .liquid-glass-strong::before {
+    .glass::before, .glass-strong::before {
       content: "";
       position: absolute; inset: 0;
       border-radius: inherit;
-      padding: 1.4px;
-      background: linear-gradient(180deg,
-        rgba(255,255,255,0.5) 0%,
-        rgba(255,255,255,0.2) 20%,
-        rgba(255,255,255,0)   40%,
-        rgba(255,255,255,0)   60%,
-        rgba(255,255,255,0.2) 80%,
-        rgba(255,255,255,0.5) 100%);
+      padding: 1px;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.35) 0%,
+        rgba(255,255,255,0.08) 30%,
+        rgba(255,255,255,0)    50%,
+        rgba(255,255,255,0.08) 70%,
+        rgba(255,255,255,0.35) 100%
+      );
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
       pointer-events: none;
     }
-  </style>
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
-  <script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
-  <script>window.Motion = window.FramerMotion;</script>
+    /* ── Animations ── */
+    @keyframes blurIn {
+      0%   { filter: blur(10px); opacity: 0; transform: translateY(40px); }
+      100% { filter: blur(0);    opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      0%   { opacity: 0; transform: translateY(20px); filter: blur(6px); }
+      100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+    }
+
+    .blur-word {
+      display: inline-block;
+      margin-right: 0.25em;
+      opacity: 0;
+    }
+    .blur-word.go { animation: blurIn 0.7s ease-out forwards; }
+
+    .fade-el { opacity: 0; }
+    .fade-el.go { animation: fadeUp 0.6s ease-out forwards; }
+
+    /* ── Nav link ── */
+    .nav-link {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 9999px;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: #fff; }
+
+    /* ── Tag pill ── */
+    .tag {
+      border-radius: 9999px;
+      padding: 0.2rem 0.65rem;
+      font-family: 'Barlow', sans-serif;
+      font-size: 11px;
+      color: rgba(255,255,255,0.9);
+      white-space: nowrap;
+    }
+
+    /* ── Responsive tweaks ── */
+    @media (max-width: 768px) {
+      #cap-content { padding: 5rem 1.5rem 2rem !important; }
+      #cap-cards { grid-template-columns: 1fr !important; }
+      #nav-links { display: none !important; }
+      #partners-row { gap: 1.5rem !important; }
+    }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       FadingVideo — rAF-driven crossfade, no CSS transitions
-  ════════════════════════════════════════════════════════════════ -->
-  <script type="text/babel">
-  (function () {
-    const { useRef, useEffect, useCallback } = React;
+<!-- ════════════════════════════════════════════════
+     HERO SECTION
+═════════════════════════════════════════════════ -->
+<section style="position:relative; min-height:100vh; background:#000; overflow:hidden; display:flex; flex-direction:column;">
 
-    const FADE_MS      = 500;
-    const FADE_OUT_LEAD = 0.55;
+  <!-- Background video -->
+  <video id="hero-video" autoplay muted playsinline preload="auto"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4"
+    style="position:absolute; left:50%; top:0; transform:translateX(-50%); width:120%; height:120%; object-fit:cover; object-position:top; z-index:0; opacity:0;">
+  </video>
 
-    function FadingVideo({ src, className, style }) {
-      const videoRef     = useRef(null);
-      const rafRef       = useRef(null);
-      const fadingOutRef = useRef(false);
+  <!-- Content layer -->
+  <div style="position:relative; z-index:10; display:flex; flex-direction:column; flex:1; min-height:100vh;">
 
-      const fadeTo = useCallback((target, duration) => {
-        if (rafRef.current) cancelAnimationFrame(rafRef.current);
-        const video = videoRef.current;
-        if (!video) return;
+    <!-- ── Navbar ── -->
+    <nav style="position:fixed; top:1rem; left:0; right:0; z-index:50; padding:0 2rem; display:flex; align-items:center; justify-content:space-between;">
+      <!-- Logo circle -->
+      <div class="glass" style="width:48px; height:48px; border-radius:9999px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <span style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:1.3rem; line-height:1;">a</span>
+      </div>
 
-        const t0           = performance.now();
-        const startOpacity = parseFloat(video.style.opacity) || 0;
+      <!-- Links pill -->
+      <div id="nav-links" class="glass" style="border-radius:9999px; display:flex; align-items:center; gap:0.125rem; padding:0.3rem;">
+        <a href="#" class="nav-link">Home</a>
+        <a href="#" class="nav-link">Voyages</a>
+        <a href="#" class="nav-link">Worlds</a>
+        <a href="#" class="nav-link">Innovation</a>
+        <button style="background:#fff; color:#000; border:none; border-radius:9999px; padding:0.5rem 1rem; font-family:'Barlow',sans-serif; font-weight:500; font-size:0.875rem; cursor:pointer; display:flex; align-items:center; gap:0.4rem;">
+          Claim a Spot
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+        </button>
+      </div>
 
-        const step = (now) => {
-          const progress = Math.min((now - t0) / duration, 1);
-          video.style.opacity = startOpacity + (target - startOpacity) * progress;
-          if (progress < 1) {
-            rafRef.current = requestAnimationFrame(step);
-          } else {
-            rafRef.current = null;
-          }
-        };
+      <!-- Spacer -->
+      <div style="width:48px; flex-shrink:0;"></div>
+    </nav>
 
-        rafRef.current = requestAnimationFrame(step);
-      }, []);
+    <!-- ── Hero content ── -->
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:7rem 1rem 2rem; text-align:center;">
 
-      useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
+      <!-- Badge -->
+      <div class="glass fade-el" data-delay="0.4" style="border-radius:9999px; padding:4px; display:inline-flex; align-items:center; gap:0.5rem; margin-bottom:1.5rem;">
+        <span style="background:#fff; color:#000; border-radius:9999px; font-family:'Barlow',sans-serif; font-weight:600; font-size:0.7rem; padding:0.2rem 0.7rem;">New</span>
+        <span style="font-family:'Barlow',sans-serif; font-size:0.875rem; color:rgba(255,255,255,0.9); padding-right:0.75rem;">Maiden Crewed Voyage to Mars Arrives 2026</span>
+      </div>
 
-        const onLoadedData = () => {
-          video.style.opacity = 0;
-          video.play().catch(() => {});
-          fadeTo(1, FADE_MS);
-        };
+      <!-- Headline (blur-word JS) -->
+      <div id="headline" style="max-width:46rem; font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:clamp(3.2rem,8.5vw,5.5rem); line-height:0.88; letter-spacing:-3px; display:flex; flex-wrap:wrap; justify-content:center; row-gap:0.05em; margin-bottom:1.25rem;"></div>
 
-        const onTimeUpdate = () => {
-          const remaining = video.duration - video.currentTime;
-          if (!fadingOutRef.current && remaining <= FADE_OUT_LEAD && remaining > 0) {
-            fadingOutRef.current = true;
-            fadeTo(0, FADE_MS);
-          }
-        };
+      <!-- Subheading -->
+      <p class="fade-el" data-delay="0.9" style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.9375rem; color:rgba(255,255,255,0.82); max-width:38rem; line-height:1.65; margin-bottom:1.75rem;">
+        Discover the universe in ways once unimaginable. Our pioneering vessels and
+        breakthrough engineering bring deep-space exploration within reach—secure and extraordinary.
+      </p>
 
-        const onEnded = () => {
-          video.style.opacity = 0;
-          setTimeout(() => {
-            video.currentTime  = 0;
-            fadingOutRef.current = false;
-            video.play().catch(() => {});
-            fadeTo(1, FADE_MS);
-          }, 100);
-        };
+      <!-- CTAs -->
+      <div class="fade-el" data-delay="1.15" style="display:flex; align-items:center; gap:1.5rem; margin-bottom:2.25rem; flex-wrap:wrap; justify-content:center;">
+        <button class="glass-strong" style="border-radius:9999px; padding:0.625rem 1.375rem; border:none; cursor:pointer; font-family:'Barlow',sans-serif; font-weight:500; font-size:0.875rem; color:#fff; display:flex; align-items:center; gap:0.5rem;">
+          Start Your Voyage
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+        </button>
+        <button style="background:transparent; border:none; cursor:pointer; font-family:'Barlow',sans-serif; font-weight:500; font-size:0.875rem; color:#fff; display:flex; align-items:center; gap:0.5rem;">
+          View Liftoff
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+        </button>
+      </div>
 
-        video.addEventListener('loadeddata', onLoadedData);
-        video.addEventListener('timeupdate', onTimeUpdate);
-        video.addEventListener('ended',      onEnded);
-
-        return () => {
-          if (rafRef.current) cancelAnimationFrame(rafRef.current);
-          video.removeEventListener('loadeddata', onLoadedData);
-          video.removeEventListener('timeupdate', onTimeUpdate);
-          video.removeEventListener('ended',      onEnded);
-        };
-      }, [fadeTo]);
-
-      return (
-        <video
-          ref={videoRef}
-          src={src}
-          autoPlay
-          muted
-          playsInline
-          preload="auto"
-          className={className}
-          style={{ ...style, opacity: 0 }}
-        />
-      );
-    }
-
-    window.FadingVideo = FadingVideo;
-  })();
-  </script>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       BlurText — word-by-word blur-in via IntersectionObserver
-  ════════════════════════════════════════════════════════════════ -->
-  <script type="text/babel">
-  (function () {
-    const { useRef, useEffect, useState } = React;
-    const { motion } = Motion;
-
-    function BlurText({ text, className }) {
-      const ref        = useRef(null);
-      const [visible, setVisible] = useState(false);
-
-      useEffect(() => {
-        const obs = new IntersectionObserver(
-          ([e]) => { if (e.isIntersecting) setVisible(true); },
-          { threshold: 0.1 }
-        );
-        if (ref.current) obs.observe(ref.current);
-        return () => obs.disconnect();
-      }, []);
-
-      return (
-        <p
-          ref={ref}
-          className={className}
-          style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', rowGap: '0.1em' }}
-        >
-          {text.split(' ').map((word, i) => (
-            <motion.span
-              key={i}
-              initial={{ filter: 'blur(10px)', opacity: 0, y: 50 }}
-              animate={visible ? {
-                filter: ['blur(10px)', 'blur(5px)', 'blur(0px)'],
-                opacity: [0, 0.5, 1],
-                y: [50, -5, 0],
-              } : {}}
-              transition={{ duration: 0.7, times: [0, 0.5, 1], ease: 'easeOut', delay: i * 0.1 }}
-              style={{ display: 'inline-block', marginRight: '0.28em' }}
-            >
-              {word}
-            </motion.span>
-          ))}
-        </p>
-      );
-    }
-
-    window.BlurText = BlurText;
-  })();
-  </script>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       Icons
-  ════════════════════════════════════════════════════════════════ -->
-  <script type="text/babel">
-  (function () {
-    function ArrowUpRight({ className }) {
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24" height="24" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor"
-          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-          className={className}
-        >
-          <path d="M7 17L17 7" />
-          <path d="M7 7h10v10" />
-        </svg>
-      );
-    }
-
-    function PlayIcon({ className }) {
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24" height="24" viewBox="0 0 24 24"
-          fill="currentColor"
-          className={className}
-        >
-          <polygon points="6 4 20 12 6 20 6 4" />
-        </svg>
-      );
-    }
-
-    window.ArrowUpRight = ArrowUpRight;
-    window.PlayIcon     = PlayIcon;
-  })();
-  </script>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       Navbar
-  ════════════════════════════════════════════════════════════════ -->
-  <script type="text/babel">
-  (function () {
-    function Navbar() {
-      return (
-        <nav
-          className="px-8 lg:px-16 flex items-center justify-between"
-          style={{ position: 'fixed', top: '1rem', left: 0, right: 0, zIndex: 50 }}
-        >
-          {/* Logo */}
-          <div
-            className="liquid-glass rounded-full flex items-center justify-center flex-shrink-0"
-            style={{ width: 48, height: 48 }}
-          >
-            <span className="font-heading italic text-white text-xl select-none">a</span>
+      <!-- Stats cards -->
+      <div class="fade-el" data-delay="1.35" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <div class="glass" style="border-radius:1.25rem; padding:1.25rem; width:208px; display:flex; flex-direction:column; text-align:left;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div style="margin-top:auto; padding-top:1rem;">
+            <div style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:2.4rem; letter-spacing:-1px; line-height:1;">34.5 Min</div>
+            <div style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.72rem; color:rgba(255,255,255,0.75); margin-top:0.4rem;">Average Videos Watch Time</div>
           </div>
-
-          {/* Centre links — desktop only */}
-          <div className="hidden md:flex liquid-glass rounded-full items-center gap-1 px-1.5 py-1.5">
-            {['Home', 'Voyages', 'Worlds', 'Innovation', 'Plan Launch'].map((label) => (
-              <a
-                key={label}
-                href="#"
-                onClick={e => e.preventDefault()}
-                className="font-body font-medium text-sm whitespace-nowrap px-3 py-2"
-                style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none' }}
-              >
-                {label}
-              </a>
-            ))}
-            <button
-              className="font-body font-medium text-sm whitespace-nowrap flex items-center gap-1.5 ml-1 cursor-pointer border-0"
-              style={{ background: '#fff', color: '#000', borderRadius: '9999px', padding: '0.5rem 1rem' }}
-            >
-              Claim a Spot
-              <ArrowUpRight className="h-4 w-4" />
-            </button>
+        </div>
+        <div class="glass" style="border-radius:1.25rem; padding:1.25rem; width:208px; display:flex; flex-direction:column; text-align:left;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <div style="margin-top:auto; padding-top:1rem;">
+            <div style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:2.4rem; letter-spacing:-1px; line-height:1;">2.8B+</div>
+            <div style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.72rem; color:rgba(255,255,255,0.75); margin-top:0.4rem;">Users Across the Globe</div>
           </div>
+        </div>
+      </div>
+    </div>
 
-          {/* Invisible spacer balances logo */}
-          <div style={{ width: 48, height: 48, flexShrink: 0 }} />
-        </nav>
-      );
+    <!-- Partners row -->
+    <div class="fade-el" data-delay="1.5" style="display:flex; flex-direction:column; align-items:center; gap:1rem; padding-bottom:2.5rem;">
+      <div class="glass" style="border-radius:9999px; padding:0.25rem 1.125rem;">
+        <span style="font-family:'Barlow',sans-serif; font-weight:500; font-size:0.72rem; color:rgba(255,255,255,0.9);">Collaborating with top aerospace pioneers globally</span>
+      </div>
+      <div id="partners-row" style="display:flex; align-items:center; gap:3.5rem; flex-wrap:wrap; justify-content:center; padding:0 1rem;">
+        <span style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:1.75rem;">Aeon</span>
+        <span style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:1.75rem;">Vela</span>
+        <span style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:1.75rem;">Apex</span>
+        <span style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:1.75rem;">Orbit</span>
+        <span style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:1.75rem;">Zeno</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     CAPABILITIES SECTION
+═════════════════════════════════════════════════ -->
+<section style="position:relative; min-height:100vh; background:#000; overflow:hidden; display:flex; flex-direction:column;">
+
+  <!-- Background video -->
+  <video id="cap-video" autoplay muted playsinline preload="auto"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4"
+    style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0;">
+  </video>
+
+  <!-- Content -->
+  <div id="cap-content" style="position:relative; z-index:10; display:flex; flex-direction:column; min-height:100vh; padding:6rem 5rem 3rem;">
+
+    <!-- Header -->
+    <div style="margin-bottom:auto;">
+      <p style="font-family:'Barlow',sans-serif; font-size:0.875rem; color:rgba(255,255,255,0.65); margin-bottom:1.5rem;">// Capabilities</p>
+      <h2 style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:clamp(3.5rem,8vw,6rem); line-height:0.88; letter-spacing:-3px;">
+        Production<br>evolved
+      </h2>
+    </div>
+
+    <!-- Cards -->
+    <div id="cap-cards" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:4rem;">
+
+      <!-- AI Scenery -->
+      <div class="glass" style="border-radius:1.25rem; padding:1.5rem; min-height:340px; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.75rem;">
+          <div class="glass" style="width:44px; height:44px; border-radius:0.75rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21H5Zm1-4h12l-3.75-5-3 4L9 13l-3 4Z"/></svg>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; justify-content:flex-end; gap:0.35rem; max-width:72%;">
+            <span class="tag glass">Natural Context</span>
+            <span class="tag glass">Photo Realism</span>
+            <span class="tag glass">Infinite Settings</span>
+            <span class="tag glass">Eco-Vibe</span>
+          </div>
+        </div>
+        <div style="margin-top:auto; padding-top:1.5rem;">
+          <h3 style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:2rem; letter-spacing:-1px; line-height:1; margin-bottom:0.75rem;">AI Scenery</h3>
+          <p style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.875rem; color:rgba(255,255,255,0.85); line-height:1.55; max-width:30ch;">AI analyzes your product to create indistinguishable natural environments — from Icelandic cliffs to misty forests.</p>
+        </div>
+      </div>
+
+      <!-- Batch Production -->
+      <div class="glass" style="border-radius:1.25rem; padding:1.5rem; min-height:340px; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.75rem;">
+          <div class="glass" style="width:44px; height:44px; border-radius:0.75rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M4 6.47 5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.89-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4Z"/></svg>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; justify-content:flex-end; gap:0.35rem; max-width:72%;">
+            <span class="tag glass">Scale Fast</span>
+            <span class="tag glass">Visual Consistency</span>
+            <span class="tag glass">Time Saver</span>
+            <span class="tag glass">Ready to Post</span>
+          </div>
+        </div>
+        <div style="margin-top:auto; padding-top:1.5rem;">
+          <h3 style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:2rem; letter-spacing:-1px; line-height:1; margin-bottom:0.75rem;">Batch Production</h3>
+          <p style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.875rem; color:rgba(255,255,255,0.85); line-height:1.55; max-width:30ch;">Style your entire product line in minutes. Create a unified visual identity for catalogues and social media without weeks of retouching.</p>
+        </div>
+      </div>
+
+      <!-- Smart Lighting -->
+      <div class="glass" style="border-radius:1.25rem; padding:1.5rem; min-height:340px; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.75rem;">
+          <div class="glass" style="width:44px; height:44px; border-radius:0.75rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1Zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7Z"/></svg>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; justify-content:flex-end; gap:0.35rem; max-width:72%;">
+            <span class="tag glass">Ray Tracing</span>
+            <span class="tag glass">Physical Shadows</span>
+            <span class="tag glass">Studio Quality</span>
+            <span class="tag glass">Sunlight Sync</span>
+          </div>
+        </div>
+        <div style="margin-top:auto; padding-top:1.5rem;">
+          <h3 style="font-family:'Instrument Serif',serif; font-style:italic; color:#fff; font-size:2rem; letter-spacing:-1px; line-height:1; margin-bottom:0.75rem;">Smart Lighting</h3>
+          <p style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.875rem; color:rgba(255,255,255,0.85); line-height:1.55; max-width:30ch;">Automatic lighting and material adjustment. Achieve flawless integration with realistic shadows and sunlight.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+// ── Video crossfade (rAF-driven, no CSS transitions) ─────────────────────────
+(function () {
+  var FADE_MS = 500;
+  var LEAD    = 0.55;
+
+  function initVideo(vid) {
+    if (!vid) return;
+    var raf = null;
+    var fadingOut = false;
+
+    function fadeTo(target, ms) {
+      if (raf) cancelAnimationFrame(raf);
+      var t0 = performance.now();
+      var from = parseFloat(vid.style.opacity) || 0;
+      (function step(now) {
+        var p = Math.min((now - t0) / ms, 1);
+        vid.style.opacity = from + (target - from) * p;
+        if (p < 1) raf = requestAnimationFrame(step);
+        else raf = null;
+      })(t0);
     }
 
-    window.Navbar = Navbar;
-  })();
-  </script>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       HeroSection
-  ════════════════════════════════════════════════════════════════ -->
-  <script type="text/babel">
-  (function () {
-    const { motion } = Motion;
-
-    const enter = (delay) => ({
-      initial:    { filter: 'blur(10px)', opacity: 0, y: 20 },
-      animate:    { filter: 'blur(0px)',  opacity: 1, y: 0  },
-      transition: { duration: 0.6, ease: 'easeOut', delay },
+    vid.addEventListener('loadeddata', function () {
+      vid.style.opacity = 0;
+      vid.play().catch(function(){});
+      fadeTo(1, FADE_MS);
     });
 
-    function ClockIcon() {
-      return (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-             stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <polyline points="12 6 12 12 16 14" />
-        </svg>
-      );
+    vid.addEventListener('timeupdate', function () {
+      if (!vid.duration) return;
+      var rem = vid.duration - vid.currentTime;
+      if (!fadingOut && rem <= LEAD && rem > 0) {
+        fadingOut = true;
+        fadeTo(0, FADE_MS);
+      }
+    });
+
+    vid.addEventListener('ended', function () {
+      vid.style.opacity = 0;
+      fadingOut = false;
+      vid.currentTime = 0;
+      vid.play().catch(function(){});
+      fadeTo(1, FADE_MS);
+    });
+
+    if (vid.readyState >= 3) {
+      vid.style.opacity = 0;
+      vid.play().catch(function(){});
+      fadeTo(1, FADE_MS);
     }
+  }
 
-    function GlobeIcon() {
-      return (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
-             stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <line x1="2" y1="12" x2="22" y2="12" />
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10
-                   15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-        </svg>
-      );
+  initVideo(document.getElementById('hero-video'));
+  initVideo(document.getElementById('cap-video'));
+}());
+
+// ── Blur-text headline ────────────────────────────────────────────────────────
+(function () {
+  var el    = document.getElementById('headline');
+  var words = 'Venture Past Our Sky Across the Universe'.split(' ');
+
+  words.forEach(function (word, i) {
+    var span = document.createElement('span');
+    span.className = 'blur-word';
+    span.textContent = word;
+    span.style.animationDelay = (i * 0.1) + 's';
+    el.appendChild(span);
+  });
+
+  var obs = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) {
+      el.querySelectorAll('.blur-word').forEach(function (s) { s.classList.add('go'); });
+      obs.disconnect();
     }
+  }, { threshold: 0.1 });
+  obs.observe(el);
+}());
 
-    const STATS = [
-      { Icon: ClockIcon, value: '34.5 Min', label: 'Average Videos Watch Time' },
-      { Icon: GlobeIcon, value: '2.8B+',    label: 'Users Across the Globe'    },
-    ];
+// ── Fade-up elements ──────────────────────────────────────────────────────────
+(function () {
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        var delay = parseFloat(el.dataset.delay) || 0;
+        el.style.animationDelay = delay + 's';
+        el.classList.add('go');
+        obs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.05 });
 
-    const PARTNERS = ['Aeon', 'Vela', 'Apex', 'Orbit', 'Zeno'];
+  document.querySelectorAll('.fade-el').forEach(function (el) { obs.observe(el); });
+}());
+</script>
 
-    function HeroSection() {
-      return (
-        <section className="relative min-h-screen bg-black overflow-hidden flex flex-col">
-
-          {/* ── Background video ── */}
-          <FadingVideo
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4"
-            className="absolute left-1/2 top-0 -translate-x-1/2 object-cover object-top z-0"
-            style={{ width: '120%', height: '120%' }}
-          />
-
-          {/* ── z-10 layer ── */}
-          <div className="relative z-10 flex flex-col flex-1">
-            <Navbar />
-
-            {/* Hero content */}
-            <div className="flex-1 flex flex-col items-center justify-center pt-24 px-4 text-center">
-
-              {/* Badge */}
-              <motion.div
-                {...enter(0.4)}
-                className="liquid-glass rounded-full flex items-center gap-2 mb-6"
-                style={{ padding: '4px' }}
-              >
-                <span
-                  className="font-body font-semibold text-xs px-3 py-1"
-                  style={{ background: '#fff', color: '#000', borderRadius: '9999px' }}
-                >
-                  New
-                </span>
-                <span className="font-body text-sm pr-3" style={{ color: 'rgba(255,255,255,0.9)' }}>
-                  Maiden Crewed Voyage to Mars Arrives 2026
-                </span>
-              </motion.div>
-
-              {/* Headline — BlurText */}
-              <BlurText
-                text="Venture Past Our Sky Across the Universe"
-                className="font-heading italic text-white max-w-2xl text-6xl md:text-7xl lg:text-[5.5rem] leading-[0.8] tracking-[-4px]"
-              />
-
-              {/* Subheading */}
-              <motion.p
-                {...enter(0.8)}
-                className="font-body font-light text-sm md:text-base text-white max-w-2xl leading-tight mt-4"
-              >
-                Discover the universe in ways once unimaginable. Our pioneering vessels and
-                breakthrough engineering bring deep-space exploration within reach—secure and extraordinary.
-              </motion.p>
-
-              {/* CTAs */}
-              <motion.div {...enter(1.1)} className="flex items-center gap-6 mt-6">
-                <button
-                  className="liquid-glass-strong rounded-full font-body font-medium text-sm text-white flex items-center gap-2 cursor-pointer border-0"
-                  style={{ padding: '0.625rem 1.25rem' }}
-                >
-                  Start Your Voyage
-                  <ArrowUpRight className="h-5 w-5" />
-                </button>
-                <button
-                  className="font-body font-medium text-sm text-white flex items-center gap-2 bg-transparent border-0 cursor-pointer"
-                >
-                  View Liftoff
-                  <PlayIcon className="h-4 w-4" />
-                </button>
-              </motion.div>
-
-              {/* Stats */}
-              <motion.div {...enter(1.3)} className="flex items-stretch gap-4 mt-8">
-                {STATS.map(({ Icon, value, label }, i) => (
-                  <div
-                    key={i}
-                    className="liquid-glass flex flex-col p-5"
-                    style={{ width: 220, borderRadius: '1.25rem' }}
-                  >
-                    <Icon />
-                    <div style={{ marginTop: 'auto', paddingTop: '1rem' }}>
-                      <div className="font-heading italic text-white text-4xl leading-none" style={{ letterSpacing: '-1px' }}>
-                        {value}
-                      </div>
-                      <div className="font-body font-light text-xs text-white mt-2">{label}</div>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Partners row */}
-            <motion.div
-              {...enter(1.4)}
-              className="flex flex-col items-center gap-4 pb-8"
-            >
-              <div className="liquid-glass rounded-full px-3.5 py-1">
-                <span className="font-body font-medium text-xs text-white">
-                  Collaborating with top aerospace pioneers globally
-                </span>
-              </div>
-              <div className="flex items-center gap-12 md:gap-16">
-                {PARTNERS.map((name) => (
-                  <span
-                    key={name}
-                    className="font-heading italic text-white text-2xl md:text-3xl tracking-tight"
-                  >
-                    {name}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      );
-    }
-
-    window.HeroSection = HeroSection;
-  })();
-  </script>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       CapabilitiesSection
-  ════════════════════════════════════════════════════════════════ -->
-  <script type="text/babel">
-  (function () {
-    const CARDS = [
-      {
-        title: 'AI Scenery',
-        desc:  'AI analyzes your product to create indistinguishable natural environments — from Icelandic cliffs to misty forests.',
-        tags:  ['Natural Context', 'Photo Realism', 'Infinite Settings', 'Eco-Vibe'],
-        icon: (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-            <path d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0
-                     1.413.588T21 5v14q0 .825-.587 1.413T19 21H5Zm1-4h12l-3.75-5-3 4L9 13l-3 4Z"/>
-          </svg>
-        ),
-      },
-      {
-        title: 'Batch Production',
-        desc:  'Style your entire product line in minutes. Create a unified visual identity for catalogues and social media without weeks of retouching.',
-        tags:  ['Scale Fast', 'Visual Consistency', 'Time Saver', 'Ready to Post'],
-        icon: (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-            <path d="M4 6.47 5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2
-                     4H7L5 4H4c-1.1 0-1.99.89-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4Z"/>
-          </svg>
-        ),
-      },
-      {
-        title: 'Smart Lighting',
-        desc:  'Automatic lighting and material adjustment. Achieve flawless integration with realistic shadows and sunlight.',
-        tags:  ['Ray Tracing', 'Physical Shadows', 'Studio Quality', 'Sunlight Sync'],
-        icon: (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-            <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1Zm3-19C8.14 2 5 5.14 5 9
-                     c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45
-                     1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7Z"/>
-          </svg>
-        ),
-      },
-    ];
-
-    function CapabilitiesSection() {
-      return (
-        <section className="relative bg-black overflow-hidden" style={{ minHeight: '100vh' }}>
-
-          {/* ── Background video ── */}
-          <FadingVideo
-            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_094631_d30ab262-45ee-4b7d-99f3-5d5848c8ef13.mp4"
-            className="absolute inset-0 w-full h-full object-cover z-0"
-          />
-
-          {/* ── Content ── */}
-          <div
-            className="relative z-10 flex flex-col px-8 md:px-16 lg:px-20 pb-10"
-            style={{ minHeight: '100vh', paddingTop: '6rem' }}
-          >
-            {/* Header */}
-            <div style={{ marginBottom: 'auto' }}>
-              <p
-                className="font-body text-sm mb-6"
-                style={{ color: 'rgba(255,255,255,0.8)' }}
-              >
-                // Capabilities
-              </p>
-              <h2
-                className="font-heading italic text-white"
-                style={{
-                  fontSize: 'clamp(3.75rem, 9vw, 6rem)',
-                  lineHeight: 0.9,
-                  letterSpacing: '-3px',
-                }}
-              >
-                Production<br />evolved
-              </h2>
-            </div>
-
-            {/* Three cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-              {CARDS.map((card) => (
-                <div
-                  key={card.title}
-                  className="liquid-glass flex flex-col"
-                  style={{ borderRadius: '1.25rem', padding: '1.5rem', minHeight: '360px' }}
-                >
-                  {/* Top row: icon + tags */}
-                  <div className="flex items-start justify-between gap-4">
-                    {/* Icon box */}
-                    <div
-                      className="liquid-glass flex items-center justify-center flex-shrink-0"
-                      style={{ width: 44, height: 44, borderRadius: '0.75rem' }}
-                    >
-                      {card.icon}
-                    </div>
-                    {/* Tags */}
-                    <div
-                      className="flex flex-wrap justify-end gap-1.5"
-                      style={{ maxWidth: '70%' }}
-                    >
-                      {card.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="liquid-glass rounded-full font-body whitespace-nowrap"
-                          style={{
-                            padding: '0.25rem 0.75rem',
-                            fontSize: '11px',
-                            color: 'rgba(255,255,255,0.9)',
-                          }}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Spacer */}
-                  <div style={{ flex: 1 }} />
-
-                  {/* Bottom: title + body */}
-                  <div style={{ marginTop: '1.5rem' }}>
-                    <h3
-                      className="font-heading italic text-white"
-                      style={{
-                        fontSize: 'clamp(1.875rem, 3vw, 2.25rem)',
-                        letterSpacing: '-1px',
-                        lineHeight: 1,
-                      }}
-                    >
-                      {card.title}
-                    </h3>
-                    <p
-                      className="font-body font-light leading-snug"
-                      style={{
-                        marginTop: '0.75rem',
-                        fontSize: '0.875rem',
-                        color: 'rgba(255,255,255,0.9)',
-                        maxWidth: '32ch',
-                      }}
-                    >
-                      {card.desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    window.CapabilitiesSection = CapabilitiesSection;
-  })();
-  </script>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       App — mount
-  ════════════════════════════════════════════════════════════════ -->
-  <script type="text/babel">
-  (function () {
-    /* Suppress benign Framer Motion list-key dev warnings */
-    const _err = console.error;
-    console.error = (...a) => {
-      if (typeof a[0] === 'string' && a[0].includes('Each child in a list')) return;
-      _err.apply(console, a);
-    };
-
-    function App() {
-      return (
-        <React.Fragment>
-          <HeroSection />
-          <CapabilitiesSection />
-        </React.Fragment>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-  })();
-  </script>
 </body>
 </html>
