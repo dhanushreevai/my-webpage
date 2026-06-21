@@ -1312,6 +1312,7 @@ export default function App() {
       )}
 
       {view === "Process" && (
+        <>
         <WolfSection
           src="/Wolf_mouth_fire_video_202606211302.mp4"
           heading="Forged in Fire"
@@ -1342,6 +1343,7 @@ export default function App() {
           ))}
         </div>
         </section>
+        </>
       )}
 
       {view === "Contact" && (
