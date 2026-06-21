@@ -247,7 +247,7 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
           className={`absolute top-0 left-0 w-1 h-0 group-hover:h-full transition-all duration-500 ${theme.bar}`}
         />
         {image && (
-          <img src={image} alt={title} className="w-full h-32 object-cover mb-6 rounded-md translate-z-10" />
+          <img src={image} alt={title} className="w-full h-48 object-cover mb-6 rounded-md translate-z-10" style={{ objectPosition: "center center" }} />
         )}
         <div className="font-mono text-[11px] tracking-wider mb-4 translate-z-10" style={{ color: "#0EA5E9" }}>{num}</div>
         <h3 className="text-2xl font-black mb-4 tracking-tighter leading-none group-hover:translate-z-30 transition-transform duration-500" style={{ color: "#FFFFFF" }}>{title}</h3>
