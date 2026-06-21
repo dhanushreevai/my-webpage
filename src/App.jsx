@@ -56,7 +56,7 @@ const SERVICES = [
     desc: "Facilitated design sprints and innovation sessions that solve deep problems in days, not months.",
     tags: ["Sprint", "UX", "Ideation"],
     color: "amber", 
-    image: "https://picsum.photos/seed/innovation/400/300",
+    image: "/innovation-workshops.png",
   },
 ];
 
