@@ -177,14 +177,14 @@ html, body { background: #000000; margin: 0; padding: 0; }
   left: 50%;
   width: 100%;
   height: 100%;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
+  transform: translate(-50%, -50%) scale(0.88);
+  object-fit: contain;
   object-position: center center;
-  opacity: 0.75;
+  opacity: 0.80;
 }
-@media (min-width: 1024px) {
+@media (max-width: 1023px) {
   .hero-bg-video {
-    object-fit: contain;
+    transform: translate(-50%, -50%) scale(0.75);
   }
 }
 

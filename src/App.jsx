@@ -1800,15 +1800,17 @@ export default function App() {
               Consulting · Talent · Technology
             </div>
 
-            <h1 className="text-[clamp(3rem,8vw,7.5rem)] display-headline mb-6 md:mb-10 fade-up d2" style={{ color: "#ffffff" }}>
+            <h1 className="text-[clamp(3rem,8vw,7.5rem)] display-headline mb-6 md:mb-10 fade-up d2"
+              style={{ color: "#ffffff", textShadow: "0 2px 24px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,1)" }}>
               Scale your
               <br />
-              <span style={{ color: "#8052ff" }}>
+              <span style={{ color: "#c4b5fd", textShadow: "0 0 32px rgba(196,181,253,0.4), 0 2px 16px rgba(0,0,0,0.9)" }}>
                 <TypingText words={["ambition", "vision", "growth", "impact"]} />
               </span>
             </h1>
 
-            <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 fade-up d3" style={{ color: "#9a9a9a" }}>
+            <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 fade-up d3"
+              style={{ color: "#e2e8f0", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
               Bridging the gap between elite engineering and strategic growth with a platform-first approach.
             </p>
 
