@@ -1939,11 +1939,7 @@ export default function App() {
       {/* CHATBOT + WHATSAPP */}
       <ChatBot />
 
-      <ExitIntentPopup onContact={() => navigateTo("Contact")} />
       <CookieBanner />
-
-      {/* FAQ */}
-      <FaqAccordion />
 
       {/* FOOTER */}
       <footer className="px-5 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)" }}>
