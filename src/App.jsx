@@ -1785,16 +1785,6 @@ export default function App() {
 
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
 
-          {/* Logo — mobile only, shown above text */}
-          <div className="flex lg:hidden items-center justify-center fade-up d1 mt-4">
-            <img
-              src={logo}
-              alt="11x Square"
-              className="object-cover"
-              style={{ width: 120, height: 120, borderRadius: 24, border: "1px solid rgba(128,82,255,0.35)" }}
-            />
-          </div>
-
           <div className="flex-1 min-w-0">
             <div className="eyebrow mb-7 fade-up d1">
               Consulting · Talent · Technology
