@@ -638,6 +638,7 @@ function SuccessModal({ onClose, title, subtitle }) {
     return () => { document.removeEventListener("keydown", k); document.body.style.overflow = ""; };
   }, [onClose]);
   return (
+    <>
     <Confetti />
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4"
       style={{ background: "rgba(5,10,15,0.88)", backdropFilter: "blur(14px)" }}
@@ -669,6 +670,7 @@ function SuccessModal({ onClose, title, subtitle }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
