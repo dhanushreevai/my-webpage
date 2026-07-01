@@ -1829,11 +1829,10 @@ export default function App() {
           </div>
 
           <div className="hidden lg:flex flex-shrink-0 items-center justify-center fade-up d3">
-            <img
-              src={logo}
-              alt="11x Square"
-              className="object-cover"
-              style={{ width: 320, height: 320, borderRadius: 40, border: "1px solid rgba(128,82,255,0.35)" }}
+            <video
+              src="/11xlogo-video.mp4"
+              autoPlay muted playsInline loop
+              style={{ width: 320, height: 320, borderRadius: 40, border: "1px solid rgba(128,82,255,0.35)", objectFit: "cover" }}
             />
           </div>
 
