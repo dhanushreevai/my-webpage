@@ -416,6 +416,97 @@ function ParticleField({ className = "" }) {
   return <canvas ref={canvasRef} className={className} style={{ width: "100%", height: "100%", display: "block" }} />;
 }
 
+function ParticleTransition({ onMidpoint, onComplete }) {
+  const canvasRef = useRef(null);
+  const onMidRef = useRef(onMidpoint);
+  const onDoneRef = useRef(onComplete);
+  useEffect(() => { onMidRef.current = onMidpoint; }, [onMidpoint]);
+  useEffect(() => { onDoneRef.current = onComplete; }, [onComplete]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const W = window.innerWidth, H = window.innerHeight;
+    canvas.width = W; canvas.height = H;
+
+    const COLORS = ["#8052ff","#a78bff","#c4b5fd","#ffb829","#15846e","#ffffff","#6b3fd4","#f472b6"];
+    const cx = W / 2, cy = H / 2;
+
+    const particles = Array.from({ length: 340 }, () => {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 2 + Math.random() * 14;
+      const delay = Math.random() * 0.18;
+      return {
+        x: cx + (Math.random() - 0.5) * 120,
+        y: cy + (Math.random() - 0.5) * 120,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: 2 + Math.random() * 7,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        shape: Math.floor(Math.random() * 3),
+        alpha: 0,
+        delay,
+        decay: 0.006 + Math.random() * 0.01,
+      };
+    });
+
+    const drawShape = ({ x, y, size, shape, color, alpha }) => {
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      if (shape === 0) {
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+      } else if (shape === 1) {
+        ctx.moveTo(x, y - size * 1.5); ctx.lineTo(x + size * 1.3, y + size); ctx.lineTo(x - size * 1.3, y + size); ctx.closePath();
+      } else {
+        ctx.moveTo(x, y - size * 1.5); ctx.lineTo(x + size * 1.3, y); ctx.lineTo(x, y + size * 1.5); ctx.lineTo(x - size * 1.3, y); ctx.closePath();
+      }
+      ctx.fill();
+    };
+
+    const DURATION = 1400;
+    let startTime = null;
+    let midFired = false;
+    let animId;
+
+    const animate = (ts) => {
+      if (!startTime) startTime = ts;
+      const t = Math.min((ts - startTime) / DURATION, 1);
+
+      // Dark overlay: ramps up 0→0.5, holds, fades 0.6→1
+      const ov = t < 0.5 ? (t / 0.5) * 0.92 : t < 0.62 ? 0.92 : 0.92 * (1 - (t - 0.62) / 0.38);
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalAlpha = Math.max(0, ov);
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(0, 0, W, H);
+
+      if (t >= 0.42 && !midFired) { midFired = true; onMidRef.current?.(); }
+
+      particles.forEach(p => {
+        const localT = Math.max(0, t - p.delay);
+        if (localT <= 0) return;
+        p.vx *= 0.965; p.vy *= 0.965;
+        p.x += p.vx; p.y += p.vy;
+        // fade in fast, then decay
+        p.alpha = localT < 0.08 ? localT / 0.08 : Math.max(0, 1 - (localT - 0.08) / (0.92 - p.delay) * (1 + p.decay * 60));
+        if (p.alpha > 0.01) drawShape(p);
+      });
+
+      ctx.globalAlpha = 1;
+      if (t < 1) {
+        animId = requestAnimationFrame(animate);
+      } else {
+        onDoneRef.current?.();
+      }
+    };
+    animId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animId);
+  }, []);
+
+  return <canvas ref={canvasRef} style={{ position: "fixed", inset: 0, zIndex: 99990, pointerEvents: "none" }} />;
+}
+
 function ScrollProgress() {
   const [width, setWidth] = useState(0);
   useEffect(() => {
@@ -1636,6 +1727,7 @@ function BusinessHours() {
 
 export default function App() {
   const [view, setView] = useState("Home");
+  const [transitioning, setTransitioning] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
@@ -1670,15 +1762,26 @@ export default function App() {
     return () => obs.disconnect();
   }, []);
 
+  const pendingViewRef = useRef(null);
   const navigateTo = (v) => {
-    setView(v);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (transitioning || v === view) return;
+    pendingViewRef.current = v;
+    setTransitioning(true);
     setMenuOpen(false);
   };
 
   return (
     <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#000000", color: "#ffffff" }}>
       <LoadingScreen />
+      {transitioning && (
+        <ParticleTransition
+          onMidpoint={() => {
+            setView(pendingViewRef.current);
+            window.scrollTo({ top: 0, behavior: "instant" });
+          }}
+          onComplete={() => setTransitioning(false)}
+        />
+      )}
       <MouseSpotlight />
 
       {/* Floating Background Blobs */}
