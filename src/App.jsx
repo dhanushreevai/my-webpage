@@ -1170,7 +1170,7 @@ function useScrollReveal() {
           observer.unobserve(e.target);
         }
       }),
-      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+      { threshold: 0, rootMargin: "0px" }
     );
     [".scroll-reveal", ".lusion-line", ".lusion-clip", ".lusion-fade"].forEach(sel =>
       document.querySelectorAll(sel).forEach(el => observer.observe(el))
@@ -1763,6 +1763,19 @@ export default function App() {
   const statsRef = useRef(null);
   const lastScrollY = useRef(0);
   useScrollReveal();
+
+  // When snap-scroll lands on a new section, reveal its animation elements
+  useEffect(() => {
+    const section = document.getElementById(activeSection);
+    if (!section) return;
+    const sels = [".scroll-reveal", ".lusion-line", ".lusion-clip", ".lusion-fade"];
+    const t = setTimeout(() => {
+      sels.forEach(sel =>
+        section.querySelectorAll(sel).forEach(el => el.classList.add("visible", "revealed"))
+      );
+    }, 80);
+    return () => clearTimeout(t);
+  }, [activeSection]);
 
   useEffect(() => {
     const onScroll = () => {
