@@ -1661,6 +1661,70 @@ function WolfSection({ src, heading, sub }) {
   );
 }
 
+const SECTION_ORDER = ["home", "services", "careers", "process", "contact"];
+
+function ScrollToContinue({ activeSection }) {
+  const idx = SECTION_ORDER.indexOf(activeSection);
+  const nextId = SECTION_ORDER[idx + 1];
+
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    let t;
+    const onScroll = () => {
+      setVisible(false);
+      clearTimeout(t);
+      t = setTimeout(() => setVisible(true), 600);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("scroll", onScroll); clearTimeout(t); };
+  }, []);
+
+  if (!nextId) return null;
+
+  const handleClick = () => {
+    const el = document.getElementById(nextId);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      style={{
+        position: "fixed",
+        bottom: 36,
+        left: "50%",
+        transform: `translateX(-50%) translateY(${visible ? 0 : 12}px)`,
+        opacity: visible ? 1 : 0,
+        transition: "opacity 0.4s ease, transform 0.4s ease",
+        zIndex: 49,
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        padding: "10px 22px",
+        borderRadius: 999,
+        background: "rgba(16,9,4,0.72)",
+        border: "1px solid rgba(220,80,0,0.35)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        color: "#ffedd7",
+        fontSize: 11,
+        fontWeight: 600,
+        letterSpacing: "0.16em",
+        textTransform: "uppercase",
+        cursor: "pointer",
+        boxShadow: "0 4px 32px rgba(220,80,0,0.12)",
+      }}
+      onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(220,80,0,0.7)"; e.currentTarget.style.boxShadow = "0 4px 32px rgba(220,80,0,0.25)"; }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(220,80,0,0.35)"; e.currentTarget.style.boxShadow = "0 4px 32px rgba(220,80,0,0.12)"; }}
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ animation: "scrollBounce 1.6s ease-in-out infinite" }}>
+        <path d="M2 4.5L7 9.5L12 4.5" stroke="#dc5000" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+      Scroll to continue
+    </button>
+  );
+}
+
 function BusinessHours() {
   const [status, setStatus] = useState({ available: false, timeStr: "" });
   useEffect(() => {
@@ -1746,6 +1810,7 @@ export default function App() {
       <CustomCursor />
       <MouseSpotlight />
       <ScrollProgress />
+      <ScrollToContinue activeSection={activeSection} />
 
       {/* Floating Background Blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">

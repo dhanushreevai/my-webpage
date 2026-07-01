@@ -35,6 +35,10 @@ html, body { background: #100904; margin: 0; padding: 0; cursor: none; }
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 }
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(4px); }
+}
 
 /* ── Lusion / Oryzo-style animation system ── */
 
