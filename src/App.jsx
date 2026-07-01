@@ -1937,7 +1937,7 @@ export default function App() {
         {/* ── HOME ─────────────────────────────────────────────────────── */}
         <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ height: "100svh" }}>
           <video src="/11xlogo-video.mp4" autoPlay muted playsInline loop style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.20) 50%, rgba(0,0,0,0.60) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.72) 100%)" }} />
           <div className="absolute inset-0 grid-bg pointer-events-none" />
 
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
@@ -1953,7 +1953,7 @@ export default function App() {
               </h1>
 
               <p className="text-[clamp(1rem,1.6vw,1.2rem)] leading-[1.6] max-w-xl mb-10 lusion-fade d3"
-                style={{ color: "rgba(255,255,255,0.80)", fontWeight: 400 }}>
+                style={{ color: "#ffffff", fontWeight: 400, textShadow: "0 1px 10px rgba(0,0,0,0.70)" }}>
                 Bridging the gap between elite engineering and strategic growth with a platform-first approach.
               </p>
 
@@ -2183,9 +2183,15 @@ export default function App() {
       <CookieBanner />
 
       {/* FOOTER — cinematic bento */}
-      <footer className="relative overflow-hidden" style={{ background: "#360802" }}>
+      <footer className="relative overflow-hidden" style={{ minHeight: "320px" }}>
+        <video
+          src="/wolf_howling_in_moon_202606211229.mp4"
+          autoPlay muted playsInline loop
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.60)" }} />
 
-        <div className="px-6 md:px-14 py-14 md:py-20">
+        <div className="relative z-10 px-6 md:px-14 py-14 md:py-20">
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
@@ -2194,9 +2200,15 @@ export default function App() {
             margin: "0 auto",
           }}>
             {/* Logo card */}
-            <div style={{ background: "#fef5f3", borderRadius: 16, padding: "20px 22px", gridColumn: "span 2" }}>
-              <Logo onClick={() => scrollToSection("home")} size="footer" dark={false} />
-              <p className="mt-3 text-xs leading-relaxed" style={{ color: "#666666", fontWeight: 400 }}>
+            <div style={{ background: "#fef5f3", borderRadius: 16, padding: "20px" }}>
+              <div className="flex items-center gap-2 mb-2" onClick={() => scrollToSection("home")} style={{ cursor: "pointer" }}>
+                <img src={logo} alt="11x Square" style={{ width: 32, height: 32, borderRadius: 7, objectFit: "cover" }} />
+                <span style={{ fontWeight: 700, fontSize: 17, color: "#360802", letterSpacing: "0.02em", lineHeight: 1 }}>
+                  11x<span style={{ color: "#f73b20" }}>Square</span>
+                </span>
+              </div>
+              <p className="text-[9px] font-semibold tracking-[0.14em] uppercase mb-3" style={{ color: "#888888" }}>Consulting · Talent</p>
+              <p className="text-xs leading-relaxed" style={{ color: "#666666", fontWeight: 400 }}>
                 Bridging elite consulting with the next generation of tech talent.
               </p>
             </div>
