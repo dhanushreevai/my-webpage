@@ -1796,8 +1796,6 @@ export default function App() {
               <span style={{ color: "#8052ff" }}>
                 <TypingText words={["ambition", "vision", "growth", "impact"]} />
               </span>
-              <br />
-              with <span style={{ color: "#ffffff" }}>11x Square</span>
             </h1>
 
             <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 fade-up d3" style={{ color: "#9a9a9a" }}>
