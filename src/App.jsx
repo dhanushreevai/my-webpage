@@ -1596,32 +1596,6 @@ export default function App() {
       {/* ABOUT VIEW */}
       {view === "About" && (
         <section id="about" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#080B12" }}>
-          {/* Team */}
-          <div className="mb-20 fade-up d1">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] mb-3" style={{ color: "#888888" }}>// Our People</p>
-            <h2 className="text-[clamp(2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-12" style={{ color: "#FFFFFF" }}>
-              The team behind 11x
-            </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem" }}>
-              {TEAM.map((member, i) => (
-                <div
-                  key={i}
-                  className="p-7 rounded-2xl flex flex-col gap-4 transition-all duration-300"
-                  style={{ background: "#111827", border: "1px solid rgba(255,255,255,0.07)" }}
-                  onMouseEnter={e => e.currentTarget.style.background="#1E293B"}
-                  onMouseLeave={e => e.currentTarget.style.background="#111827"}
-                >
-                  <div style={{ fontSize: "48px", lineHeight: 1 }}>{member.emoji}</div>
-                  <div>
-                    <h3 className="font-black text-lg" style={{ color: "#FFFFFF" }}>{member.name}</h3>
-                    <p className="font-mono text-[11px] uppercase tracking-wider mt-1" style={{ color: "#0EA5E9" }}>{member.role}</p>
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{member.bio}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Case Studies */}
           <div className="mb-20 fade-up d2">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] mb-3" style={{ color: "#888888" }}>// Impact</p>
