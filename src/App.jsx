@@ -1638,9 +1638,40 @@ function NewsletterSection() {
   );
 }
 
+function RainbowBorder() {
+  const GRAD_H = "linear-gradient(90deg,#ff0000 0%,#ff7700 14%,#ffff00 28%,#00ff88 42%,#00aaff 57%,#8800ff 71%,#ff00aa 85%,#ff0000 100%)";
+  const GRAD_V = "linear-gradient(180deg,#ff0000 0%,#ff7700 14%,#ffff00 28%,#00ff88 42%,#00aaff 57%,#8800ff 71%,#ff00aa 85%,#ff0000 100%)";
+  return (
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9995 }}>
+      <div className="absolute top-0 left-0 right-0" style={{ height: 3, background: GRAD_H, animation: "rainbowHue 14s linear infinite", boxShadow: "0 0 14px 3px rgba(220,120,0,0.55)" }} />
+      <div className="absolute bottom-0 left-0 right-0" style={{ height: 3, background: GRAD_H, animation: "rainbowHue 14s linear infinite reverse", boxShadow: "0 0 14px 3px rgba(100,0,255,0.35)" }} />
+      <div className="absolute top-0 left-0 bottom-0" style={{ width: 3, background: GRAD_V, animation: "rainbowHue 14s linear infinite 3.5s", boxShadow: "0 0 14px 3px rgba(255,0,120,0.35)" }} />
+      <div className="absolute top-0 right-0 bottom-0" style={{ width: 3, background: GRAD_V, animation: "rainbowHue 14s linear infinite reverse 3.5s", boxShadow: "0 0 14px 3px rgba(0,180,255,0.35)" }} />
+    </div>
+  );
+}
+
+function SectionSweep({ sweepKey }) {
+  if (!sweepKey) return null;
+  return (
+    <div
+      key={sweepKey}
+      className="fixed inset-x-0 pointer-events-none"
+      style={{ top: "50%", marginTop: -1, zIndex: 9994 }}
+    >
+      <div style={{
+        height: 2,
+        background: "linear-gradient(90deg,transparent 0%,rgba(220,80,0,0.95) 20%,rgba(255,184,122,1) 50%,rgba(220,80,0,0.95) 80%,transparent 100%)",
+        animation: "sweepAcross 0.75s cubic-bezier(0.4,0,0.2,1) forwards",
+        boxShadow: "0 0 24px 8px rgba(220,80,0,0.55)",
+      }} />
+    </div>
+  );
+}
+
 function WolfSection({ src, heading, sub }) {
   return (
-    <section className="wolf-snap relative overflow-hidden flex items-center justify-center" style={{ height: "100vh" }}>
+    <section className="relative overflow-hidden flex items-center justify-center" style={{ height: "100vh" }}>
       <video
         src={src} autoPlay muted playsInline loop
         className="absolute inset-0 w-full h-full object-cover"
@@ -1760,11 +1791,16 @@ export default function App() {
   const [statsVisible, setStatsVisible] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
   const [careersApplyRole, setCareersApplyRole] = useState(null);
+  const [sweepKey, setSweepKey] = useState(0);
   const statsRef = useRef(null);
   const lastScrollY = useRef(0);
+  const activeSectionRef = useRef("home");
   useScrollReveal();
 
-  // When snap-scroll lands on a new section, reveal its animation elements
+  // Keep activeSectionRef in sync for use inside event handlers
+  useEffect(() => { activeSectionRef.current = activeSection; }, [activeSection]);
+
+  // When section changes, reveal its animation elements
   useEffect(() => {
     const section = document.getElementById(activeSection);
     if (!section) return;
@@ -1776,6 +1812,65 @@ export default function App() {
     }, 80);
     return () => clearTimeout(t);
   }, [activeSection]);
+
+  // Listen for sweep trigger from wheel/keyboard navigation
+  useEffect(() => {
+    const onSweep = () => setSweepKey(k => k + 1);
+    window.addEventListener("sectionchange", onSweep);
+    return () => window.removeEventListener("sectionchange", onSweep);
+  }, []);
+
+  // JS-controlled fullpage navigation: wheel, keyboard, touch
+  useEffect(() => {
+    const navBusy = { current: false };
+
+    const go = (dir) => {
+      if (navBusy.current) return;
+      const idx = SECTION_ORDER.indexOf(activeSectionRef.current);
+      const nextIdx = Math.max(0, Math.min(SECTION_ORDER.length - 1, idx + dir));
+      if (nextIdx === idx) return;
+      navBusy.current = true;
+      window.dispatchEvent(new Event("sectionchange"));
+      const el = document.getElementById(SECTION_ORDER[nextIdx]);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => { navBusy.current = false; }, 1050);
+    };
+
+    const onWheel = (e) => {
+      if (navBusy.current) { e.preventDefault(); return; }
+      const section = document.getElementById(activeSectionRef.current);
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        if (e.deltaY > 0 && rect.bottom > window.innerHeight + 6) return; // section still has content below
+        if (e.deltaY < 0 && rect.top < -6) return;                        // section has content above
+      }
+      e.preventDefault();
+      go(e.deltaY > 0 ? 1 : -1);
+    };
+
+    const onKey = (e) => {
+      if (["ArrowDown", "PageDown"].includes(e.key)) { e.preventDefault(); go(1); }
+      else if (["ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); go(-1); }
+    };
+
+    let touchY = 0;
+    const onTouchStart = (e) => { touchY = e.touches[0].clientY; };
+    const onTouchEnd = (e) => {
+      const diff = touchY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 70) go(diff > 0 ? 1 : -1);
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, []); // runs once — uses refs for active section
 
   useEffect(() => {
     const onScroll = () => {
@@ -1813,6 +1908,7 @@ export default function App() {
 
   const scrollToSection = useCallback((id) => {
     setMenuOpen(false);
+    window.dispatchEvent(new Event("sectionchange"));
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   }, []);
@@ -1821,6 +1917,8 @@ export default function App() {
     <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#100904", color: "#ffedd7" }}>
       <LoadingScreen />
       <CustomCursor />
+      <RainbowBorder />
+      <SectionSweep sweepKey={sweepKey} />
       <MouseSpotlight />
       <ScrollProgress />
       <ScrollToContinue activeSection={activeSection} />
@@ -2011,7 +2109,7 @@ export default function App() {
         />
 
         {/* ── CAREERS ───────────────────────────────────────────────────── */}
-        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh", height: "100svh", overflowY: "auto", background: "#100904" }}>
+        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh", background: "#100904" }}>
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
             <div>
               <div className="eyebrow mb-4 lusion-fade d1">Careers</div>
