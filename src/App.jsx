@@ -1936,7 +1936,8 @@ export default function App() {
 
         {/* ── HOME ─────────────────────────────────────────────────────── */}
         <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ height: "100svh" }}>
-          <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #f8a4a4 0%, #f73b20 55%, #f5a060 100%)" }} />
+          <video src="/11xlogo-video.mp4" autoPlay muted playsInline loop style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.20) 50%, rgba(0,0,0,0.60) 100%)" }} />
           <div className="absolute inset-0 grid-bg pointer-events-none" />
 
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
@@ -1960,7 +1961,7 @@ export default function App() {
                 <MagneticButton
                   onClick={() => scrollToSection("services")}
                   className="text-center"
-                  style={{ padding: "14px 32px", background: "#ffffff", color: "#360802", border: "1.5px solid rgba(255,255,255,0.80)", borderRadius: "16px", fontSize: 14, fontWeight: 500, cursor: "pointer" }}
+                  style={{ padding: "14px 32px", background: "#ffffff", color: "#000000", border: "1.5px solid rgba(255,255,255,0.90)", borderRadius: "16px", fontSize: 14, fontWeight: 500, cursor: "pointer" }}
                 >
                   Start Building ↗
                 </MagneticButton>
