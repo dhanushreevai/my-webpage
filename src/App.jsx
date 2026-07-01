@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import logo from "./image/11x-logo.jpeg";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion, AnimatePresence } from "motion/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const NAV_LINKS = [
   { label: "Services", id: "services" },
@@ -500,9 +505,13 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
   const isResting = rotation.x === 0 && rotation.y === 0;
 
   return (
-    <div
-      className="group fade-up"
-      style={{ animationDelay: `${delay}s`, perspective: "1000px" }}
+    <motion.div
+      className="group"
+      style={{ perspective: "1000px" }}
+      initial={{ opacity: 0, y: 48 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] }}
+      viewport={{ once: true, margin: "-30px" }}
     >
       <div
         ref={cardRef}
@@ -544,7 +553,7 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -1160,22 +1169,57 @@ function TestimonialsSection() {
 }
 
 /* ── Scroll Reveal Hook (handles both legacy + Lusion classes) ─────────────── */
-function useScrollReveal() {
+function useGSAPAnimations() {
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add("revealed");
-          e.target.classList.add("visible");
-          observer.unobserve(e.target);
-        }
-      }),
-      { threshold: 0, rootMargin: "0px" }
-    );
-    [".scroll-reveal", ".lusion-line", ".lusion-clip", ".lusion-fade"].forEach(sel =>
-      document.querySelectorAll(sel).forEach(el => observer.observe(el))
-    );
-    return () => observer.disconnect();
+    const alreadyLoaded = sessionStorage.getItem("11x_loaded");
+    const heroDelay = alreadyLoaded ? 0.15 : 2.85;
+
+    const ctx = gsap.context(() => {
+      // ── Hero: timeline on page load (not scroll-triggered) ──
+      gsap.timeline({ delay: heroDelay })
+        .from("#home .lusion-fade.d1", { y: 20, opacity: 0, duration: 0.6, ease: "power3.out" })
+        .from("#home .lusion-line-inner", { y: "110%", duration: 1.1, stagger: 0.15, ease: "power4.out" }, "-=0.3")
+        .from(
+          "#home .lusion-fade:not(.d1)",
+          { y: 44, opacity: 0, duration: 0.9, stagger: 0.13, ease: "power3.out" },
+          "-=0.85"
+        );
+
+      // ── All other sections: scroll-triggered ──
+      ["services", "careers", "process", "testimonials", "contact"].forEach((id) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+
+        const lineInners = section.querySelectorAll(".lusion-line-inner");
+        const clips      = section.querySelectorAll(".lusion-clip");
+        const fades      = section.querySelectorAll(".lusion-fade");
+        const reveals    = section.querySelectorAll(".scroll-reveal");
+
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: section, start: "top 78%", once: true },
+        });
+
+        if (lineInners.length)
+          tl.from(lineInners, { y: "110%", duration: 1.1, stagger: 0.15, ease: "power4.out" });
+        if (clips.length)
+          tl.from(clips, { clipPath: "inset(0 0 100% 0)", y: 20, opacity: 0, duration: 1.1, stagger: 0.14, ease: "power4.out" }, lineInners.length ? "<0.2" : ">");
+        if (fades.length)
+          tl.from(fades, { y: 44, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out" }, "<0.2");
+        if (reveals.length)
+          tl.from(reveals, { y: 36, opacity: 0, duration: 0.7, stagger: 0.08, ease: "power3.out" }, "<0.15");
+      });
+
+      // ── Wolf cinematic sections ──
+      gsap.utils.toArray(".wolf-heading").forEach((el) => {
+        gsap.from(el, {
+          y: 50, opacity: 0, duration: 1.1, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 82%", once: true },
+        });
+      });
+    });
+
+    ScrollTrigger.refresh();
+    return () => ctx.revert();
   }, []);
 }
 
@@ -1638,37 +1682,6 @@ function NewsletterSection() {
   );
 }
 
-function RainbowBorder() {
-  const GRAD_H = "linear-gradient(90deg,#ff0000 0%,#ff7700 14%,#ffff00 28%,#00ff88 42%,#00aaff 57%,#8800ff 71%,#ff00aa 85%,#ff0000 100%)";
-  const GRAD_V = "linear-gradient(180deg,#ff0000 0%,#ff7700 14%,#ffff00 28%,#00ff88 42%,#00aaff 57%,#8800ff 71%,#ff00aa 85%,#ff0000 100%)";
-  return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9995 }}>
-      <div className="absolute top-0 left-0 right-0" style={{ height: 3, background: GRAD_H, animation: "rainbowHue 14s linear infinite", boxShadow: "0 0 14px 3px rgba(220,120,0,0.55)" }} />
-      <div className="absolute bottom-0 left-0 right-0" style={{ height: 3, background: GRAD_H, animation: "rainbowHue 14s linear infinite reverse", boxShadow: "0 0 14px 3px rgba(100,0,255,0.35)" }} />
-      <div className="absolute top-0 left-0 bottom-0" style={{ width: 3, background: GRAD_V, animation: "rainbowHue 14s linear infinite 3.5s", boxShadow: "0 0 14px 3px rgba(255,0,120,0.35)" }} />
-      <div className="absolute top-0 right-0 bottom-0" style={{ width: 3, background: GRAD_V, animation: "rainbowHue 14s linear infinite reverse 3.5s", boxShadow: "0 0 14px 3px rgba(0,180,255,0.35)" }} />
-    </div>
-  );
-}
-
-function SectionSweep({ sweepKey }) {
-  if (!sweepKey) return null;
-  return (
-    <div
-      key={sweepKey}
-      className="fixed inset-x-0 pointer-events-none"
-      style={{ top: "50%", marginTop: -1, zIndex: 9994 }}
-    >
-      <div style={{
-        height: 2,
-        background: "linear-gradient(90deg,transparent 0%,rgba(220,80,0,0.95) 20%,rgba(255,184,122,1) 50%,rgba(220,80,0,0.95) 80%,transparent 100%)",
-        animation: "sweepAcross 0.75s cubic-bezier(0.4,0,0.2,1) forwards",
-        boxShadow: "0 0 24px 8px rgba(220,80,0,0.55)",
-      }} />
-    </div>
-  );
-}
-
 function WolfSection({ src, heading, sub }) {
   return (
     <section className="relative overflow-hidden flex items-center justify-center" style={{ height: "100vh" }}>
@@ -1679,12 +1692,12 @@ function WolfSection({ src, heading, sub }) {
       />
       <div className="relative z-10 text-center px-6 max-w-3xl">
         <h2
-          className="font-black tracking-tighter leading-none mb-6 text-white"
+          className="wolf-heading font-black tracking-tighter leading-none mb-6 text-white"
           style={{ fontSize: "clamp(3rem,8vw,6rem)", textShadow: "0 2px 24px rgba(0,0,0,0.85), 0 1px 4px rgba(0,0,0,1)", fontFamily: "'Cinzel', serif", textTransform: "uppercase", letterSpacing: "0.04em" }}
         >
           {heading}
         </h2>
-        <p className="text-lg font-medium max-w-md mx-auto" style={{ color: "rgba(255,237,215,0.85)", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
+        <p className="wolf-heading text-lg font-medium max-w-md mx-auto" style={{ color: "rgba(255,237,215,0.85)", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
           {sub}
         </p>
       </div>
@@ -1791,86 +1804,10 @@ export default function App() {
   const [statsVisible, setStatsVisible] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
   const [careersApplyRole, setCareersApplyRole] = useState(null);
-  const [sweepKey, setSweepKey] = useState(0);
   const statsRef = useRef(null);
   const lastScrollY = useRef(0);
-  const activeSectionRef = useRef("home");
-  useScrollReveal();
+  useGSAPAnimations();
 
-  // Keep activeSectionRef in sync for use inside event handlers
-  useEffect(() => { activeSectionRef.current = activeSection; }, [activeSection]);
-
-  // When section changes, reveal its animation elements
-  useEffect(() => {
-    const section = document.getElementById(activeSection);
-    if (!section) return;
-    const sels = [".scroll-reveal", ".lusion-line", ".lusion-clip", ".lusion-fade"];
-    const t = setTimeout(() => {
-      sels.forEach(sel =>
-        section.querySelectorAll(sel).forEach(el => el.classList.add("visible", "revealed"))
-      );
-    }, 80);
-    return () => clearTimeout(t);
-  }, [activeSection]);
-
-  // Listen for sweep trigger from wheel/keyboard navigation
-  useEffect(() => {
-    const onSweep = () => setSweepKey(k => k + 1);
-    window.addEventListener("sectionchange", onSweep);
-    return () => window.removeEventListener("sectionchange", onSweep);
-  }, []);
-
-  // JS-controlled fullpage navigation: wheel, keyboard, touch
-  useEffect(() => {
-    const navBusy = { current: false };
-
-    const go = (dir) => {
-      if (navBusy.current) return;
-      const idx = SECTION_ORDER.indexOf(activeSectionRef.current);
-      const nextIdx = Math.max(0, Math.min(SECTION_ORDER.length - 1, idx + dir));
-      if (nextIdx === idx) return;
-      navBusy.current = true;
-      window.dispatchEvent(new Event("sectionchange"));
-      const el = document.getElementById(SECTION_ORDER[nextIdx]);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-      setTimeout(() => { navBusy.current = false; }, 1050);
-    };
-
-    const onWheel = (e) => {
-      if (navBusy.current) { e.preventDefault(); return; }
-      const section = document.getElementById(activeSectionRef.current);
-      if (section) {
-        const rect = section.getBoundingClientRect();
-        if (e.deltaY > 0 && rect.bottom > window.innerHeight + 6) return; // section still has content below
-        if (e.deltaY < 0 && rect.top < -6) return;                        // section has content above
-      }
-      e.preventDefault();
-      go(e.deltaY > 0 ? 1 : -1);
-    };
-
-    const onKey = (e) => {
-      if (["ArrowDown", "PageDown"].includes(e.key)) { e.preventDefault(); go(1); }
-      else if (["ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); go(-1); }
-    };
-
-    let touchY = 0;
-    const onTouchStart = (e) => { touchY = e.touches[0].clientY; };
-    const onTouchEnd = (e) => {
-      const diff = touchY - e.changedTouches[0].clientY;
-      if (Math.abs(diff) > 70) go(diff > 0 ? 1 : -1);
-    };
-
-    window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("keydown", onKey);
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchend", onTouchEnd, { passive: true });
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchend", onTouchEnd);
-    };
-  }, []); // runs once — uses refs for active section
 
   useEffect(() => {
     const onScroll = () => {
@@ -1908,7 +1845,6 @@ export default function App() {
 
   const scrollToSection = useCallback((id) => {
     setMenuOpen(false);
-    window.dispatchEvent(new Event("sectionchange"));
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   }, []);
@@ -1917,8 +1853,6 @@ export default function App() {
     <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#100904", color: "#ffedd7" }}>
       <LoadingScreen />
       <CustomCursor />
-      <RainbowBorder />
-      <SectionSweep sweepKey={sweepKey} />
       <MouseSpotlight />
       <ScrollProgress />
       <ScrollToContinue activeSection={activeSection} />
@@ -1931,16 +1865,17 @@ export default function App() {
       </div>
 
       {/* NAV */}
-      <nav
+      <motion.nav
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 md:px-12"
+        initial={{ y: -72, opacity: 0 }}
+        animate={{ y: navHidden ? -72 : 0, opacity: navHidden ? 0 : 1 }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
         style={{
           height: 64,
           backdropFilter: scrolled ? "blur(16px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
           background: scrolled ? "rgba(0,0,0,0.88)" : "transparent",
           borderBottom: scrolled ? "1px solid rgba(220,80,0,0.10)" : "none",
-          transform: navHidden ? "translateY(-100%)" : "translateY(0)",
-          transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.3s, border-color 0.3s",
         }}
       >
         <Logo onClick={() => scrollToSection("home")} dark={false} />
@@ -1992,7 +1927,7 @@ export default function App() {
         >
           {menuOpen ? "✕" : "☰"}
         </button>
-      </nav>
+      </motion.nav>
 
       {/* MOBILE MENU */}
       {menuOpen && (
@@ -2054,17 +1989,29 @@ export default function App() {
                 </MagneticButton>
               </div>
 
-              <div ref={statsRef} className="mt-8 md:mt-10 pt-7 md:pt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10 lusion-fade d5" style={{ borderTop: "1px solid rgba(220,80,0,0.15)" }}>
+              <motion.div
+                ref={statsRef}
+                className="mt-8 md:mt-10 pt-7 md:pt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10"
+                style={{ borderTop: "1px solid rgba(220,80,0,0.15)" }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: sessionStorage.getItem("11x_loaded") ? 0.9 : 3.6 }}
+              >
                 {STATS.map((s) => (
                   <StatCard key={s.label} {...s} animate={statsVisible} />
                 ))}
-              </div>
+              </motion.div>
             </div>
 
-            <div className="hidden lg:flex flex-shrink-0 items-center justify-center lusion-fade d3">
+            <motion.div
+              className="hidden lg:flex flex-shrink-0 items-center justify-center"
+              initial={{ opacity: 0, scale: 0.88, rotate: -8 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: sessionStorage.getItem("11x_loaded") ? 0.4 : 3.1 }}
+            >
               <img src={logo} alt="11x Square" className="object-cover"
                 style={{ width: 320, height: 320, borderRadius: 40, border: "1px solid rgba(220,80,0,0.35)" }} />
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -2165,8 +2112,12 @@ export default function App() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden lusion-fade d4" style={{ border: "1px solid rgba(220,80,0,0.25)" }}>
               {STEPS.map((s, i) => (
-                <div
+                <motion.div
                   key={s.num}
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                  viewport={{ once: true, margin: "-40px" }}
                   style={{
                     background: "rgba(16,9,4,0.82)",
                     backdropFilter: "blur(16px)",
@@ -2174,14 +2125,14 @@ export default function App() {
                     borderRight: i < STEPS.length - 1 ? "1px solid rgba(220,80,0,0.2)" : undefined,
                     borderBottom: "1px solid rgba(220,80,0,0.15)",
                   }}
-                  className="p-5 sm:p-6 lg:p-8 relative group transition-all duration-500"
+                  className="p-5 sm:p-6 lg:p-8 relative group transition-colors duration-500"
                   onMouseEnter={e => e.currentTarget.style.background="rgba(36,20,8,0.88)"}
                   onMouseLeave={e => e.currentTarget.style.background="rgba(16,9,4,0.82)"}
                 >
                   <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(220,80,0,0.30)" }}>{s.num}</div>
                   <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#ffedd7" }}>{s.title}</h4>
                   <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#e0cdb8" }}>{s.desc}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -2225,9 +2176,23 @@ export default function App() {
       </main>
 
       {/* MODALS */}
-      {activeModal === "project" && <StartProjectModal onClose={() => setActiveModal(null)} />}
-      {activeModal === "apply" && <ApplyNowModal onClose={() => setActiveModal(null)} />}
-      {careersApplyRole && <CareersApplyModal role={careersApplyRole} onClose={() => setCareersApplyRole(null)} />}
+      <AnimatePresence>
+        {activeModal === "project" && (
+          <motion.div key="modal-project" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+            <StartProjectModal onClose={() => setActiveModal(null)} />
+          </motion.div>
+        )}
+        {activeModal === "apply" && (
+          <motion.div key="modal-apply" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+            <ApplyNowModal onClose={() => setActiveModal(null)} />
+          </motion.div>
+        )}
+        {careersApplyRole && (
+          <motion.div key="modal-careers" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+            <CareersApplyModal role={careersApplyRole} onClose={() => setCareersApplyRole(null)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* CHATBOT + WHATSAPP */}
       <ChatBot />
