@@ -1778,7 +1778,7 @@ export default function App() {
         <video
           src="/11xlogo-video.mp4"
           autoPlay muted playsInline loop
-          style={{ position: "absolute", top: "50%", left: "50%", minWidth: "100%", minHeight: "100%", width: "auto", height: "auto", transform: "translate(-50%,-50%)", objectFit: "cover", objectPosition: "center 30%", opacity: 0.75 }}
+          style={{ position: "absolute", top: "50%", left: "50%", width: "100%", height: "100%", transform: "translate(-50%,-50%)", objectFit: "contain", opacity: 0.75 }}
         />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(13,24,38,0.30) 40%, rgba(8,11,18,0.65) 100%)" }} />
         <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
