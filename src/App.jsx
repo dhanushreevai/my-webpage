@@ -453,7 +453,7 @@ function StatCard({ val, unit, label, animate, color, delay }) {
         {animate ? num : val}
         <span className="opacity-60">{unit}</span>
       </div>
-      <div className="text-xs uppercase tracking-wide font-medium" style={{ color: "rgba(255,255,255,0.65)" }}>{label}</div>
+      <div className="text-xs uppercase tracking-wide font-medium" style={{ color: "rgba(255,255,255,0.92)", textShadow: "0 1px 6px rgba(0,0,0,0.80)" }}>{label}</div>
     </div>
   );
 }
@@ -2004,9 +2004,9 @@ export default function App() {
         <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#360802", borderTop: "1px solid rgba(247,59,32,0.30)", borderBottom: "1px solid rgba(247,59,32,0.30)" }}>
           <div className="marquee-track flex gap-14 w-max">
             {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-              <span key={i} className="mono text-[11px] font-medium uppercase tracking-widest whitespace-nowrap flex items-center gap-4" style={{ color: "#fbdfd9" }}>
+              <span key={i} className="mono text-[11px] font-medium uppercase tracking-widest whitespace-nowrap flex items-center gap-4" style={{ color: "#ffffff" }}>
                 {item}
-                <span className="text-[8px]" style={{ color: "rgba(247,59,32,0.70)" }}>✦</span>
+                <span className="text-[8px]" style={{ color: "#f73b20" }}>✦</span>
               </span>
             ))}
           </div>
