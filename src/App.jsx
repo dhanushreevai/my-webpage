@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import logo from "./image/11x-logo.jpeg";
 
 const NAV_LINKS = ["Services", "About", "Careers", "Process", "Contact"];
@@ -604,32 +605,6 @@ function LeafDecor({ className = "" }) {
   );
 }
 
-function Confetti() {
-  const [pieces] = useState(() =>
-    Array.from({ length: 80 }, (_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      delay: `${Math.random() * 0.7}s`,
-      duration: `${1.3 + Math.random() * 1.6}s`,
-      color: ["#0EA5E9","#38BDF8","#BAE6FD","#F59E0B","#10B981","#8B5CF6","#EC4899","#ffffff"][Math.floor(Math.random() * 8)],
-      size: `${5 + Math.random() * 9}px`,
-      shape: Math.random() > 0.5 ? "50%" : "3px",
-    }))
-  );
-  return (
-    <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 99998, overflow: "hidden" }}>
-      {pieces.map((p) => (
-        <div key={p.id} style={{
-          position: "absolute", left: p.left, top: "-20px",
-          width: p.size, height: p.size,
-          background: p.color, borderRadius: p.shape,
-          animation: `confettiFall ${p.duration} ${p.delay} ease-in forwards`,
-        }} />
-      ))}
-    </div>
-  );
-}
-
 function SuccessModal({ onClose, title, subtitle }) {
   useEffect(() => {
     const k = (e) => { if (e.key === "Escape") onClose(); };
@@ -637,10 +612,8 @@ function SuccessModal({ onClose, title, subtitle }) {
     document.body.style.overflow = "hidden";
     return () => { document.removeEventListener("keydown", k); document.body.style.overflow = ""; };
   }, [onClose]);
-  return (
-    <>
-    <Confetti />
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
       style={{ background: "rgba(5,10,15,0.88)", backdropFilter: "blur(14px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
@@ -669,8 +642,8 @@ function SuccessModal({ onClose, title, subtitle }) {
           >Done</button>
         </div>
       </div>
-    </div>
-    </>
+    </div>,
+    document.body
   );
 }
 
