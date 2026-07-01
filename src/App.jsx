@@ -76,17 +76,17 @@ const ROLES = [
 ];
 
 const STEPS = [
-  { num: "01", title: "Discovery", desc: "We audit your stack, team, and goals to understand what's holding you back and what's possible.", color: "text-[#8052ff]" },
-  { num: "02", title: "Strategy", desc: "A clear, actionable roadmap with milestones, owners, and measurable success criteria.", color: "text-[#6b3fd4]" },
-  { num: "03", title: "Execution", desc: "Embedded consultants and curated talent work alongside your team to ship results.", color: "text-[#6b3fd4]" },
-  { num: "04", title: "Scale", desc: "We hand off with documentation, playbooks, and a team ready to multiply the wins.", color: "text-[#a78bff]" },
+  { num: "01", title: "Discovery", desc: "We audit your stack, team, and goals to understand what's holding you back and what's possible.", color: "text-[#dc5000]" },
+  { num: "02", title: "Strategy", desc: "A clear, actionable roadmap with milestones, owners, and measurable success criteria.", color: "text-[#b84000]" },
+  { num: "03", title: "Execution", desc: "Embedded consultants and curated talent work alongside your team to ship results.", color: "text-[#b84000]" },
+  { num: "04", title: "Scale", desc: "We hand off with documentation, playbooks, and a team ready to multiply the wins.", color: "text-[#f07030]" },
 ];
 
 const STATS = [
-  { val: "120", unit: "+", label: "Projects Delivered", color: "text-[#a78bff]" },
-  { val: "48",  unit: "+", label: "Interns Placed",     color: "text-[#E2E8F0]" },
-  { val: "11",  unit: "x", label: "Average ROI",        color: "text-[#FFFFFF]" },
-  { val: "32",  unit: "+", label: "Partner Companies",  color: "text-[#8052ff]" },
+  { val: "120", unit: "+", label: "Projects Delivered", color: "text-[#f07030]" },
+  { val: "48",  unit: "+", label: "Interns Placed",     color: "text-[#f0dfc4]" },
+  { val: "11",  unit: "x", label: "Average ROI",        color: "text-[#ffedd7]" },
+  { val: "32",  unit: "+", label: "Partner Companies",  color: "text-[#dc5000]" },
 ];
 
 const MARQUEE_ITEMS = [
@@ -150,7 +150,7 @@ const CASE_STUDIES = [
     challenge: "Legacy monolith causing 40% downtime, blocking Series B due diligence and preventing international expansion.",
     solution: "Full cloud migration to microservices architecture, implemented CI/CD pipeline, and deployed 99.99% SLA monitoring.",
     metrics: ["340% capacity", "99.99% uptime", "£8M Series B"],
-    color: "#8052ff",
+    color: "#dc5000",
   },
   {
     client: "EdTech Platform",
@@ -216,10 +216,10 @@ const BLOG_POSTS = [
 ];
 
 const CATEGORY_COLORS = {
-  Engineering: { bg: "rgba(128,82,255,0.12)", text: "#8052ff" },
+  Engineering: { bg: "rgba(220,80,0,0.12)", text: "#dc5000" },
   Strategy:    { bg: "rgba(245,158,11,0.12)",  text: "#F59E0B" },
   Talent:      { bg: "rgba(16,185,129,0.12)",  text: "#10B981" },
-  "AI & Data": { bg: "rgba(139,92,246,0.12)", text: "#8B5CF6" },
+  "AI & Data": { bg: "rgba(220,80,0,0.12)", text: "#8B5CF6" },
   Consulting:  { bg: "rgba(249,115,22,0.12)",  text: "#F97316" },
   Startup:     { bg: "rgba(20,184,166,0.12)",  text: "#14B8A6" },
 };
@@ -292,7 +292,7 @@ function LoadingScreen() {
   return (
     <div style={{
       position: "fixed", inset: 0, zIndex: 99999,
-      background: "#000000",
+      background: "#100904",
       display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
       opacity: fading ? 0 : 1,
       transition: "opacity 0.65s cubic-bezier(0.4,0,0.2,1)",
@@ -304,7 +304,7 @@ function LoadingScreen() {
           <div style={{
             position: "absolute", inset: -16,
             borderRadius: 44,
-            background: "radial-gradient(circle, rgba(128,82,255,0.35) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(220,80,0,0.35) 0%, transparent 70%)",
             filter: "blur(16px)",
           }} />
           <img
@@ -316,8 +316,8 @@ function LoadingScreen() {
               width: 96, height: 96,
               objectFit: "cover",
               borderRadius: 22,
-              border: "2px solid rgba(128,82,255,0.5)",
-              boxShadow: "0 0 32px rgba(128,82,255,0.25), 0 8px 32px rgba(0,0,0,0.5)",
+              border: "2px solid rgba(220,80,0,0.5)",
+              boxShadow: "0 0 32px rgba(220,80,0,0.25), 0 8px 32px rgba(0,0,0,0.5)",
             }}
           />
         </div>
@@ -327,17 +327,17 @@ function LoadingScreen() {
           fontFamily: "'Cinzel', serif",
           fontSize: "clamp(2rem, 6vw, 3rem)",
           fontWeight: 900,
-          color: "#FFFFFF",
+          color: "#ffedd7",
           letterSpacing: "0.08em",
           textTransform: "uppercase",
           lineHeight: 1,
           marginBottom: 8,
         }}>
-          11x<span style={{ color: "#8052ff" }}>Square</span>
+          11x<span style={{ color: "#dc5000" }}>Square</span>
         </div>
 
         <p style={{
-          color: "#64748B",
+          color: "#887060",
           fontSize: 10,
           fontFamily: "monospace",
           letterSpacing: "0.3em",
@@ -348,7 +348,7 @@ function LoadingScreen() {
         </p>
 
         {/* Loading bar */}
-        <div style={{ width: 160, height: 2, background: "rgba(128,82,255,0.12)", borderRadius: 2, overflow: "hidden" }}>
+        <div style={{ width: 160, height: 2, background: "rgba(220,80,0,0.12)", borderRadius: 2, overflow: "hidden" }}>
           <div className="load-bar-fill" />
         </div>
       </div>
@@ -372,7 +372,7 @@ function ParticleField({ className = "" }) {
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
-    const COLORS = ["#8052ff","#a78bff","#c4b5fd","#ffb829","#15846e","#ffffff","#6b3fd4"];
+    const COLORS = ["#dc5000","#f07030","#ffb87a","#ffedd7","#b84000","#a83800","#ff8c40"];
     const particles = Array.from({ length: 520 }, () => {
       const w = canvas.offsetWidth || 400;
       const h = canvas.offsetHeight || 480;
@@ -432,7 +432,7 @@ function ScrollProgress() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  return <div className="fixed top-0 left-0 z-[60] transition-all duration-100" style={{ height: "2px", width: `${width}%`, background: "linear-gradient(90deg, #8052ff 0%, #a78bff 55%, #fde9ff 100%)" }} />;
+  return <div className="fixed top-0 left-0 z-[60] transition-all duration-100" style={{ height: "2px", width: `${width}%`, background: "linear-gradient(90deg, #dc5000 0%, #f07030 55%, #fde9ff 100%)" }} />;
 }
 
 function MouseSpotlight() {
@@ -444,7 +444,7 @@ function MouseSpotlight() {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[1] opacity-50" style={{ background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(128,82,255,0.07), transparent 80%)` }} />
+    <div className="fixed inset-0 pointer-events-none z-[1] opacity-50" style={{ background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(220,80,0,0.07), transparent 80%)` }} />
   );
 }
 
@@ -456,7 +456,7 @@ function StatCard({ val, unit, label, animate, color, delay }) {
         {animate ? num : val}
         <span className="opacity-60">{unit}</span>
       </div>
-      <div className="text-xs uppercase tracking-wide font-medium" style={{ color: "#9a9a9a" }}>{label}</div>
+      <div className="text-xs uppercase tracking-wide font-medium" style={{ color: "#a09080" }}>{label}</div>
     </div>
   );
 }
@@ -488,14 +488,14 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
   };
 
   const THEMES = {
-    indigo:  { bar: "bg-[#8052ff]", tag: "rgba(128,82,255,0.12)",  tagText: "#5b2fd4" },
+    indigo:  { bar: "bg-[#dc5000]", tag: "rgba(220,80,0,0.12)",  tagText: "#a83800" },
     orange:  { bar: "bg-[#F97316]", tag: "rgba(249,115,22,0.10)",  tagText: "#C2410C" },
-    purple:  { bar: "bg-[#8B5CF6]", tag: "rgba(139,92,246,0.10)",  tagText: "#6D28D9" },
+    purple:  { bar: "bg-[#8B5CF6]", tag: "rgba(220,80,0,0.10)",  tagText: "#6D28D9" },
     pink:    { bar: "bg-[#14B8A6]", tag: "rgba(20,184,166,0.10)",  tagText: "#0F766E" },
     emerald: { bar: "bg-[#10B981]", tag: "rgba(16,185,129,0.10)",  tagText: "#047857" },
     amber:   { bar: "bg-[#F59E0B]", tag: "rgba(245,158,11,0.10)",  tagText: "#B45309" },
   };
-  const theme = THEMES[color] || { bar: "bg-[#8052ff]", tag: "rgba(128,82,255,0.12)", tagText: "#5b2fd4" };
+  const theme = THEMES[color] || { bar: "bg-[#dc5000]", tag: "rgba(220,80,0,0.12)", tagText: "#a83800" };
 
   const isResting = rotation.x === 0 && rotation.y === 0;
 
@@ -507,14 +507,14 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
       <div
         ref={cardRef}
         onMouseMove={handleMouseMove}
-        onMouseEnter={e => { e.currentTarget.style.background = "#111111"; }}
-        onMouseLeave={e => { handleMouseLeave(); e.currentTarget.style.background = "#0a0a0a"; }}
+        onMouseEnter={e => { e.currentTarget.style.background = "#1e1208"; }}
+        onMouseLeave={e => { handleMouseLeave(); e.currentTarget.style.background = "#160e08"; }}
         className="relative p-8 cursor-default overflow-hidden hover:z-10"
         style={{
           transform: `translateY(${isResting ? 0 : -8}px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
           transition: isResting ? "transform 0.6s ease-out" : "none",
           transformStyle: "preserve-3d",
-          background: "#0a0a0a",
+          background: "#160e08",
           borderBottom: "1px solid rgba(255,255,255,0.05)",
           borderRight: "1px solid rgba(255,255,255,0.05)",
         }}
@@ -532,9 +532,9 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
         {image && (
           <img src={image} alt={title} className="w-full object-cover mb-6 rounded-md translate-z-10" style={{ height: "200px", objectPosition: "center top" }} />
         )}
-        <div className="font-mono text-[11px] tracking-wider mb-4 translate-z-10" style={{ color: "#8052ff" }}>{num}</div>
-        <h3 className="text-2xl font-black mb-4 tracking-tighter leading-none group-hover:translate-z-30 transition-transform duration-500" style={{ color: "#FFFFFF" }}>{title}</h3>
-        <p className="text-[15px] font-medium leading-relaxed max-w-[280px] group-hover:translate-z-20 transition-transform duration-500" style={{ color: "#9a9a9a" }}>{desc}</p>
+        <div className="font-mono text-[11px] tracking-wider mb-4 translate-z-10" style={{ color: "#dc5000" }}>{num}</div>
+        <h3 className="text-2xl font-black mb-4 tracking-tighter leading-none group-hover:translate-z-30 transition-transform duration-500" style={{ color: "#ffedd7" }}>{title}</h3>
+        <p className="text-[15px] font-medium leading-relaxed max-w-[280px] group-hover:translate-z-20 transition-transform duration-500" style={{ color: "#a09080" }}>{desc}</p>
         <div className="flex flex-wrap gap-2 mt-5 group-hover:translate-z-10 transition-transform duration-500">
           {tags.map((t, i) => (
             <span key={i} className="font-mono text-[10px] px-3 py-1 rounded-full uppercase tracking-wider font-bold"
@@ -553,13 +553,13 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
     <div
       onClick={onApply}
       className="flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 transition-all duration-300 cursor-pointer group"
-      style={{ background: "rgba(13,17,23,0.80)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
-      onMouseEnter={e => e.currentTarget.style.background="rgba(30,41,59,0.88)"}
-      onMouseLeave={e => e.currentTarget.style.background="rgba(13,17,23,0.80)"}
+      style={{ background: "rgba(19,12,5,0.80)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+      onMouseEnter={e => e.currentTarget.style.background="rgba(36,20,8,0.88)"}
+      onMouseLeave={e => e.currentTarget.style.background="rgba(19,12,5,0.80)"}
     >
       <div className="flex flex-col gap-1.5">
-        <span className="text-sm font-bold" style={{ color: "#FFFFFF" }}>{title}</span>
-        <div className="flex gap-4 font-mono text-[11px]" style={{ color: "#8052ff" }}>
+        <span className="text-sm font-bold" style={{ color: "#ffedd7" }}>{title}</span>
+        <div className="flex gap-4 font-mono text-[11px]" style={{ color: "#dc5000" }}>
           <span>{location}</span>
           <span>{period}</span>
         </div>
@@ -568,13 +568,13 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
         <span
           className="font-mono text-[10px] px-2.5 py-1 rounded-sm uppercase tracking-normal"
           style={type === "intern"
-            ? { background: "rgba(128,82,255,0.12)", color: "#8052ff", border: "1px solid rgba(128,82,255,0.3)" }
-            : { background: "rgba(251,113,133,0.08)", color: "#6b3fd4", border: "1px solid rgba(251,113,133,0.25)" }
+            ? { background: "rgba(220,80,0,0.12)", color: "#dc5000", border: "1px solid rgba(220,80,0,0.3)" }
+            : { background: "rgba(251,113,133,0.08)", color: "#b84000", border: "1px solid rgba(251,113,133,0.25)" }
           }
         >
           {type === "intern" ? "Intern" : "Full-time"}
         </span>
-        <span className="text-2xl transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" style={{ color: "#8052ff" }}>
+        <span className="text-2xl transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" style={{ color: "#dc5000" }}>
           ↗
         </span>
       </div>
@@ -599,11 +599,11 @@ function Logo({ onClick, className = "", size = "nav", dark = false }) {
         />
       )}
       <div className="flex flex-col leading-none">
-        <span className={`font-black tracking-tighter ${size === "footer" ? "text-3xl" : "text-[22px]"}`} style={{ color: dark ? "#1A1A1A" : "#FFFFFF", lineHeight: 1 }}>
-          11x<span style={{ color: "#6b3fd4" }}>Square</span>
+        <span className={`font-black tracking-tighter ${size === "footer" ? "text-3xl" : "text-[22px]"}`} style={{ color: dark ? "#1A1A1A" : "#ffedd7", lineHeight: 1 }}>
+          11x<span style={{ color: "#b84000" }}>Square</span>
         </span>
         {size === "footer" && (
-          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: "#AAAAAA", marginTop: 2 }}>Consulting · Talent</span>
+          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: "#c4b4a4", marginTop: 2 }}>Consulting · Talent</span>
         )}
       </div>
     </div>
@@ -621,7 +621,7 @@ const toBase64 = (file) =>
   });
 
 function launchConfetti() {
-  const colors = ["#8052ff", "#a78bff", "#7DD3FC", "#FFFFFF", "#6b3fd4", "#c4b5fd"];
+  const colors = ["#dc5000", "#f07030", "#7DD3FC", "#FFFFFF", "#b84000", "#ffb87a"];
   for (let i = 0; i < 80; i++) {
     const el = document.createElement("div");
     const size = 5 + Math.random() * 8;
@@ -653,13 +653,13 @@ function TypingText({ words = [] }) {
 
 /* Nature palette */
 const N = {
-  green:      "#8052ff",
-  greenLight: "#6b3fd4",
-  greenMid:   "#5b2fd4",
+  green:      "#dc5000",
+  greenLight: "#b84000",
+  greenMid:   "#a83800",
   brown:      "#888888",
   brownLight: "#CCCCCC",
-  beige:      "#8052ff",
-  beigeLight: "#E0F2FE",
+  beige:      "#dc5000",
+  beigeLight: "#f0dfc4",
   cream:      "#FFFFFF",
   leaf:       "rgba(255,255,255,0.08)",
 };
@@ -684,31 +684,31 @@ function SuccessModal({ onClose, title, subtitle }) {
   }, [onClose]);
   return createPortal(
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-      style={{ background: "rgba(5,10,15,0.88)", backdropFilter: "blur(14px)" }}
+      style={{ background: "rgba(16,9,4,0.88)", backdropFilter: "blur(14px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className="w-full max-w-sm rounded-2xl shadow-2xl animate-fadeIn overflow-hidden"
-        style={{ background: "#0D1B2E", border: "1px solid rgba(128,82,255,0.25)" }}
+        style={{ background: "#160e08", border: "1px solid rgba(220,80,0,0.25)" }}
       >
-        <div className="h-px w-full" style={{ background: "linear-gradient(90deg,transparent,#6b3fd4,transparent)" }} />
+        <div className="h-px w-full" style={{ background: "linear-gradient(90deg,transparent,#b84000,transparent)" }} />
         <div className="flex flex-col items-center gap-6 px-8 py-12 text-center">
           <div className="w-16 h-16 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(128,82,255,0.12)", border: "1.5px solid rgba(128,82,255,0.35)" }}
+            style={{ background: "rgba(220,80,0,0.12)", border: "1.5px solid rgba(220,80,0,0.35)" }}
           >
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-              <circle cx="15" cy="15" r="14" stroke="#6b3fd4" strokeWidth="1.5" strokeOpacity="0.5"/>
-              <path d="M8 15.5l5 5 9-10" stroke="#6b3fd4" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="15" cy="15" r="14" stroke="#b84000" strokeWidth="1.5" strokeOpacity="0.5"/>
+              <path d="M8 15.5l5 5 9-10" stroke="#b84000" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <div>
             <p className="text-xl font-black text-white mb-2 tracking-tight">{title}</p>
-            <p className="text-sm leading-relaxed" style={{ color: "#CCCCCC" }}>{subtitle}</p>
+            <p className="text-sm leading-relaxed" style={{ color: "#d4c4b4" }}>{subtitle}</p>
           </div>
           <button onClick={onClose}
             className="font-bold text-sm px-10 py-3 rounded-full cursor-pointer transition-all duration-200 border-0"
-            style={{ background: "#8052ff", color: "#fff" }}
-            onMouseEnter={e => e.target.style.background="#6b3fd4"}
-            onMouseLeave={e => e.target.style.background="#8052ff"}
+            style={{ background: "#dc5000", color: "#fff" }}
+            onMouseEnter={e => e.target.style.background="#b84000"}
+            onMouseLeave={e => e.target.style.background="#dc5000"}
           >Done</button>
         </div>
       </div>
@@ -727,12 +727,12 @@ function NatureModal({ onClose, children }) {
   return (
     <div
       className="fixed inset-0 z-[200] flex items-center justify-center p-4"
-      style={{ background: "rgba(12,35,64,0.88)", backdropFilter: "blur(12px)" }}
+      style={{ background: "rgba(22,14,8,0.88)", backdropFilter: "blur(12px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
         className="modal-container w-full max-w-md rounded-3xl shadow-2xl animate-fadeIn relative flex flex-col"
-        style={{ background: "#0D1B2E" }}
+        style={{ background: "#160e08" }}
       >
         <LeafDecor className="w-32 h-32 -top-6 -right-6 rotate-45" />
         <LeafDecor className="w-20 h-20 -bottom-4 -left-4 -rotate-12" />
@@ -832,7 +832,7 @@ function StartProjectModal({ onClose }) {
             type="submit"
             disabled={status === "loading"}
             className="w-full font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ background: "#8052ff", color: "#FFFFFF" }}
+            style={{ background: "#dc5000", color: "#ffedd7" }}
           >
             {status === "loading" ? "Submitting…" : "Submit →"}
           </button>
@@ -973,7 +973,7 @@ function ApplyNowModal({ onClose }) {
             type="submit"
             disabled={status === "loading"}
             className="w-full font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ background: "#8052ff", color: "#FFFFFF" }}
+            style={{ background: "#dc5000", color: "#ffedd7" }}
           >
             {status === "loading" ? "Submitting…" : "Submit Application →"}
           </button>
@@ -985,13 +985,13 @@ function ApplyNowModal({ onClose }) {
 
 /* ── Careers Apply Modal — Midnight / Indigo theme ───────────────────────── */
 const M = {
-  bg:      "#0D1B2E",
-  panel:   "#13253C",
-  border:  "rgba(128,82,255,0.25)",
-  indigo:  "#8052ff",
-  violet:  "#6b3fd4",
+  bg:      "#160e08",
+  panel:   "#1a0e08",
+  border:  "rgba(220,80,0,0.25)",
+  indigo:  "#dc5000",
+  violet:  "#b84000",
   muted:   "#CCCCCC",
-  text:    "#E0F2FE",
+  text:    "#f0dfc4",
 };
 
 function CareersApplyModal({ role, onClose }) {
@@ -1045,7 +1045,7 @@ function CareersApplyModal({ role, onClose }) {
   return (
     <div
       className="fixed inset-0 z-[200] flex items-center justify-center p-4"
-      style={{ background: "rgba(5,8,20,0.80)", backdropFilter: "blur(10px)" }}
+      style={{ background: "rgba(16,9,4,0.80)", backdropFilter: "blur(10px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className="modal-container w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col" style={{ background: M.bg, border: `1px solid ${M.border}` }}>
@@ -1080,7 +1080,7 @@ function CareersApplyModal({ role, onClose }) {
                   <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: M.violet }}>{label}</label>
                   <input name={name} type={type} value={form[name]} onChange={handleChange} required placeholder={placeholder}
                     style={inputSt} className="nature-input"
-                    onFocus={(e) => { e.target.style.border = `1.5px solid ${M.indigo}`; e.target.style.background = "rgba(128,82,255,0.12)"; }}
+                    onFocus={(e) => { e.target.style.border = `1.5px solid ${M.indigo}`; e.target.style.background = "rgba(220,80,0,0.12)"; }}
                     onBlur={(e) => { e.target.style.border = `1.5px solid ${M.border}`; e.target.style.background = "rgba(255,255,255,0.06)"; }}
                   />
                 </div>
@@ -1124,10 +1124,10 @@ function CareersApplyModal({ role, onClose }) {
 /* ── Testimonials Section ────────────────────────────────────────────────── */
 function TestimonialsSection() {
   return (
-    <section style={{ background: "#000000", borderTop: "1px solid rgba(128,82,255,0.12)" }}>
+    <section style={{ background: "#100904", borderTop: "1px solid rgba(220,80,0,0.12)" }}>
       <div className="px-5 md:px-12 py-14 md:py-20">
         <div className="eyebrow mb-3">Client Stories</div>
-        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-12" style={{ color: "#FFFFFF" }}>
+        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-12" style={{ color: "#ffedd7" }}>
           What our clients say
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
@@ -1135,21 +1135,21 @@ function TestimonialsSection() {
             <div
               key={i}
               className="p-7 rounded-2xl flex flex-col gap-5 transition-all duration-300"
-              style={{ background: "#0a0a0a" }}
-              onMouseEnter={e => e.currentTarget.style.background="#111111"}
-              onMouseLeave={e => e.currentTarget.style.background="#0a0a0a"}
+              style={{ background: "#160e08" }}
+              onMouseEnter={e => e.currentTarget.style.background="#1e1208"}
+              onMouseLeave={e => e.currentTarget.style.background="#160e08"}
             >
               <div className="flex gap-1">
                 {Array.from({ length: t.stars }).map((_, s) => (
                   <span key={s} style={{ color: "#F59E0B", fontSize: "16px" }}>★</span>
                 ))}
               </div>
-              <p className="text-[15px] leading-relaxed font-medium flex-1" style={{ color: "#9a9a9a" }}>
+              <p className="text-[15px] leading-relaxed font-medium flex-1" style={{ color: "#a09080" }}>
                 "{t.quote}"
               </p>
               <div>
-                <p className="font-bold text-sm" style={{ color: "#FFFFFF" }}>{t.name}</p>
-                <p className="text-xs mt-0.5" style={{ color: "#8052ff" }}>{t.title}</p>
+                <p className="font-bold text-sm" style={{ color: "#ffedd7" }}>{t.name}</p>
+                <p className="text-xs mt-0.5" style={{ color: "#dc5000" }}>{t.title}</p>
               </div>
             </div>
           ))}
@@ -1237,22 +1237,22 @@ function ExitIntentPopup({ onContact }) {
   if (!show) return null;
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}>
-      <div className="relative w-full max-w-md rounded-2xl p-8 text-center" style={{ background: "#0D1117", border: "1px solid rgba(128,82,255,0.3)", boxShadow: "0 0 60px rgba(128,82,255,0.15)" }}>
-        <button onClick={() => setShow(false)} className="absolute top-4 right-4 text-xl bg-transparent border-0 cursor-pointer" style={{ color: "#9a9a9a" }}>✕</button>
+      <div className="relative w-full max-w-md rounded-2xl p-8 text-center" style={{ background: "#130c05", border: "1px solid rgba(220,80,0,0.3)", boxShadow: "0 0 60px rgba(220,80,0,0.15)" }}>
+        <button onClick={() => setShow(false)} className="absolute top-4 right-4 text-xl bg-transparent border-0 cursor-pointer" style={{ color: "#a09080" }}>✕</button>
         <div className="text-4xl mb-4">🎯</div>
         <div className="eyebrow mb-2 justify-center">Wait — before you go!</div>
-        <h3 className="text-2xl font-black tracking-tighter mb-3" style={{ color: "#FFFFFF" }}>Get a FREE 30-min Strategy Session</h3>
-        <p className="text-sm leading-relaxed mb-6" style={{ color: "#9a9a9a" }}>No commitment. Just clarity on what's possible for your business. Our consultants have helped 120+ companies unlock breakthrough growth.</p>
+        <h3 className="text-2xl font-black tracking-tighter mb-3" style={{ color: "#ffedd7" }}>Get a FREE 30-min Strategy Session</h3>
+        <p className="text-sm leading-relaxed mb-6" style={{ color: "#a09080" }}>No commitment. Just clarity on what's possible for your business. Our consultants have helped 120+ companies unlock breakthrough growth.</p>
         <button
           onClick={() => { setShow(false); onContact(); }}
           className="w-full font-bold text-base py-3 rounded-xl transition-all duration-200 cursor-pointer"
-          style={{ background: "linear-gradient(135deg,#8052ff,#6b3fd4)", color: "#FFFFFF", border: "none" }}
+          style={{ background: "linear-gradient(135deg,#dc5000,#b84000)", color: "#ffedd7", border: "none" }}
           onMouseEnter={e => e.target.style.opacity="0.9"}
           onMouseLeave={e => e.target.style.opacity="1"}
         >
           Claim Free Session →
         </button>
-        <button onClick={() => setShow(false)} className="mt-3 text-xs bg-transparent border-0 cursor-pointer underline" style={{ color: "#64748B" }}>No thanks, I'll pass</button>
+        <button onClick={() => setShow(false)} className="mt-3 text-xs bg-transparent border-0 cursor-pointer underline" style={{ color: "#887060" }}>No thanks, I'll pass</button>
       </div>
     </div>
   );
@@ -1268,13 +1268,13 @@ function CookieBanner() {
   const decline = () => { localStorage.setItem("cookieConsent", "declined"); setShow(false); };
   if (!show) return null;
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[9998] px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ background: "rgba(13,17,23,0.97)", borderTop: "1px solid rgba(128,82,255,0.2)", backdropFilter: "blur(12px)" }}>
-      <p className="text-sm text-center sm:text-left" style={{ color: "#9a9a9a" }}>
-        🍪 We use cookies to improve your experience on 11xsquare.com. <span style={{ color: "#64748B" }}>By continuing, you agree to our cookie policy.</span>
+    <div className="fixed bottom-0 left-0 right-0 z-[9998] px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ background: "rgba(19,12,5,0.97)", borderTop: "1px solid rgba(220,80,0,0.2)", backdropFilter: "blur(12px)" }}>
+      <p className="text-sm text-center sm:text-left" style={{ color: "#a09080" }}>
+        🍪 We use cookies to improve your experience on 11xsquare.com. <span style={{ color: "#887060" }}>By continuing, you agree to our cookie policy.</span>
       </p>
       <div className="flex gap-3 flex-shrink-0">
-        <button onClick={decline} className="text-sm font-bold px-5 py-2 rounded-full cursor-pointer transition-all" style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.15)", color: "#9a9a9a" }}>Decline</button>
-        <button onClick={accept} className="text-sm font-bold px-5 py-2 rounded-full cursor-pointer transition-all" style={{ background: "#8052ff", color: "#FFFFFF", border: "none" }}>Accept All</button>
+        <button onClick={decline} className="text-sm font-bold px-5 py-2 rounded-full cursor-pointer transition-all" style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.15)", color: "#a09080" }}>Decline</button>
+        <button onClick={accept} className="text-sm font-bold px-5 py-2 rounded-full cursor-pointer transition-all" style={{ background: "#dc5000", color: "#ffedd7", border: "none" }}>Accept All</button>
       </div>
     </div>
   );
@@ -1293,23 +1293,23 @@ const FAQ_ITEMS = [
 function FaqAccordion() {
   const [open, setOpen] = useState(null);
   return (
-    <section className="px-5 md:px-12 py-16 md:py-20 scroll-reveal" style={{ background: "#000000", borderTop: "1px solid rgba(128,82,255,0.12)" }}>
+    <section className="px-5 md:px-12 py-16 md:py-20 scroll-reveal" style={{ background: "#100904", borderTop: "1px solid rgba(220,80,0,0.12)" }}>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <div className="eyebrow mb-3">FAQ</div>
-        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-10" style={{ color: "#FFFFFF" }}>Common questions</h2>
+        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-10" style={{ color: "#ffedd7" }}>Common questions</h2>
         <div className="flex flex-col gap-3">
           {FAQ_ITEMS.map((item, i) => (
-            <div key={i} className="rounded-xl overflow-hidden transition-all duration-300" style={{ background: open === i ? "#111111" : "rgba(17,24,39,0.6)", border: `1px solid ${open === i ? "rgba(128,82,255,0.3)" : "rgba(255,255,255,0.07)"}` }}>
+            <div key={i} className="rounded-xl overflow-hidden transition-all duration-300" style={{ background: open === i ? "#1e1208" : "rgba(26,14,8,0.6)", border: `1px solid ${open === i ? "rgba(220,80,0,0.3)" : "rgba(255,255,255,0.07)"}` }}>
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 className="w-full flex items-center justify-between px-6 py-4 text-left bg-transparent border-0 cursor-pointer gap-4"
               >
-                <span className="font-bold text-base" style={{ color: "#FFFFFF" }}>{item.q}</span>
-                <span className="flex-shrink-0 text-xl font-light transition-transform duration-300" style={{ color: "#8052ff", transform: open === i ? "rotate(45deg)" : "rotate(0deg)" }}>+</span>
+                <span className="font-bold text-base" style={{ color: "#ffedd7" }}>{item.q}</span>
+                <span className="flex-shrink-0 text-xl font-light transition-transform duration-300" style={{ color: "#dc5000", transform: open === i ? "rotate(45deg)" : "rotate(0deg)" }}>+</span>
               </button>
               {open === i && (
                 <div className="px-6 pb-5">
-                  <p className="text-sm leading-relaxed" style={{ color: "#9a9a9a" }}>{item.a}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: "#a09080" }}>{item.a}</p>
                 </div>
               )}
             </div>
@@ -1354,7 +1354,7 @@ function ChatBot() {
     }
   };
 
-  const C = { bg: "#0D1B2E", header: "#102040", accent: "#8052ff", moss: "#c4b5fd", text: "#FFFFFF", muted: "#AAAAAA" };
+  const C = { bg: "#160e08", header: "#1a0e08", accent: "#dc5000", moss: "#ffb87a", text: "#ffedd7", muted: "#c4b4a4" };
 
   return (
     <div className="fixed bottom-6 right-6 z-[300] flex flex-col items-end gap-3">
@@ -1395,7 +1395,7 @@ function ChatBot() {
             top: "50%",
             transform: "translateY(-50%)",
             background: "#1a1a1a",
-            color: "#FFFFFF",
+            color: "#ffedd7",
             fontSize: "12px",
             fontWeight: 600,
             padding: "6px 12px",
@@ -1425,15 +1425,15 @@ function ChatBot() {
 
       {isOpen && (
         <div className="rounded-2xl overflow-hidden shadow-2xl animate-fadeIn flex flex-col"
-          style={{ width: 340, height: 480, background: C.bg, border: "1px solid rgba(128,82,255,0.2)" }}
+          style={{ width: 340, height: 480, background: C.bg, border: "1px solid rgba(220,80,0,0.2)" }}
         >
           {/* header */}
-          <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: C.header, borderBottom: "1px solid rgba(128,82,255,0.2)" }}>
+          <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: C.header, borderBottom: "1px solid rgba(220,80,0,0.2)" }}>
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#8052ff" }}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#dc5000" }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#8052ff" stroke="#8052ff" strokeWidth="1.5"/>
-                  <circle cx="8.5" cy="11" r="1.1" fill="#8052ff"/><circle cx="12" cy="11" r="1.1" fill="#8052ff"/><circle cx="15.5" cy="11" r="1.1" fill="#8052ff"/>
+                  <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#dc5000" stroke="#dc5000" strokeWidth="1.5"/>
+                  <circle cx="8.5" cy="11" r="1.1" fill="#dc5000"/><circle cx="12" cy="11" r="1.1" fill="#dc5000"/><circle cx="15.5" cy="11" r="1.1" fill="#dc5000"/>
                 </svg>
               </div>
               <div>
@@ -1454,20 +1454,20 @@ function ChatBot() {
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}>
                 {msg.from === "bot" && (
-                  <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs mr-2 shrink-0 mt-0.5" style={{ background: "#8052ff", color: "#fff", fontWeight: 700, fontSize: 10 }}>11x</div>
+                  <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs mr-2 shrink-0 mt-0.5" style={{ background: "#dc5000", color: "#fff", fontWeight: 700, fontSize: 10 }}>11x</div>
                 )}
                 <div className="max-w-[78%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-line"
                   style={msg.from === "user"
-                    ? { background: "linear-gradient(135deg,#8052ff,#6b3fd4)", color: "#fff", borderBottomRightRadius: 4 }
-                    : { background: "rgba(128,82,255,0.12)", color: C.text, borderBottomLeftRadius: 4, border: "1px solid rgba(128,82,255,0.2)" }
+                    ? { background: "linear-gradient(135deg,#dc5000,#b84000)", color: "#fff", borderBottomRightRadius: 4 }
+                    : { background: "rgba(220,80,0,0.12)", color: C.text, borderBottomLeftRadius: 4, border: "1px solid rgba(220,80,0,0.2)" }
                   }
                 >{msg.text}</div>
               </div>
             ))}
             {isTyping && (
               <div className="flex justify-start items-end gap-2">
-                <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0" style={{ background: "#8052ff", color: "#fff", fontWeight: 700, fontSize: 10 }}>11x</div>
-                <div className="px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1" style={{ background: "rgba(128,82,255,0.12)", border: "1px solid rgba(128,82,255,0.2)" }}>
+                <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0" style={{ background: "#dc5000", color: "#fff", fontWeight: 700, fontSize: 10 }}>11x</div>
+                <div className="px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1" style={{ background: "rgba(220,80,0,0.12)", border: "1px solid rgba(220,80,0,0.2)" }}>
                   {[0,1,2].map((j) => <span key={j} className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: C.moss, animationDelay: `${j*0.15}s` }} />)}
                 </div>
               </div>
@@ -1476,32 +1476,32 @@ function ChatBot() {
           </div>
 
           {/* quick reply chips */}
-          <div className="px-4 pt-2.5 pb-1.5 flex flex-wrap gap-1.5 shrink-0" style={{ borderTop: "1px solid rgba(128,82,255,0.08)" }}>
+          <div className="px-4 pt-2.5 pb-1.5 flex flex-wrap gap-1.5 shrink-0" style={{ borderTop: "1px solid rgba(220,80,0,0.08)" }}>
             {["Services", "Careers", "Pricing", "Contact Us"].map((label) => (
               <button
                 key={label}
                 onClick={() => sendMessage(label)}
                 disabled={isTyping}
                 className="text-xs px-3 py-1 rounded-full cursor-pointer border-0 transition-all duration-150 disabled:opacity-40"
-                style={{ background: "rgba(128,82,255,0.10)", color: "#a78bff", border: "1px solid rgba(128,82,255,0.22)", fontWeight: 600 }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(128,82,255,0.22)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "rgba(128,82,255,0.10)"; }}
+                style={{ background: "rgba(220,80,0,0.10)", color: "#f07030", border: "1px solid rgba(220,80,0,0.22)", fontWeight: 600 }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(220,80,0,0.22)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(220,80,0,0.10)"; }}
               >{label}</button>
             ))}
           </div>
 
           {/* input */}
-          <div className="px-4 py-3 shrink-0 flex gap-2" style={{ borderTop: "1px solid rgba(128,82,255,0.12)" }}>
+          <div className="px-4 py-3 shrink-0 flex gap-2" style={{ borderTop: "1px solid rgba(220,80,0,0.12)" }}>
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
               placeholder="Type a message…"
               className="nature-input flex-1 rounded-xl px-4 py-2.5 text-sm outline-none"
-              style={{ background: "rgba(128,82,255,0.08)", border: "1.5px solid rgba(128,82,255,0.25)", color: C.text, fontWeight: 500 }}
+              style={{ background: "rgba(220,80,0,0.08)", border: "1.5px solid rgba(220,80,0,0.25)", color: C.text, fontWeight: 500 }}
             />
             <button onClick={sendMessage} disabled={!input.trim()} className="w-10 h-10 rounded-xl flex items-center justify-center transition-all cursor-pointer disabled:opacity-40 border-0 shrink-0"
-              style={{ background: "linear-gradient(135deg,#8052ff,#6b3fd4)" }}
+              style={{ background: "linear-gradient(135deg,#dc5000,#b84000)" }}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M2 8h12M9 3l5 5-5 5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1515,19 +1515,19 @@ function ChatBot() {
       <button
         onClick={() => setIsOpen((o) => !o)}
         className="w-14 h-14 rounded-2xl shadow-2xl flex items-center justify-center border-0 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-green-900/40"
-        style={{ background: "linear-gradient(135deg, #8052ff, #6b3fd4)", border: "1px solid rgba(128,82,255,0.4)" }}
+        style={{ background: "linear-gradient(135deg, #dc5000, #b84000)", border: "1px solid rgba(220,80,0,0.4)" }}
         aria-label="Open chat"
       >
         {isOpen ? (
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M2 2L16 16M16 2L2 16" stroke="#8052ff" strokeWidth="2.2" strokeLinecap="round"/>
+            <path d="M2 2L16 16M16 2L2 16" stroke="#dc5000" strokeWidth="2.2" strokeLinecap="round"/>
           </svg>
         ) : (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#8052ff" stroke="#8052ff" strokeWidth="1.5" strokeLinejoin="round"/>
-            <circle cx="8.5" cy="11" r="1.2" fill="#8052ff"/>
-            <circle cx="12" cy="11" r="1.2" fill="#8052ff"/>
-            <circle cx="15.5" cy="11" r="1.2" fill="#8052ff"/>
+            <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#dc5000" stroke="#dc5000" strokeWidth="1.5" strokeLinejoin="round"/>
+            <circle cx="8.5" cy="11" r="1.2" fill="#dc5000"/>
+            <circle cx="12" cy="11" r="1.2" fill="#dc5000"/>
+            <circle cx="15.5" cy="11" r="1.2" fill="#dc5000"/>
           </svg>
         )}
       </button>
@@ -1564,21 +1564,21 @@ function NewsletterSection() {
   };
 
   return (
-    <section style={{ background: "#0D1117", borderTop: "1px solid rgba(128,82,255,0.15)", borderBottom: "1px solid rgba(128,82,255,0.15)" }}>
+    <section style={{ background: "#130c05", borderTop: "1px solid rgba(220,80,0,0.15)", borderBottom: "1px solid rgba(220,80,0,0.15)" }}>
       <div className="px-5 md:px-12 py-12 md:py-16">
         <div style={{ maxWidth: "640px", margin: "0 auto", textAlign: "center" }}>
           <div className="eyebrow mb-3">Stay Informed</div>
-          <h2 className="text-[clamp(1.6rem,4vw,2.5rem)] font-black tracking-tighter mb-3" style={{ color: "#FFFFFF" }}>
+          <h2 className="text-[clamp(1.6rem,4vw,2.5rem)] font-black tracking-tighter mb-3" style={{ color: "#ffedd7" }}>
             Insights delivered to your inbox
           </h2>
-          <p className="text-sm font-medium mb-8" style={{ color: "#9a9a9a" }}>
+          <p className="text-sm font-medium mb-8" style={{ color: "#a09080" }}>
             Strategy, engineering, and talent — one newsletter, no noise.
           </p>
 
           {status === "success" ? (
-            <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl" style={{ background: "rgba(128,82,255,0.12)", border: "1px solid rgba(128,82,255,0.3)" }}>
-              <span style={{ color: "#8052ff", fontSize: "20px" }}>✓</span>
-              <p className="font-bold text-sm" style={{ color: "#8052ff" }}>{message}</p>
+            <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl" style={{ background: "rgba(220,80,0,0.12)", border: "1px solid rgba(220,80,0,0.3)" }}>
+              <span style={{ color: "#dc5000", fontSize: "20px" }}>✓</span>
+              <p className="font-bold text-sm" style={{ color: "#dc5000" }}>{message}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
@@ -1593,24 +1593,24 @@ function NewsletterSection() {
                   flex: "1 1 240px",
                   maxWidth: "360px",
                   background: "rgba(255,255,255,0.06)",
-                  border: "1.5px solid rgba(128,82,255,0.25)",
+                  border: "1.5px solid rgba(220,80,0,0.25)",
                   borderRadius: "12px",
-                  color: "#FFFFFF",
+                  color: "#ffedd7",
                   padding: "12px 18px",
                   fontSize: "14px",
                   fontWeight: 500,
                   outline: "none",
                   transition: "border 0.2s, background 0.2s",
                 }}
-                onFocus={e => { e.target.style.border = "1.5px solid #8052ff"; e.target.style.background = "rgba(128,82,255,0.1)"; }}
-                onBlur={e => { e.target.style.border = "1.5px solid rgba(128,82,255,0.25)"; e.target.style.background = "rgba(255,255,255,0.06)"; }}
+                onFocus={e => { e.target.style.border = "1.5px solid #dc5000"; e.target.style.background = "rgba(220,80,0,0.1)"; }}
+                onBlur={e => { e.target.style.border = "1.5px solid rgba(220,80,0,0.25)"; e.target.style.background = "rgba(255,255,255,0.06)"; }}
               />
               <button
                 type="submit"
                 disabled={status === "loading"}
                 style={{
-                  background: "#8052ff",
-                  color: "#FFFFFF",
+                  background: "#dc5000",
+                  color: "#ffedd7",
                   border: "none",
                   borderRadius: "12px",
                   padding: "12px 28px",
@@ -1621,8 +1621,8 @@ function NewsletterSection() {
                   whiteSpace: "nowrap",
                   opacity: status === "loading" ? 0.7 : 1,
                 }}
-                onMouseEnter={e => { e.target.style.background = "#6b3fd4"; }}
-                onMouseLeave={e => { e.target.style.background = "#8052ff"; }}
+                onMouseEnter={e => { e.target.style.background = "#b84000"; }}
+                onMouseLeave={e => { e.target.style.background = "#dc5000"; }}
               >
                 {status === "loading" ? "Subscribing…" : "Subscribe"}
               </button>
@@ -1653,7 +1653,7 @@ function WolfSection({ src, heading, sub }) {
         >
           {heading}
         </h2>
-        <p className="text-lg font-medium max-w-md mx-auto" style={{ color: "rgba(255,255,255,0.85)", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
+        <p className="text-lg font-medium max-w-md mx-auto" style={{ color: "rgba(255,237,215,0.85)", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
           {sub}
         </p>
       </div>
@@ -1678,7 +1678,7 @@ function BusinessHours() {
   }, []);
   return (
     <div className="hidden lg:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full"
-      style={{ background: status.available ? "rgba(128,82,255,0.10)" : "rgba(255,255,255,0.05)", border: `1px solid ${status.available ? "rgba(128,82,255,0.30)" : "rgba(255,255,255,0.10)"}` }}
+      style={{ background: status.available ? "rgba(220,80,0,0.10)" : "rgba(255,255,255,0.05)", border: `1px solid ${status.available ? "rgba(220,80,0,0.30)" : "rgba(255,255,255,0.10)"}` }}
     >
       <span className={`w-1.5 h-1.5 rounded-full ${status.available ? "bg-emerald-400 animate-pulse" : "bg-gray-500"}`} />
       <span style={{ color: status.available ? "#888888" : "#6B7280" }}>
@@ -1741,7 +1741,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#000000", color: "#ffffff" }}>
+    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#100904", color: "#ffedd7" }}>
       <LoadingScreen />
       <CustomCursor />
       <MouseSpotlight />
@@ -1749,9 +1749,9 @@ export default function App() {
 
       {/* Floating Background Blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] animate-pulse" style={{ background: "rgba(128,82,255,0.12)" }} />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] animate-pulse" style={{ background: "rgba(107,63,212,0.10)", animationDelay: "2s" }} />
-        <div className="absolute top-[50%] left-[60%] w-[25%] h-[25%] rounded-full blur-[100px] animate-pulse" style={{ background: "rgba(128,82,255,0.08)", animationDelay: "4s" }} />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(220,80,0,0.08)" }} />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(184,64,0,0.07)", animationDelay: "2s" }} />
+        <div className="absolute top-[40%] left-[55%] w-[30%] h-[30%] rounded-full blur-[110px] animate-pulse" style={{ background: "rgba(255,184,122,0.05)", animationDelay: "4s" }} />
       </div>
 
       {/* NAV */}
@@ -1762,7 +1762,7 @@ export default function App() {
           backdropFilter: scrolled ? "blur(16px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
           background: scrolled ? "rgba(0,0,0,0.88)" : "transparent",
-          borderBottom: scrolled ? "1px solid rgba(128,82,255,0.10)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(220,80,0,0.10)" : "none",
           transform: navHidden ? "translateY(-100%)" : "translateY(0)",
           transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.3s, border-color 0.3s",
         }}
@@ -1776,14 +1776,14 @@ export default function App() {
                 onClick={() => scrollToSection(id)}
                 className="transition-all duration-200 bg-transparent border-0 cursor-pointer"
                 style={{
-                  color: activeSection === id ? "#ffffff" : "#9a9a9a",
+                  color: activeSection === id ? "#ffedd7" : "#a09080",
                   fontSize: 12,
                   fontWeight: 500,
                   letterSpacing: "1.44px",
                   textTransform: "uppercase",
                 }}
-                onMouseEnter={e => { if (activeSection !== id) e.target.style.color = "#ffffff"; }}
-                onMouseLeave={e => { if (activeSection !== id) e.target.style.color = "#9a9a9a"; }}
+                onMouseEnter={e => { if (activeSection !== id) e.target.style.color = "#ffedd7"; }}
+                onMouseLeave={e => { if (activeSection !== id) e.target.style.color = "#a09080"; }}
               >
                 {label}
               </button>
@@ -1799,7 +1799,7 @@ export default function App() {
             fontWeight: 500,
             letterSpacing: "1.44px",
             textTransform: "uppercase",
-            color: "#ffffff",
+            color: "#ffedd7",
             padding: "10px 22px",
           }}
         >
@@ -1808,7 +1808,7 @@ export default function App() {
 
         <button
           className="md:hidden bg-transparent border-0 cursor-pointer text-2xl"
-          style={{ color: "#8052ff" }}
+          style={{ color: "#dc5000" }}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation"
           aria-expanded={menuOpen}
@@ -1826,8 +1826,8 @@ export default function App() {
               key={id}
               onClick={() => scrollToSection(id)}
               className="text-2xl font-bold transition-colors duration-200 bg-transparent border-0 cursor-pointer"
-              style={{ color: "#9a9a9a" }}
-              onMouseEnter={e => e.target.style.color="#8052ff"}
+              style={{ color: "#a09080" }}
+              onMouseEnter={e => e.target.style.color="#dc5000"}
               onMouseLeave={e => e.target.style.color="#9a9a9a"}
             >
               {label}
@@ -1841,7 +1841,7 @@ export default function App() {
         {/* ── HOME ─────────────────────────────────────────────────────── */}
         <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ minHeight: "100svh" }}>
           <video src="/11xlogo-video.mp4" autoPlay muted playsInline loop className="hero-bg-video" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(13,24,38,0.30) 40%, rgba(8,11,18,0.65) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(16,9,4,0.60) 0%, rgba(22,14,8,0.30) 40%, rgba(16,9,4,0.65) 100%)" }} />
           <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
 
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
@@ -1849,15 +1849,15 @@ export default function App() {
               <div className="eyebrow mb-7 lusion-fade d1">Consulting · Talent · Technology</div>
 
               <h1 className="text-[clamp(3rem,8vw,7.5rem)] display-headline mb-6 md:mb-10"
-                style={{ color: "#ffffff", textShadow: "0 2px 24px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,1)" }}>
+                style={{ color: "#ffedd7", textShadow: "0 2px 24px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,1)" }}>
                 <span className="lusion-line d2"><span className="lusion-line-inner">Scale your</span></span>
-                <span className="lusion-line d3"><span className="lusion-line-inner" style={{ color: "#c4b5fd", textShadow: "0 0 32px rgba(196,181,253,0.4), 0 2px 16px rgba(0,0,0,0.9)" }}>
+                <span className="lusion-line d3"><span className="lusion-line-inner" style={{ color: "#ffb87a", textShadow: "0 0 32px rgba(220,80,0,0.35), 0 2px 16px rgba(0,0,0,0.9)" }}>
                   <TypingText words={["ambition", "vision", "growth", "impact"]} />
                 </span></span>
               </h1>
 
               <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 lusion-fade d3"
-                style={{ color: "#e2e8f0", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
+                style={{ color: "#f0dfc4", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
                 Bridging the gap between elite engineering and strategic growth with a platform-first approach.
               </p>
 
@@ -1872,13 +1872,13 @@ export default function App() {
                 <MagneticButton
                   onClick={() => scrollToSection("careers")}
                   className="ghost-aurora text-center"
-                  style={{ padding: "14px 28px", color: "#ffffff", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}
+                  style={{ padding: "14px 28px", color: "#ffedd7", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}
                 >
                   Explore Roles
                 </MagneticButton>
               </div>
 
-              <div ref={statsRef} className="mt-8 md:mt-10 pt-7 md:pt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10 lusion-fade d5" style={{ borderTop: "1px solid rgba(128,82,255,0.15)" }}>
+              <div ref={statsRef} className="mt-8 md:mt-10 pt-7 md:pt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10 lusion-fade d5" style={{ borderTop: "1px solid rgba(220,80,0,0.15)" }}>
                 {STATS.map((s) => (
                   <StatCard key={s.label} {...s} animate={statsVisible} />
                 ))}
@@ -1887,34 +1887,34 @@ export default function App() {
 
             <div className="hidden lg:flex flex-shrink-0 items-center justify-center lusion-fade d3">
               <img src={logo} alt="11x Square" className="object-cover"
-                style={{ width: 320, height: 320, borderRadius: 40, border: "1px solid rgba(128,82,255,0.35)" }} />
+                style={{ width: 320, height: 320, borderRadius: 40, border: "1px solid rgba(220,80,0,0.35)" }} />
             </div>
           </div>
         </section>
 
         {/* MARQUEE */}
-        <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#060606", borderTop: "1px solid rgba(128,82,255,0.2)", borderBottom: "1px solid rgba(128,82,255,0.2)" }}>
+        <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#120b05", borderTop: "1px solid rgba(220,80,0,0.2)", borderBottom: "1px solid rgba(220,80,0,0.2)" }}>
           <div className="marquee-track flex gap-14 w-max">
             {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-              <span key={i} className="mono text-[12px] font-bold uppercase tracking-wider whitespace-nowrap flex items-center gap-4" style={{ color: "#8052ff" }}>
+              <span key={i} className="mono text-[12px] font-bold uppercase tracking-wider whitespace-nowrap flex items-center gap-4" style={{ color: "#dc5000" }}>
                 {item}
-                <span className="text-[10px]" style={{ color: "#6b3fd4" }}>✦</span>
+                <span className="text-[10px]" style={{ color: "#b84000" }}>✦</span>
               </span>
             ))}
           </div>
         </div>
 
         {/* ── SERVICES ──────────────────────────────────────────────────── */}
-        <section id="services" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#000000" }}>
+        <section id="services" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#100904" }}>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div>
               <div className="eyebrow mb-4 lusion-fade d1">Our Solutions</div>
-              <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#FFFFFF" }}>
+              <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#ffedd7" }}>
                 <span className="lusion-clip d2" style={{ display: "block" }}>Consulting for the</span>
                 <span className="lusion-clip d3" style={{ display: "block" }}>bold &amp; ambitious</span>
               </h2>
             </div>
-            <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md lusion-fade d4" style={{ color: "#9a9a9a" }}>
+            <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md lusion-fade d4" style={{ color: "#a09080" }}>
               Platform-driven consulting that solves deep engineering and product problems in record time.
             </p>
           </div>
@@ -1933,20 +1933,20 @@ export default function App() {
         />
 
         {/* ── CAREERS ───────────────────────────────────────────────────── */}
-        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh", background: "#000000" }}>
+        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh", background: "#100904" }}>
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
             <div>
               <div className="eyebrow mb-4 lusion-fade d1">Careers</div>
-              <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6" style={{ color: "#FFFFFF" }}>
+              <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6" style={{ color: "#ffedd7" }}>
                 <span className="lusion-clip d2" style={{ display: "block" }}>Find your next</span>
-                <span className="lusion-clip d3" style={{ display: "block" }}>challenge at <span style={{ color: "#8052ff" }}>11x</span></span>
+                <span className="lusion-clip d3" style={{ display: "block" }}>challenge at <span style={{ color: "#dc5000" }}>11x</span></span>
               </h2>
-              <p className="text-lg font-medium leading-relaxed mb-10 max-w-md lusion-fade d4" style={{ color: "#9a9a9a" }}>
+              <p className="text-lg font-medium leading-relaxed mb-10 max-w-md lusion-fade d4" style={{ color: "#a09080" }}>
                 Whether you're a seasoned consultant or a fresh grad ready to make your mark — we have a seat for you.
               </p>
 
-              <div className="p-7 rounded-xl shadow-sm lusion-fade d5" style={{ background: "rgba(17,24,39,0.80)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(128,82,255,0.25)" }}>
-                <p className="mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "#8052ff" }}>Intern Program Highlights</p>
+              <div className="p-7 rounded-xl shadow-sm lusion-fade d5" style={{ background: "rgba(26,14,8,0.80)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(220,80,0,0.25)" }}>
+                <p className="mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "#dc5000" }}>Intern Program Highlights</p>
                 <ul className="flex flex-col gap-3">
                   {[
                     "3-month structured cohort program",
@@ -1954,15 +1954,15 @@ export default function App() {
                     "Mentorship from senior consultants",
                     "Full-time conversion for top performers",
                   ].map((item) => (
-                    <li key={item} className="flex gap-3 text-sm font-medium" style={{ color: "#888888" }}>
-                      <span className="flex-shrink-0 text-xl" style={{ color: "#6b3fd4" }}>→</span> {item}
+                    <li key={item} className="flex gap-3 text-sm font-medium" style={{ color: "#988878" }}>
+                      <span className="flex-shrink-0 text-xl" style={{ color: "#b84000" }}>→</span> {item}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
 
-            <div className="flex flex-col lusion-fade d5 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(128,82,255,0.20)" }}>
+            <div className="flex flex-col lusion-fade d5 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(220,80,0,0.20)" }}>
               {ROLES.map((r, i) => (
                 <RoleItem key={r.title} {...r} delay={0.1 * i} onApply={() => setCareersApplyRole(r)} />
               ))}
@@ -1978,33 +1978,33 @@ export default function App() {
         />
 
         {/* ── PROCESS ───────────────────────────────────────────────────── */}
-        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "80vh", background: "#000000" }}>
+        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "80vh", background: "#100904" }}>
           <div className="relative z-10">
             <div className="eyebrow mb-3 lusion-fade d1">The Process</div>
             <h2 className="text-[clamp(1.5rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-6 md:mb-14 max-w-xl"
-              style={{ color: "#FFFFFF", textShadow: "0 2px 20px rgba(0,0,0,0.95), 0 1px 4px rgba(0,0,0,1)" }}>
+              style={{ color: "#ffedd7", textShadow: "0 2px 20px rgba(0,0,0,0.95), 0 1px 4px rgba(0,0,0,1)" }}>
               <span className="lusion-clip d2" style={{ display: "block" }}>From discovery</span>
               <span className="lusion-clip d3" style={{ display: "block" }}>to results in weeks</span>
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden lusion-fade d4" style={{ border: "1px solid rgba(128,82,255,0.25)" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden lusion-fade d4" style={{ border: "1px solid rgba(220,80,0,0.25)" }}>
               {STEPS.map((s, i) => (
                 <div
                   key={s.num}
                   style={{
-                    background: "rgba(8,11,18,0.82)",
+                    background: "rgba(16,9,4,0.82)",
                     backdropFilter: "blur(16px)",
                     WebkitBackdropFilter: "blur(16px)",
-                    borderRight: i < STEPS.length - 1 ? "1px solid rgba(128,82,255,0.2)" : undefined,
-                    borderBottom: "1px solid rgba(128,82,255,0.15)",
+                    borderRight: i < STEPS.length - 1 ? "1px solid rgba(220,80,0,0.2)" : undefined,
+                    borderBottom: "1px solid rgba(220,80,0,0.15)",
                   }}
                   className="p-5 sm:p-6 lg:p-8 relative group transition-all duration-500"
-                  onMouseEnter={e => e.currentTarget.style.background="rgba(30,41,59,0.88)"}
-                  onMouseLeave={e => e.currentTarget.style.background="rgba(8,11,18,0.82)"}
+                  onMouseEnter={e => e.currentTarget.style.background="rgba(36,20,8,0.88)"}
+                  onMouseLeave={e => e.currentTarget.style.background="rgba(16,9,4,0.82)"}
                 >
-                  <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(128,82,255,0.30)" }}>{s.num}</div>
-                  <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#FFFFFF" }}>{s.title}</h4>
-                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#CBD5E1" }}>{s.desc}</p>
+                  <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(220,80,0,0.30)" }}>{s.num}</div>
+                  <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#ffedd7" }}>{s.title}</h4>
+                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#e0cdb8" }}>{s.desc}</p>
                 </div>
               ))}
             </div>
@@ -2018,7 +2018,7 @@ export default function App() {
         <FaqAccordion />
 
         {/* ── CONTACT ───────────────────────────────────────────────────── */}
-        <section id="contact" className="px-5 md:px-12 py-16 md:py-24 relative overflow-hidden" style={{ background: "#000000" }}>
+        <section id="contact" className="px-5 md:px-12 py-16 md:py-24 relative overflow-hidden" style={{ background: "#100904" }}>
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
           </div>
@@ -2028,11 +2028,11 @@ export default function App() {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 relative z-10">
             <div>
               <div className="eyebrow mb-3 lusion-fade d1">Get In Touch</div>
-              <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl" style={{ color: "#FFFFFF" }}>
+              <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl" style={{ color: "#ffedd7" }}>
                 <span className="lusion-clip d2" style={{ display: "block" }}>Accelerate your team's</span>
                 <span className="lusion-clip d3" style={{ display: "block" }}>potential today.</span>
               </h2>
-              <p className="text-[18px] font-medium mt-4 max-w-md lusion-fade d4" style={{ color: "#9a9a9a" }}>
+              <p className="text-[18px] font-medium mt-4 max-w-md lusion-fade d4" style={{ color: "#a09080" }}>
                 Connect with our leadership to explore high-impact consulting or talent solutions.
               </p>
             </div>
@@ -2041,7 +2041,7 @@ export default function App() {
                 Start a Project ↗
               </button>
               <button onClick={() => setActiveModal("apply")} className="ghost-aurora"
-                style={{ padding: "16px 44px", color: "#ffffff", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}>
+                style={{ padding: "16px 44px", color: "#ffedd7", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}>
                 Apply Now
               </button>
             </div>
@@ -2061,11 +2061,11 @@ export default function App() {
       <CookieBanner />
 
       {/* FOOTER */}
-      <footer className="px-5 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(128,82,255,0.2)" }}>
+      <footer className="px-5 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10 fade-up d1" style={{ background: "#130c05", borderTop: "1px solid rgba(220,80,0,0.2)" }}>
         <div className="flex flex-col lg:flex-row justify-between gap-10 lg:gap-16 mb-8 md:mb-10 fade-up d2">
           <div className="max-w-xs fade-up d3">
             <Logo onClick={() => scrollToSection("home")} className="mb-4" size="footer" dark={false} />
-            <p className="text-sm leading-relaxed" style={{ color: "#9a9a9a" }}>
+            <p className="text-sm leading-relaxed" style={{ color: "#a09080" }}>
               Bridging elite consulting with the next generation of tech talent.
             </p>
           </div>
@@ -2090,13 +2090,13 @@ export default function App() {
               ]},
             ].map((col) => (
               <div key={col.heading}>
-                <h5 className="mono text-[10px] font-bold uppercase tracking-[0.18em] mb-5" style={{ color: "#8052ff" }}>{col.heading}</h5>
+                <h5 className="mono text-[10px] font-bold uppercase tracking-[0.18em] mb-5" style={{ color: "#dc5000" }}>{col.heading}</h5>
                 <ul className="flex flex-col gap-1.5 list-none">
                   {col.links.map(({ label, dest }) => (
                     <li key={label}>
                       <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(dest); }}
-                        className="text-sm transition-colors duration-200 no-underline" style={{ color: "#9a9a9a" }}
-                        onMouseEnter={e => e.target.style.color="#8052ff"}
+                        className="text-sm transition-colors duration-200 no-underline" style={{ color: "#a09080" }}
+                        onMouseEnter={e => e.target.style.color="#dc5000"}
                         onMouseLeave={e => e.target.style.color="#9a9a9a"}
                       >{label}</a>
                     </li>
@@ -2107,11 +2107,11 @@ export default function App() {
           </div>
         </div>
 
-        <div className="pt-7 flex flex-col sm:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(128,82,255,0.2)" }}>
-          <p className="mono text-[11px]" style={{ color: "#9a9a9a" }}>
-            © 2025 <span style={{ color: "#8052ff" }}>11x Square</span>. All rights reserved.
+        <div className="pt-7 flex flex-col sm:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(220,80,0,0.2)" }}>
+          <p className="mono text-[11px]" style={{ color: "#a09080" }}>
+            © 2025 <span style={{ color: "#dc5000" }}>11x Square</span>. All rights reserved.
           </p>
-          <p className="mono text-[11px]" style={{ color: "#9a9a9a" }}>✦ Built for the bold.</p>
+          <p className="mono text-[11px]" style={{ color: "#a09080" }}>✦ Built for the bold.</p>
         </div>
       </footer>
     </div>
