@@ -1771,19 +1771,19 @@ export default function App() {
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
 
           <div className="flex-1 min-w-0">
-            <p className="mono text-[11px] font-bold uppercase tracking-[0.15em] mb-7 flex items-center gap-3 fade-up d1" style={{ color: "#5b2fd4" }}>
-              <span className="block w-12 h-[2px]" style={{ background: "#8052ff" }} />
+            <p className="mono text-[11px] font-bold uppercase tracking-[0.15em] mb-7 flex items-center gap-3 fade-up d1" style={{ color: "#9a9a9a" }}>
+              <span className="block w-12 h-[1px]" style={{ background: "#9a9a9a" }} />
               Consulting · Talent · Technology
             </p>
 
-            <h1 className="text-[clamp(2rem,7vw,6.5rem)] display-headline mb-6 md:mb-10 fade-up d2" style={{ color: "#FFFFFF" }}>
+            <h1 className="text-[clamp(2rem,7vw,6.5rem)] display-headline mb-6 md:mb-10 fade-up d2" style={{ color: "#ffffff" }}>
               Scale your
               <br />
-              <span className="text-stroke cursor-default inline-block" style={{ WebkitTextStroke: "2px #8052ff" }}>
+              <span style={{ color: "#8052ff" }}>
                 <TypingText words={["ambition", "vision", "growth", "impact"]} />
               </span>
               <br />
-              with <span className="gradient-text">11x Square</span>
+              with <span style={{ color: "#ffffff" }}>11x Square</span>
             </h1>
 
             <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 fade-up d3" style={{ color: "#9a9a9a" }}>
