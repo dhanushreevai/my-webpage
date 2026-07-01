@@ -1,8 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=DM+Mono:wght@300;400&display=swap');
 @import "tailwindcss";
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
 html, body { background: #100904; margin: 0; padding: 0; cursor: none; }
+
+/* ── Full-page scroll snap ── */
+section[id] {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+/* Services and testimonials are taller than viewport — allow normal scroll within them */
+#services, #contact {
+  scroll-snap-stop: normal;
+}
+/* Wolf break sections snap too */
+.wolf-snap {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
 
 * { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.01em; }
 .mono { font-family: 'DM Mono', monospace; }

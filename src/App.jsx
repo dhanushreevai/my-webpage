@@ -1124,7 +1124,7 @@ function CareersApplyModal({ role, onClose }) {
 /* ── Testimonials Section ────────────────────────────────────────────────── */
 function TestimonialsSection() {
   return (
-    <section style={{ background: "#100904", borderTop: "1px solid rgba(220,80,0,0.12)" }}>
+    <section id="testimonials" style={{ background: "#100904", borderTop: "1px solid rgba(220,80,0,0.12)" }}>
       <div className="px-5 md:px-12 py-14 md:py-20">
         <div className="eyebrow mb-3">Client Stories</div>
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-12" style={{ color: "#ffedd7" }}>
@@ -1640,7 +1640,7 @@ function NewsletterSection() {
 
 function WolfSection({ src, heading, sub }) {
   return (
-    <section className="relative overflow-hidden flex items-center justify-center" style={{ height: "100vh" }}>
+    <section className="wolf-snap relative overflow-hidden flex items-center justify-center" style={{ height: "100vh" }}>
       <video
         src={src} autoPlay muted playsInline loop
         className="absolute inset-0 w-full h-full object-cover"
@@ -1661,7 +1661,7 @@ function WolfSection({ src, heading, sub }) {
   );
 }
 
-const SECTION_ORDER = ["home", "services", "careers", "process", "contact"];
+const SECTION_ORDER = ["home", "services", "careers", "process", "testimonials", "contact"];
 
 function ScrollToContinue({ activeSection }) {
   const idx = SECTION_ORDER.indexOf(activeSection);
@@ -1789,7 +1789,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const ids = ["home", "services", "careers", "process", "contact"];
+    const ids = ["home", "services", "careers", "process", "testimonials", "contact"];
     const secObs = new IntersectionObserver(
       (entries) => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }),
       { threshold: 0.4 }
@@ -1904,7 +1904,7 @@ export default function App() {
       <main>
 
         {/* ── HOME ─────────────────────────────────────────────────────── */}
-        <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ minHeight: "100svh" }}>
+        <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ height: "100svh" }}>
           <video src="/11xlogo-video.mp4" autoPlay muted playsInline loop className="hero-bg-video" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(16,9,4,0.60) 0%, rgba(22,14,8,0.30) 40%, rgba(16,9,4,0.65) 100%)" }} />
           <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
@@ -1998,7 +1998,7 @@ export default function App() {
         />
 
         {/* ── CAREERS ───────────────────────────────────────────────────── */}
-        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh", background: "#100904" }}>
+        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh", height: "100svh", overflowY: "auto", background: "#100904" }}>
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
             <div>
               <div className="eyebrow mb-4 lusion-fade d1">Careers</div>
@@ -2043,7 +2043,7 @@ export default function App() {
         />
 
         {/* ── PROCESS ───────────────────────────────────────────────────── */}
-        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "80vh", background: "#100904" }}>
+        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh", background: "#100904" }}>
           <div className="relative z-10">
             <div className="eyebrow mb-3 lusion-fade d1">The Process</div>
             <h2 className="text-[clamp(1.5rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-6 md:mb-14 max-w-xl"
@@ -2081,7 +2081,7 @@ export default function App() {
 
         {/* ── FAQ ───────────────────────────────────────────────────────── */}
         {/* ── CONTACT ───────────────────────────────────────────────────── */}
-        <section id="contact" className="px-5 md:px-12 py-16 md:py-24 relative overflow-hidden" style={{ background: "#100904" }}>
+        <section id="contact" className="px-5 md:px-12 relative overflow-hidden flex flex-col justify-center" style={{ minHeight: "100svh", background: "#100904" }}>
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
           </div>
