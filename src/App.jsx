@@ -267,6 +267,89 @@ function MagneticButton({ children, className = "", onClick, style: customStyle 
   );
 }
 
+function LoadingScreen() {
+  const [visible, setVisible] = useState(() => !sessionStorage.getItem("11x_loaded"));
+  const [fading, setFading] = useState(false);
+
+  useEffect(() => {
+    if (!visible) return;
+    const t1 = setTimeout(() => setFading(true), 2000);
+    const t2 = setTimeout(() => {
+      setVisible(false);
+      sessionStorage.setItem("11x_loaded", "1");
+    }, 2650);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [visible]);
+
+  if (!visible) return null;
+
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 99999,
+      background: "#080B12",
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      opacity: fading ? 0 : 1,
+      transition: "opacity 0.65s cubic-bezier(0.4,0,0.2,1)",
+      pointerEvents: fading ? "none" : "all",
+    }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        {/* Logo with glow */}
+        <div style={{ position: "relative", marginBottom: 28 }}>
+          <div style={{
+            position: "absolute", inset: -16,
+            borderRadius: 44,
+            background: "radial-gradient(circle, rgba(14,165,233,0.35) 0%, transparent 70%)",
+            filter: "blur(16px)",
+          }} />
+          <img
+            src={logo}
+            alt="11x Square"
+            className="load-logo-pulse"
+            style={{
+              position: "relative",
+              width: 96, height: 96,
+              objectFit: "cover",
+              borderRadius: 22,
+              border: "2px solid rgba(14,165,233,0.5)",
+              boxShadow: "0 0 32px rgba(14,165,233,0.25), 0 8px 32px rgba(0,0,0,0.5)",
+            }}
+          />
+        </div>
+
+        {/* Brand */}
+        <div style={{
+          fontFamily: "'Cinzel', serif",
+          fontSize: "clamp(2rem, 6vw, 3rem)",
+          fontWeight: 900,
+          color: "#FFFFFF",
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          lineHeight: 1,
+          marginBottom: 8,
+        }}>
+          11x<span style={{ color: "#0EA5E9" }}>Square</span>
+        </div>
+
+        <p style={{
+          color: "#64748B",
+          fontSize: 10,
+          fontFamily: "monospace",
+          letterSpacing: "0.3em",
+          textTransform: "uppercase",
+          marginBottom: 40,
+        }}>
+          Consulting · Talent · Technology
+        </p>
+
+        {/* Loading bar */}
+        <div style={{ width: 160, height: 2, background: "rgba(14,165,233,0.12)", borderRadius: 2, overflow: "hidden" }}>
+          <div className="load-bar-fill" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ScrollProgress() {
   const [width, setWidth] = useState(0);
   useEffect(() => {
@@ -1513,6 +1596,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#080B12", color: "#F0F7FF" }}>
+      <LoadingScreen />
       <MouseSpotlight />
 
       {/* Floating Background Blobs */}

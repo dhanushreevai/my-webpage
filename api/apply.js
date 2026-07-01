@@ -1,5 +1,6 @@
 import { connectDB, Application } from "./_db.js";
 import { rateLimit, getIP, sanitize, isValidEmail, isValidPhone, setSecurityHeaders } from "./_security.js";
+import { sendApplicationEmails } from "./_email.js";
 
 export const config = {
   api: { bodyParser: { sizeLimit: "5mb" } },
@@ -44,6 +45,8 @@ export default async function handler(req, res) {
   try {
     await connectDB();
     const application = await Application.create({ name, email, phone, resumeFileName, resumeData, resumeMimeType });
+    // Fire-and-forget — don't block the response
+    sendApplicationEmails(name, email, resumeFileName).catch(err => console.error("Application email error:", err));
     res.status(201).json({ message: "Application submitted successfully.", id: application._id });
   } catch (err) {
     console.error(err);

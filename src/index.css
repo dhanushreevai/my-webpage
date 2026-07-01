@@ -125,6 +125,25 @@ html, body { background: #080B12; margin: 0; padding: 0; }
   overflow: hidden;
 }
 
+/* ── Page loading screen ── */
+@keyframes loadBar {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+@keyframes loadPulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+.load-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0EA5E9, #38BDF8);
+  border-radius: 2px;
+  animation: loadBar 2s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.load-logo-pulse {
+  animation: loadPulse 1.5s ease-in-out infinite;
+}
+
 /* ── Scroll-triggered reveal ── */
 .scroll-reveal {
   opacity: 0;
