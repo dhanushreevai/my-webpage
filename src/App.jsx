@@ -1823,7 +1823,7 @@ export default function App() {
                 src={logo}
                 alt="11x Square"
                 className="relative object-cover"
-                style={{ width: 110, height: 110, borderRadius: 22, border: "1px solid rgba(128,82,255,0.4)" }}
+                style={{ width: 220, height: 220, borderRadius: 36, border: "1px solid rgba(128,82,255,0.4)" }}
               />
               </div>
             </div>
