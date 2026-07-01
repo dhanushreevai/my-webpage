@@ -2,7 +2,12 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import logo from "./image/11x-logo.jpeg";
 
-const NAV_LINKS = ["Services", "Careers", "Process", "Contact"];
+const NAV_LINKS = [
+  { label: "Services", id: "services" },
+  { label: "Careers",  id: "careers" },
+  { label: "Process",  id: "process" },
+  { label: "Contact",  id: "contact" },
+];
 
 const SERVICES = [
   {
@@ -1154,16 +1159,65 @@ function TestimonialsSection() {
   );
 }
 
-/* ── Scroll Reveal Hook ───────────────────────────────────────────────────── */
-function useScrollReveal(view) {
+/* ── Scroll Reveal Hook (handles both legacy + Lusion classes) ─────────────── */
+function useScrollReveal() {
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("revealed"); observer.unobserve(e.target); } }),
-      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+      (entries) => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add("revealed");
+          e.target.classList.add("visible");
+          observer.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
     );
-    document.querySelectorAll(".scroll-reveal").forEach(el => observer.observe(el));
+    [".scroll-reveal", ".lusion-line", ".lusion-clip", ".lusion-fade"].forEach(sel =>
+      document.querySelectorAll(sel).forEach(el => observer.observe(el))
+    );
     return () => observer.disconnect();
-  }, [view]);
+  }, []);
+}
+
+/* ── Custom cursor (dot + lagging ring) ─────────────────────────────────── */
+function CustomCursor() {
+  const dotRef  = useRef(null);
+  const ringRef = useRef(null);
+  const ringPos = useRef({ x: 0, y: 0 });
+  const mouse   = useRef({ x: 0, y: 0 });
+  const animId  = useRef(null);
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    const onMove = (e) => {
+      mouse.current = { x: e.clientX, y: e.clientY };
+      if (dotRef.current) dotRef.current.style.transform = `translate3d(${e.clientX - 3}px,${e.clientY - 3}px,0)`;
+    };
+    const onEnter = () => setHovered(true);
+    const onLeave = () => setHovered(false);
+    window.addEventListener("mousemove", onMove);
+    const addHover = () => document.querySelectorAll("a,button,[data-cursor]").forEach(el => {
+      el.addEventListener("mouseenter", onEnter);
+      el.addEventListener("mouseleave", onLeave);
+    });
+    addHover();
+    const lerp = (a, b, n) => a + (b - a) * n;
+    const loop = () => {
+      ringPos.current.x = lerp(ringPos.current.x, mouse.current.x - 16, 0.13);
+      ringPos.current.y = lerp(ringPos.current.y, mouse.current.y - 16, 0.13);
+      if (ringRef.current) ringRef.current.style.transform = `translate3d(${ringPos.current.x}px,${ringPos.current.y}px,0)`;
+      animId.current = requestAnimationFrame(loop);
+    };
+    loop();
+    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(animId.current); };
+  }, []);
+
+  return (
+    <>
+      <div ref={dotRef} className="cursor-dot" />
+      <div ref={ringRef} className={`cursor-ring${hovered ? " hovered" : ""}`} />
+    </>
+  );
 }
 
 /* ── Exit Intent Popup ────────────────────────────────────────────────────── */
@@ -1635,9 +1689,7 @@ function BusinessHours() {
 }
 
 export default function App() {
-  const [view, setView] = useState("Home");
-  const [curtainPhase, setCurtainPhase] = useState("idle"); // "idle" | "enter" | "exit"
-  const [isBusy, setIsBusy] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
@@ -1646,7 +1698,7 @@ export default function App() {
   const [careersApplyRole, setCareersApplyRole] = useState(null);
   const statsRef = useRef(null);
   const lastScrollY = useRef(0);
-  useScrollReveal(view);
+  useScrollReveal();
 
   useEffect(() => {
     const onScroll = () => {
@@ -1672,52 +1724,28 @@ export default function App() {
     return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    const ids = ["home", "services", "careers", "process", "contact"];
+    const secObs = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }),
+      { threshold: 0.4 }
+    );
+    ids.forEach(id => { const el = document.getElementById(id); if (el) secObs.observe(el); });
+    return () => secObs.disconnect();
+  }, []);
 
-  const navigateTo = (v) => {
-    if (v === view || isBusy) return;
+  const scrollToSection = useCallback((id) => {
     setMenuOpen(false);
-    setIsBusy(true);
-    setCurtainPhase("enter");
-    setTimeout(() => {
-      setView(v);
-      window.scrollTo({ top: 0, behavior: "instant" });
-      setCurtainPhase("exit");
-      setTimeout(() => {
-        setCurtainPhase("idle");
-        setIsBusy(false);
-      }, 560);
-    }, 560);
-  };
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   return (
     <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#000000", color: "#ffffff" }}>
       <LoadingScreen />
+      <CustomCursor />
       <MouseSpotlight />
-
-      {/* Curtain transition overlay */}
-      {curtainPhase !== "idle" && (
-        <div
-          className={curtainPhase === "enter" ? "curtain-enter" : "curtain-exit"}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 99998,
-            background: "linear-gradient(105deg, #000000 0%, #0d0520 45%, #1a0840 55%, #000000 100%)",
-            pointerEvents: "all",
-          }}
-        >
-          {/* Glowing leading edge */}
-          <div style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: 2,
-            height: "100%",
-            background: "linear-gradient(180deg, transparent 0%, #8052ff 30%, #c4b5fd 50%, #8052ff 70%, transparent 100%)",
-            boxShadow: "0 0 24px 4px rgba(128,82,255,0.6)",
-          }} />
-        </div>
-      )}
+      <ScrollProgress />
 
       {/* Floating Background Blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -1739,32 +1767,32 @@ export default function App() {
           transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.3s, border-color 0.3s",
         }}
       >
-        <Logo onClick={() => navigateTo("Home")} dark={false} />
+        <Logo onClick={() => scrollToSection("home")} dark={false} />
 
         <ul className="hidden md:flex gap-8 list-none">
-          {NAV_LINKS.map((l) => (
-            <li key={l}>
+          {NAV_LINKS.map(({ label, id }) => (
+            <li key={id}>
               <button
-                onClick={() => navigateTo(l)}
+                onClick={() => scrollToSection(id)}
                 className="transition-all duration-200 bg-transparent border-0 cursor-pointer"
                 style={{
-                  color: view === l ? "#ffffff" : "#9a9a9a",
+                  color: activeSection === id ? "#ffffff" : "#9a9a9a",
                   fontSize: 12,
                   fontWeight: 500,
                   letterSpacing: "1.44px",
                   textTransform: "uppercase",
                 }}
-                onMouseEnter={e => { if (view !== l) e.target.style.color = "#ffffff"; }}
-                onMouseLeave={e => { if (view !== l) e.target.style.color = "#9a9a9a"; }}
+                onMouseEnter={e => { if (activeSection !== id) e.target.style.color = "#ffffff"; }}
+                onMouseLeave={e => { if (activeSection !== id) e.target.style.color = "#9a9a9a"; }}
               >
-                {l}
+                {label}
               </button>
             </li>
           ))}
         </ul>
 
         <button
-          onClick={() => navigateTo("Contact")}
+          onClick={() => scrollToSection("contact")}
           className="hidden md:block ghost-aurora"
           style={{
             fontSize: 12,
@@ -1793,88 +1821,75 @@ export default function App() {
       {/* MOBILE MENU */}
       {menuOpen && (
         <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "rgba(0,0,0,0.98)" }}>
-          {NAV_LINKS.map((l) => (
+          {NAV_LINKS.map(({ label, id }) => (
             <button
-              key={l}
-              onClick={() => navigateTo(l)}
+              key={id}
+              onClick={() => scrollToSection(id)}
               className="text-2xl font-bold transition-colors duration-200 bg-transparent border-0 cursor-pointer"
               style={{ color: "#9a9a9a" }}
               onMouseEnter={e => e.target.style.color="#8052ff"}
               onMouseLeave={e => e.target.style.color="#9a9a9a"}
             >
-              {l}
+              {label}
             </button>
           ))}
         </div>
       )}
 
-      <main key={view} className="page-transition">
-        {view === "Home" && (
-        <>
+      <main>
+
+        {/* ── HOME ─────────────────────────────────────────────────────── */}
         <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ minHeight: "100svh" }}>
-        <video
-          src="/11xlogo-video.mp4"
-          autoPlay muted playsInline loop
-          className="hero-bg-video"
-        />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(13,24,38,0.30) 40%, rgba(8,11,18,0.65) 100%)" }} />
-        <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
+          <video src="/11xlogo-video.mp4" autoPlay muted playsInline loop className="hero-bg-video" />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(13,24,38,0.30) 40%, rgba(8,11,18,0.65) 100%)" }} />
+          <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
 
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
+            <div className="flex-1 min-w-0">
+              <div className="eyebrow mb-7 lusion-fade d1">Consulting · Talent · Technology</div>
 
-          <div className="flex-1 min-w-0">
-            <div className="eyebrow mb-7 fade-up d1">
-              Consulting · Talent · Technology
+              <h1 className="text-[clamp(3rem,8vw,7.5rem)] display-headline mb-6 md:mb-10"
+                style={{ color: "#ffffff", textShadow: "0 2px 24px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,1)" }}>
+                <span className="lusion-line d2"><span className="lusion-line-inner">Scale your</span></span>
+                <span className="lusion-line d3"><span className="lusion-line-inner" style={{ color: "#c4b5fd", textShadow: "0 0 32px rgba(196,181,253,0.4), 0 2px 16px rgba(0,0,0,0.9)" }}>
+                  <TypingText words={["ambition", "vision", "growth", "impact"]} />
+                </span></span>
+              </h1>
+
+              <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 lusion-fade d3"
+                style={{ color: "#e2e8f0", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
+                Bridging the gap between elite engineering and strategic growth with a platform-first approach.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center lusion-fade d4">
+                <MagneticButton
+                  onClick={() => scrollToSection("services")}
+                  className="btn-gradient text-center"
+                  style={{ padding: "14px 32px" }}
+                >
+                  Start Building ↗
+                </MagneticButton>
+                <MagneticButton
+                  onClick={() => scrollToSection("careers")}
+                  className="ghost-aurora text-center"
+                  style={{ padding: "14px 28px", color: "#ffffff", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}
+                >
+                  Explore Roles
+                </MagneticButton>
+              </div>
+
+              <div ref={statsRef} className="mt-8 md:mt-10 pt-7 md:pt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10 lusion-fade d5" style={{ borderTop: "1px solid rgba(128,82,255,0.15)" }}>
+                {STATS.map((s) => (
+                  <StatCard key={s.label} {...s} animate={statsVisible} />
+                ))}
+              </div>
             </div>
 
-            <h1 className="text-[clamp(3rem,8vw,7.5rem)] display-headline mb-6 md:mb-10 fade-up d2"
-              style={{ color: "#ffffff", textShadow: "0 2px 24px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,1)" }}>
-              Scale your
-              <br />
-              <span style={{ color: "#c4b5fd", textShadow: "0 0 32px rgba(196,181,253,0.4), 0 2px 16px rgba(0,0,0,0.9)" }}>
-                <TypingText words={["ambition", "vision", "growth", "impact"]} />
-              </span>
-            </h1>
-
-            <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 fade-up d3"
-              style={{ color: "#e2e8f0", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
-              Bridging the gap between elite engineering and strategic growth with a platform-first approach.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center fade-up d4">
-              <MagneticButton
-                onClick={() => navigateTo("Services")}
-                className="btn-gradient text-center"
-                style={{ padding: "14px 32px" }}
-              >
-                Start Building ↗
-              </MagneticButton>
-              <MagneticButton
-                onClick={() => navigateTo("Careers")}
-                className="ghost-aurora text-center"
-                style={{ padding: "14px 28px", color: "#ffffff", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}
-              >
-                Explore Roles
-              </MagneticButton>
-            </div>
-
-            <div ref={statsRef} className="mt-8 md:mt-10 pt-7 md:pt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10 fade-up d5" style={{ borderTop: "1px solid rgba(128,82,255,0.15)" }}>
-              {STATS.map((s) => (
-                <StatCard key={s.label} {...s} animate={statsVisible} />
-              ))}
+            <div className="hidden lg:flex flex-shrink-0 items-center justify-center lusion-fade d3">
+              <img src={logo} alt="11x Square" className="object-cover"
+                style={{ width: 320, height: 320, borderRadius: 40, border: "1px solid rgba(128,82,255,0.35)" }} />
             </div>
           </div>
-
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center fade-up d3">
-            <img
-              src={logo}
-              alt="11x Square"
-              className="object-cover"
-              style={{ width: 320, height: 320, borderRadius: 40, border: "1px solid rgba(128,82,255,0.35)" }}
-            />
-          </div>
-
-        </div>
         </section>
 
         {/* MARQUEE */}
@@ -1889,98 +1904,94 @@ export default function App() {
           </div>
         </div>
 
-        </>
-        )}
-        {view === "Services" && (
-        <section id="services" className="scroll-reveal px-5 md:px-12 py-14 md:py-20" style={{ background: "#000000" }}>
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 fade-up d1">
-          <div className="fade-up d2">
-            <div className="eyebrow mb-4 fade-up d3">Our Solutions</div>
-            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9] fade-up d4" style={{ color: "#FFFFFF" }}>
-              Consulting for the<br />bold & ambitious
-            </h2>
-          </div>
-          <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md fade-up d5" style={{ color: "#9a9a9a" }}>
-            Platform-driven consulting that solves deep engineering and product problems in record time.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 fade-up d6" style={{ borderTop: "1px solid rgba(255,255,255,0.08)", borderLeft: "1px solid rgba(255,255,255,0.08)" }}>
-          {SERVICES.map((s, i) => (
-            <ServiceCard key={s.num} {...s} delay={0.1 * i} />
-          ))}
-        </div>
-        </section>
-        )}
-        {view === "Careers" && (
-        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh" }}>
-          <video
-            src="/Group_of_wolves_on_path_202606211412.mp4"
-            autoPlay muted playsInline loop
-            style={{ position: "absolute", top: "50%", left: "50%", minWidth: "100%", minHeight: "100%", width: "auto", height: "auto", transform: "translate(-50%,-50%)", objectFit: "cover", objectPosition: "center center", opacity: 0.75 }}
-          />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.65) 0%, rgba(8,11,18,0.35) 50%, rgba(0,0,0,0.70) 100%)" }} />
-
-        <div className="relative z-10 h-full overflow-y-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start" style={{ maxHeight: "calc(100svh - 8rem)" }}>
-          <div className="fade-up d1">
-            <div className="eyebrow mb-4 fade-up d2">Careers</div>
-            <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6 fade-up d3" style={{ color: "#FFFFFF" }}>
-              Find your next<br />challenge at <span style={{ color: "#8052ff" }}>11x</span>
-            </h2>
-            <p className="text-lg font-medium leading-relaxed mb-10 max-w-md fade-up d4" style={{ color: "#9a9a9a" }}>
-              Whether you're a seasoned consultant or a fresh grad ready to make your mark — we have a seat for you.
-            </p>
-
-            <div className="p-7 rounded-xl shadow-sm fade-up d5" style={{ background: "rgba(17,24,39,0.80)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(128,82,255,0.25)" }}>
-              <p className="mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "#8052ff" }}>Intern Program Highlights</p>
-              <ul className="flex flex-col gap-3">
-                {[
-                  "3-month structured cohort program",
-                  "Real client projects from day one",
-                  "Mentorship from senior consultants",
-                  "Full-time conversion for top performers",
-                ].map((item) => (
-                  <li key={item} className="flex gap-3 text-sm font-medium" style={{ color: "#888888" }}>
-                    <span className="flex-shrink-0 text-xl" style={{ color: "#6b3fd4" }}>→</span> {item}
-                  </li>
-                ))}
-              </ul>
+        {/* ── SERVICES ──────────────────────────────────────────────────── */}
+        <section id="services" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#000000" }}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+            <div>
+              <div className="eyebrow mb-4 lusion-fade d1">Our Solutions</div>
+              <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#FFFFFF" }}>
+                <span className="lusion-clip d2" style={{ display: "block" }}>Consulting for the</span>
+                <span className="lusion-clip d3" style={{ display: "block" }}>bold &amp; ambitious</span>
+              </h2>
             </div>
+            <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md lusion-fade d4" style={{ color: "#9a9a9a" }}>
+              Platform-driven consulting that solves deep engineering and product problems in record time.
+            </p>
           </div>
-
-          <div className="flex flex-col fade-up d6 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(128,82,255,0.20)" }}>
-            {ROLES.map((r, i) => (
-              <RoleItem
-                key={r.title} {...r} delay={0.1 * i}
-                onApply={() => setCareersApplyRole(r)}
-              />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lusion-fade d5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)", borderLeft: "1px solid rgba(255,255,255,0.08)" }}>
+            {SERVICES.map((s, i) => (
+              <ServiceCard key={s.num} {...s} delay={0.1 * i} />
             ))}
           </div>
-        </div>
         </section>
-        )}
-        {view === "Process" && (
-        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh" }}>
-          <video
-            src="/Wolf_mouth_fire_video_202606211302.mp4"
-            autoPlay muted playsInline loop
-            className="absolute inset-0 w-full h-full"
-            style={{ objectFit: "cover", objectPosition: "center center", opacity: 0.80 }}
-          />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.65) 0%, rgba(8,11,18,0.30) 50%, rgba(0,0,0,0.70) 100%)" }} />
 
+        {/* Wolf break 1 */}
+        <WolfSection
+          src="/Group_of_wolves_on_path_202606211412.mp4"
+          heading="Run with the pack"
+          sub="Join a team that hunts for excellence and never settles for less."
+        />
+
+        {/* ── CAREERS ───────────────────────────────────────────────────── */}
+        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh", background: "#000000" }}>
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+            <div>
+              <div className="eyebrow mb-4 lusion-fade d1">Careers</div>
+              <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6" style={{ color: "#FFFFFF" }}>
+                <span className="lusion-clip d2" style={{ display: "block" }}>Find your next</span>
+                <span className="lusion-clip d3" style={{ display: "block" }}>challenge at <span style={{ color: "#8052ff" }}>11x</span></span>
+              </h2>
+              <p className="text-lg font-medium leading-relaxed mb-10 max-w-md lusion-fade d4" style={{ color: "#9a9a9a" }}>
+                Whether you're a seasoned consultant or a fresh grad ready to make your mark — we have a seat for you.
+              </p>
+
+              <div className="p-7 rounded-xl shadow-sm lusion-fade d5" style={{ background: "rgba(17,24,39,0.80)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(128,82,255,0.25)" }}>
+                <p className="mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "#8052ff" }}>Intern Program Highlights</p>
+                <ul className="flex flex-col gap-3">
+                  {[
+                    "3-month structured cohort program",
+                    "Real client projects from day one",
+                    "Mentorship from senior consultants",
+                    "Full-time conversion for top performers",
+                  ].map((item) => (
+                    <li key={item} className="flex gap-3 text-sm font-medium" style={{ color: "#888888" }}>
+                      <span className="flex-shrink-0 text-xl" style={{ color: "#6b3fd4" }}>→</span> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="flex flex-col lusion-fade d5 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(128,82,255,0.20)" }}>
+              {ROLES.map((r, i) => (
+                <RoleItem key={r.title} {...r} delay={0.1 * i} onApply={() => setCareersApplyRole(r)} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Wolf break 2 */}
+        <WolfSection
+          src="/Wolf_mouth_fire_video_202606211302.mp4"
+          heading="Forged in fire"
+          sub="Our process is battle-tested. Results that speak louder than slides."
+        />
+
+        {/* ── PROCESS ───────────────────────────────────────────────────── */}
+        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "80vh", background: "#000000" }}>
           <div className="relative z-10">
-            <div className="eyebrow mb-3 fade-up d1">The Process</div>
-            <h2 className="text-[clamp(1.5rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-6 md:mb-14 max-w-xl fade-up d2"
+            <div className="eyebrow mb-3 lusion-fade d1">The Process</div>
+            <h2 className="text-[clamp(1.5rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-6 md:mb-14 max-w-xl"
               style={{ color: "#FFFFFF", textShadow: "0 2px 20px rgba(0,0,0,0.95), 0 1px 4px rgba(0,0,0,1)" }}>
-              From discovery<br />to results in weeks
+              <span className="lusion-clip d2" style={{ display: "block" }}>From discovery</span>
+              <span className="lusion-clip d3" style={{ display: "block" }}>to results in weeks</span>
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden fade-up d3" style={{ border: "1px solid rgba(128,82,255,0.25)" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden lusion-fade d4" style={{ border: "1px solid rgba(128,82,255,0.25)" }}>
               {STEPS.map((s, i) => (
                 <div
                   key={s.num}
                   style={{
-                    animationDelay: `${0.1 * i}s`,
                     background: "rgba(8,11,18,0.82)",
                     backdropFilter: "blur(16px)",
                     WebkitBackdropFilter: "blur(16px)",
@@ -1991,9 +2002,7 @@ export default function App() {
                   onMouseEnter={e => e.currentTarget.style.background="rgba(30,41,59,0.88)"}
                   onMouseLeave={e => e.currentTarget.style.background="rgba(8,11,18,0.82)"}
                 >
-                  <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(128,82,255,0.30)" }}>
-                    {s.num}
-                  </div>
+                  <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(128,82,255,0.30)" }}>{s.num}</div>
                   <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#FFFFFF" }}>{s.title}</h4>
                   <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#CBD5E1" }}>{s.desc}</p>
                 </div>
@@ -2001,44 +2010,44 @@ export default function App() {
             </div>
           </div>
         </section>
-        )}
-        {view === "Contact" && (
-        <section id="contact" className="scroll-reveal px-5 md:px-12 py-16 md:py-24 relative overflow-hidden" style={{ background: "#000000" }}>
+
+        {/* ── TESTIMONIALS ──────────────────────────────────────────────── */}
+        <TestimonialsSection />
+
+        {/* ── FAQ ───────────────────────────────────────────────────────── */}
+        <FaqAccordion />
+
+        {/* ── CONTACT ───────────────────────────────────────────────────── */}
+        <section id="contact" className="px-5 md:px-12 py-16 md:py-24 relative overflow-hidden" style={{ background: "#000000" }}>
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
           </div>
           <div className="absolute -bottom-8 -left-8 w-48 h-48 opacity-10" style={{ transform: "rotate(45deg)" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/></svg>
           </div>
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 fade-up d2 relative z-10">
-          <div className="fade-up d3">
-            <div className="eyebrow mb-3">Get In Touch</div>
-            <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl fade-up d4" style={{ color: "#FFFFFF" }}>
-              Accelerate your team's potential today.
-            </h2>
-            <p className="text-[18px] font-medium mt-4 max-w-md fade-up d5" style={{ color: "#9a9a9a" }}>
-              Connect with our leadership to explore high-impact consulting or talent solutions.
-            </p>
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 relative z-10">
+            <div>
+              <div className="eyebrow mb-3 lusion-fade d1">Get In Touch</div>
+              <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl" style={{ color: "#FFFFFF" }}>
+                <span className="lusion-clip d2" style={{ display: "block" }}>Accelerate your team's</span>
+                <span className="lusion-clip d3" style={{ display: "block" }}>potential today.</span>
+              </h2>
+              <p className="text-[18px] font-medium mt-4 max-w-md lusion-fade d4" style={{ color: "#9a9a9a" }}>
+                Connect with our leadership to explore high-impact consulting or talent solutions.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0 lusion-fade d5">
+              <button onClick={() => setActiveModal("project")} className="btn-gradient" style={{ padding: "16px 44px", fontSize: 13 }}>
+                Start a Project ↗
+              </button>
+              <button onClick={() => setActiveModal("apply")} className="ghost-aurora"
+                style={{ padding: "16px 44px", color: "#ffffff", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}>
+                Apply Now
+              </button>
+            </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0 fade-up d6">
-            <button
-              onClick={() => setActiveModal("project")}
-              className="btn-gradient"
-              style={{ padding: "16px 44px", fontSize: 13 }}
-            >
-              Start a Project ↗
-            </button>
-            <button
-              onClick={() => setActiveModal("apply")}
-              className="ghost-aurora"
-              style={{ padding: "16px 44px", color: "#ffffff", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}
-            >
-              Apply Now
-            </button>
-          </div>
-        </div>
         </section>
-        )}
+
       </main>
 
       {/* MODALS */}
@@ -2055,7 +2064,7 @@ export default function App() {
       <footer className="px-5 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(128,82,255,0.2)" }}>
         <div className="flex flex-col lg:flex-row justify-between gap-10 lg:gap-16 mb-8 md:mb-10 fade-up d2">
           <div className="max-w-xs fade-up d3">
-            <Logo onClick={() => navigateTo("Home")} className="mb-4" size="footer" dark={false} />
+            <Logo onClick={() => scrollToSection("home")} className="mb-4" size="footer" dark={false} />
             <p className="text-sm leading-relaxed" style={{ color: "#9a9a9a" }}>
               Bridging elite consulting with the next generation of tech talent.
             </p>
@@ -2064,20 +2073,20 @@ export default function App() {
           <div className="flex flex-wrap gap-8 sm:gap-16 fade-up d4">
             {[
               { heading: "Company", links: [
-                  { label: "Services", dest: "Services" },
-                  { label: "Process",  dest: "Process" },
-                  { label: "Contact",  dest: "Contact" },
+                  { label: "Services", dest: "services" },
+                  { label: "Process",  dest: "process" },
+                  { label: "Contact",  dest: "contact" },
               ]},
               { heading: "Careers", links: [
-                  { label: "Internships", dest: "Careers" },
-                  { label: "Full-time",   dest: "Careers" },
-                  { label: "Freelance",   dest: "Careers" },
+                  { label: "Internships", dest: "careers" },
+                  { label: "Full-time",   dest: "careers" },
+                  { label: "Freelance",   dest: "careers" },
               ]},
               { heading: "Contact", links: [
-                  { label: "11xsquarebusiness@gmail.com", dest: "Contact" },
-                  { label: "United Kingdom",       dest: "Contact" },
-                  { label: "LinkedIn",             dest: "Contact" },
-                  { label: "Twitter",              dest: "Contact" },
+                  { label: "11xsquarebusiness@gmail.com", dest: "contact" },
+                  { label: "United Kingdom",       dest: "contact" },
+                  { label: "LinkedIn",             dest: "contact" },
+                  { label: "Twitter",              dest: "contact" },
               ]},
             ].map((col) => (
               <div key={col.heading}>
@@ -2085,7 +2094,7 @@ export default function App() {
                 <ul className="flex flex-col gap-1.5 list-none">
                   {col.links.map(({ label, dest }) => (
                     <li key={label}>
-                      <a href="#" onClick={(e) => { e.preventDefault(); navigateTo(dest); }}
+                      <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(dest); }}
                         className="text-sm transition-colors duration-200 no-underline" style={{ color: "#9a9a9a" }}
                         onMouseEnter={e => e.target.style.color="#8052ff"}
                         onMouseLeave={e => e.target.style.color="#9a9a9a"}
