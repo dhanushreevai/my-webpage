@@ -81,17 +81,17 @@ const ROLES = [
 ];
 
 const STEPS = [
-  { num: "01", title: "Discovery", desc: "We audit your stack, team, and goals to understand what's holding you back and what's possible.", color: "text-[#dc5000]" },
-  { num: "02", title: "Strategy", desc: "A clear, actionable roadmap with milestones, owners, and measurable success criteria.", color: "text-[#b84000]" },
-  { num: "03", title: "Execution", desc: "Embedded consultants and curated talent work alongside your team to ship results.", color: "text-[#b84000]" },
-  { num: "04", title: "Scale", desc: "We hand off with documentation, playbooks, and a team ready to multiply the wins.", color: "text-[#f07030]" },
+  { num: "01", title: "Discovery", desc: "We audit your stack, team, and goals to understand what's holding you back and what's possible.", color: "text-[#222222]" },
+  { num: "02", title: "Strategy", desc: "A clear, actionable roadmap with milestones, owners, and measurable success criteria.", color: "text-[#0b252a]" },
+  { num: "03", title: "Execution", desc: "Embedded consultants and curated talent work alongside your team to ship results.", color: "text-[#0b252a]" },
+  { num: "04", title: "Scale", desc: "We hand off with documentation, playbooks, and a team ready to multiply the wins.", color: "text-[#222222]" },
 ];
 
 const STATS = [
-  { val: "120", unit: "+", label: "Projects Delivered", color: "text-[#f07030]" },
-  { val: "48",  unit: "+", label: "Interns Placed",     color: "text-[#f0dfc4]" },
-  { val: "11",  unit: "x", label: "Average ROI",        color: "text-[#ffedd7]" },
-  { val: "32",  unit: "+", label: "Partner Companies",  color: "text-[#dc5000]" },
+  { val: "120", unit: "+", label: "Projects Delivered", color: "text-white" },
+  { val: "48",  unit: "+", label: "Interns Placed",     color: "text-white" },
+  { val: "11",  unit: "x", label: "Average ROI",        color: "text-white" },
+  { val: "32",  unit: "+", label: "Partner Companies",  color: "text-white" },
 ];
 
 const MARQUEE_ITEMS = [
@@ -155,7 +155,7 @@ const CASE_STUDIES = [
     challenge: "Legacy monolith causing 40% downtime, blocking Series B due diligence and preventing international expansion.",
     solution: "Full cloud migration to microservices architecture, implemented CI/CD pipeline, and deployed 99.99% SLA monitoring.",
     metrics: ["340% capacity", "99.99% uptime", "£8M Series B"],
-    color: "#dc5000",
+    color: "#222222",
   },
   {
     client: "EdTech Platform",
@@ -221,12 +221,12 @@ const BLOG_POSTS = [
 ];
 
 const CATEGORY_COLORS = {
-  Engineering: { bg: "rgba(220,80,0,0.12)", text: "#dc5000" },
-  Strategy:    { bg: "rgba(245,158,11,0.12)",  text: "#F59E0B" },
-  Talent:      { bg: "rgba(16,185,129,0.12)",  text: "#10B981" },
-  "AI & Data": { bg: "rgba(220,80,0,0.12)", text: "#8B5CF6" },
-  Consulting:  { bg: "rgba(249,115,22,0.12)",  text: "#F97316" },
-  Startup:     { bg: "rgba(20,184,166,0.12)",  text: "#14B8A6" },
+  Engineering: { bg: "#c5d5e8", text: "#000000" },
+  Strategy:    { bg: "#e7d3bf", text: "#000000" },
+  Talent:      { bg: "#d4e6eb", text: "#000000" },
+  "AI & Data": { bg: "#efe5f9", text: "#000000" },
+  Consulting:  { bg: "#e7d3bf", text: "#000000" },
+  Startup:     { bg: "#d4e6eb", text: "#000000" },
 };
 
 function useCountUp(target, duration = 1500, start = false) {
@@ -297,7 +297,7 @@ function LoadingScreen() {
   return (
     <div style={{
       position: "fixed", inset: 0, zIndex: 99999,
-      background: "#100904",
+      background: "#ffffff",
       display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
       opacity: fading ? 0 : 1,
       transition: "opacity 0.65s cubic-bezier(0.4,0,0.2,1)",
@@ -306,12 +306,6 @@ function LoadingScreen() {
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         {/* Logo with glow */}
         <div style={{ position: "relative", marginBottom: 28 }}>
-          <div style={{
-            position: "absolute", inset: -16,
-            borderRadius: 44,
-            background: "radial-gradient(circle, rgba(220,80,0,0.35) 0%, transparent 70%)",
-            filter: "blur(16px)",
-          }} />
           <img
             src={logo}
             alt="11x Square"
@@ -320,29 +314,27 @@ function LoadingScreen() {
               position: "relative",
               width: 96, height: 96,
               objectFit: "cover",
-              borderRadius: 22,
-              border: "2px solid rgba(220,80,0,0.5)",
-              boxShadow: "0 0 32px rgba(220,80,0,0.25), 0 8px 32px rgba(0,0,0,0.5)",
+              borderRadius: 16,
+              border: "1px solid #e1dad9",
             }}
           />
         </div>
 
         {/* Brand */}
         <div style={{
-          fontFamily: "'Cinzel', serif",
+          fontFamily: "'Playfair Display', ui-serif, Georgia, serif",
           fontSize: "clamp(2rem, 6vw, 3rem)",
-          fontWeight: 900,
-          color: "#ffedd7",
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
+          fontWeight: 700,
+          color: "#000000",
+          letterSpacing: "-0.045em",
           lineHeight: 1,
           marginBottom: 8,
         }}>
-          11x<span style={{ color: "#dc5000" }}>Square</span>
+          11x<span style={{ color: "#0b252a" }}>Square</span>
         </div>
 
         <p style={{
-          color: "#887060",
+          color: "#222222",
           fontSize: 10,
           fontFamily: "monospace",
           letterSpacing: "0.3em",
@@ -353,7 +345,7 @@ function LoadingScreen() {
         </p>
 
         {/* Loading bar */}
-        <div style={{ width: 160, height: 2, background: "rgba(220,80,0,0.12)", borderRadius: 2, overflow: "hidden" }}>
+        <div style={{ width: 160, height: 2, background: "rgba(0,0,0,0.12)", borderRadius: 2, overflow: "hidden" }}>
           <div className="load-bar-fill" />
         </div>
       </div>
@@ -377,7 +369,7 @@ function ParticleField({ className = "" }) {
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
-    const COLORS = ["#dc5000","#f07030","#ffb87a","#ffedd7","#b84000","#a83800","#ff8c40"];
+    const COLORS = ["#222222","#222222","#e1dad9","#000000","#0b252a","#0b252a","#ff8c40"];
     const particles = Array.from({ length: 520 }, () => {
       const w = canvas.offsetWidth || 400;
       const h = canvas.offsetHeight || 480;
@@ -437,7 +429,7 @@ function ScrollProgress() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  return <div className="fixed top-0 left-0 z-[60] transition-all duration-100" style={{ height: "2px", width: `${width}%`, background: "linear-gradient(90deg, #dc5000 0%, #f07030 55%, #fde9ff 100%)" }} />;
+  return <div className="fixed top-0 left-0 z-[60] transition-all duration-100" style={{ height: "1px", width: `${width}%`, background: "#000000" }} />;
 }
 
 function MouseSpotlight() {
@@ -449,7 +441,7 @@ function MouseSpotlight() {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[1] opacity-50" style={{ background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(220,80,0,0.07), transparent 80%)` }} />
+    <div className="fixed inset-0 pointer-events-none z-[1] opacity-50" style={{ background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0,0,0,0.07), transparent 80%)` }} />
   );
 }
 
@@ -461,7 +453,7 @@ function StatCard({ val, unit, label, animate, color, delay }) {
         {animate ? num : val}
         <span className="opacity-60">{unit}</span>
       </div>
-      <div className="text-xs uppercase tracking-wide font-medium" style={{ color: "#a09080" }}>{label}</div>
+      <div className="text-xs uppercase tracking-wide font-medium" style={{ color: "rgba(255,255,255,0.65)" }}>{label}</div>
     </div>
   );
 }
@@ -493,14 +485,14 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
   };
 
   const THEMES = {
-    indigo:  { bar: "bg-[#dc5000]", tag: "rgba(220,80,0,0.12)",  tagText: "#a83800" },
-    orange:  { bar: "bg-[#F97316]", tag: "rgba(249,115,22,0.10)",  tagText: "#C2410C" },
-    purple:  { bar: "bg-[#8B5CF6]", tag: "rgba(220,80,0,0.10)",  tagText: "#6D28D9" },
-    pink:    { bar: "bg-[#14B8A6]", tag: "rgba(20,184,166,0.10)",  tagText: "#0F766E" },
-    emerald: { bar: "bg-[#10B981]", tag: "rgba(16,185,129,0.10)",  tagText: "#047857" },
-    amber:   { bar: "bg-[#F59E0B]", tag: "rgba(245,158,11,0.10)",  tagText: "#B45309" },
+    indigo:  { bg: "#c5d5e8", bgHover: "#b4c8df", tag: "rgba(0,0,0,0.10)", tagText: "#000000" },
+    orange:  { bg: "#e7d3bf", bgHover: "#d9c4ae", tag: "rgba(0,0,0,0.10)", tagText: "#000000" },
+    purple:  { bg: "#efe5f9", bgHover: "#e0d4f0", tag: "rgba(0,0,0,0.10)", tagText: "#000000" },
+    pink:    { bg: "#d4e6eb", bgHover: "#c4d9e2", tag: "rgba(0,0,0,0.10)", tagText: "#000000" },
+    emerald: { bg: "#c5d5e8", bgHover: "#b4c8df", tag: "rgba(0,0,0,0.10)", tagText: "#000000" },
+    amber:   { bg: "#e7d3bf", bgHover: "#d9c4ae", tag: "rgba(0,0,0,0.10)", tagText: "#000000" },
   };
-  const theme = THEMES[color] || { bar: "bg-[#dc5000]", tag: "rgba(220,80,0,0.12)", tagText: "#a83800" };
+  const theme = THEMES[color] || { bg: "#f6f5f5", bgHover: "#ede2d7", tag: "rgba(0,0,0,0.10)", tagText: "#000000" };
 
   const isResting = rotation.x === 0 && rotation.y === 0;
 
@@ -516,38 +508,26 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
       <div
         ref={cardRef}
         onMouseMove={handleMouseMove}
-        onMouseEnter={e => { e.currentTarget.style.background = "#1e1208"; }}
-        onMouseLeave={e => { handleMouseLeave(); e.currentTarget.style.background = "#160e08"; }}
+        onMouseEnter={e => { e.currentTarget.style.background = theme.bgHover; }}
+        onMouseLeave={e => { handleMouseLeave(); e.currentTarget.style.background = theme.bg; }}
         className="relative p-8 cursor-default overflow-hidden hover:z-10"
         style={{
-          transform: `translateY(${isResting ? 0 : -8}px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-          transition: isResting ? "transform 0.6s ease-out" : "none",
-          transformStyle: "preserve-3d",
-          background: "#160e08",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
-          borderRight: "1px solid rgba(255,255,255,0.05)",
+          transition: isResting ? "background 0.3s ease, transform 0.6s ease-out" : "background 0.3s ease",
+          background: theme.bg,
+          border: "1px solid #e1dad9",
+          borderRadius: "16px",
         }}
       >
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,0.4) 0%, transparent 80%)`,
-            opacity: glare.opacity
-          }}
-        />
-        <div
-          className={`absolute top-0 left-0 w-1 h-0 group-hover:h-full transition-all duration-500 ${theme.bar}`}
-        />
         {image && (
-          <img src={image} alt={title} className="w-full object-cover mb-6 rounded-md translate-z-10" style={{ height: "200px", objectPosition: "center top" }} />
+          <img src={image} alt={title} className="w-full object-cover mb-6" style={{ height: "200px", objectPosition: "center top", borderRadius: "8px" }} />
         )}
-        <div className="font-mono text-[11px] tracking-wider mb-4 translate-z-10" style={{ color: "#dc5000" }}>{num}</div>
-        <h3 className="text-2xl font-black mb-4 tracking-tighter leading-none group-hover:translate-z-30 transition-transform duration-500" style={{ color: "#ffedd7" }}>{title}</h3>
-        <p className="text-[15px] font-medium leading-relaxed max-w-[280px] group-hover:translate-z-20 transition-transform duration-500" style={{ color: "#a09080" }}>{desc}</p>
-        <div className="flex flex-wrap gap-2 mt-5 group-hover:translate-z-10 transition-transform duration-500">
+        <div className="mono text-[10px] tracking-widest mb-4 uppercase" style={{ color: "#888888" }}>{num}</div>
+        <h3 className="text-2xl font-bold mb-4 leading-tight" style={{ color: "#000000", letterSpacing: "-0.04em" }}>{title}</h3>
+        <p className="text-[15px] leading-relaxed max-w-[280px]" style={{ color: "#444444", fontWeight: 400 }}>{desc}</p>
+        <div className="flex flex-wrap gap-2 mt-5">
           {tags.map((t, i) => (
-            <span key={i} className="font-mono text-[10px] px-3 py-1 rounded-full uppercase tracking-wider font-bold"
-              style={{ background: theme.tag, color: theme.tagText }}>
+            <span key={i} className="mono text-[10px] px-3 py-1 uppercase tracking-wider font-medium"
+              style={{ background: theme.tag, color: theme.tagText, borderRadius: "8px" }}>
               {t}
             </span>
           ))}
@@ -562,13 +542,13 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
     <div
       onClick={onApply}
       className="flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 transition-all duration-300 cursor-pointer group"
-      style={{ background: "rgba(19,12,5,0.80)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
-      onMouseEnter={e => e.currentTarget.style.background="rgba(36,20,8,0.88)"}
-      onMouseLeave={e => e.currentTarget.style.background="rgba(19,12,5,0.80)"}
+      style={{ background: "#ffffff", borderBottom: "1px solid #e1dad9" }}
+      onMouseEnter={e => e.currentTarget.style.background="#f6f5f5"}
+      onMouseLeave={e => e.currentTarget.style.background="#ffffff"}
     >
       <div className="flex flex-col gap-1.5">
-        <span className="text-sm font-bold" style={{ color: "#ffedd7" }}>{title}</span>
-        <div className="flex gap-4 font-mono text-[11px]" style={{ color: "#dc5000" }}>
+        <span className="text-sm font-bold" style={{ color: "#000000" }}>{title}</span>
+        <div className="flex gap-4 font-mono text-[11px]" style={{ color: "#222222" }}>
           <span>{location}</span>
           <span>{period}</span>
         </div>
@@ -577,13 +557,13 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
         <span
           className="font-mono text-[10px] px-2.5 py-1 rounded-sm uppercase tracking-normal"
           style={type === "intern"
-            ? { background: "rgba(220,80,0,0.12)", color: "#dc5000", border: "1px solid rgba(220,80,0,0.3)" }
-            : { background: "rgba(251,113,133,0.08)", color: "#b84000", border: "1px solid rgba(251,113,133,0.25)" }
+            ? { background: "#c5d5e8", color: "#000000", borderRadius: "8px" }
+            : { background: "#efe5f9", color: "#000000", borderRadius: "8px" }
           }
         >
           {type === "intern" ? "Intern" : "Full-time"}
         </span>
-        <span className="text-2xl transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" style={{ color: "#dc5000" }}>
+        <span className="text-lg transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" style={{ color: "#000000" }}>
           ↗
         </span>
       </div>
@@ -608,11 +588,11 @@ function Logo({ onClick, className = "", size = "nav", dark = false }) {
         />
       )}
       <div className="flex flex-col leading-none">
-        <span className={`font-black tracking-tighter ${size === "footer" ? "text-3xl" : "text-[22px]"}`} style={{ color: dark ? "#1A1A1A" : "#ffedd7", lineHeight: 1 }}>
-          11x<span style={{ color: "#b84000" }}>Square</span>
+        <span className={`font-black tracking-tighter ${size === "footer" ? "text-3xl" : "text-[22px]"}`} style={{ color: dark ? "#1A1A1A" : "#000000", lineHeight: 1 }}>
+          11x<span style={{ color: "#0b252a" }}>Square</span>
         </span>
         {size === "footer" && (
-          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: "#c4b4a4", marginTop: 2 }}>Consulting · Talent</span>
+          <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: "#444444", marginTop: 2 }}>Consulting · Talent</span>
         )}
       </div>
     </div>
@@ -630,7 +610,7 @@ const toBase64 = (file) =>
   });
 
 function launchConfetti() {
-  const colors = ["#dc5000", "#f07030", "#7DD3FC", "#FFFFFF", "#b84000", "#ffb87a"];
+  const colors = ["#000000", "#0b252a", "#c5d5e8", "#e7d3bf", "#efe5f9", "#d4e6eb"];
   for (let i = 0; i < 80; i++) {
     const el = document.createElement("div");
     const size = 5 + Math.random() * 8;
@@ -662,13 +642,13 @@ function TypingText({ words = [] }) {
 
 /* Nature palette */
 const N = {
-  green:      "#dc5000",
-  greenLight: "#b84000",
-  greenMid:   "#a83800",
-  brown:      "#888888",
+  green:      "#222222",
+  greenLight: "#0b252a",
+  greenMid:   "#0b252a",
+  brown:      "#444444",
   brownLight: "#CCCCCC",
-  beige:      "#dc5000",
-  beigeLight: "#f0dfc4",
+  beige:      "#222222",
+  beigeLight: "#444444",
   cream:      "#FFFFFF",
   leaf:       "rgba(255,255,255,0.08)",
 };
@@ -693,31 +673,31 @@ function SuccessModal({ onClose, title, subtitle }) {
   }, [onClose]);
   return createPortal(
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-      style={{ background: "rgba(16,9,4,0.88)", backdropFilter: "blur(14px)" }}
+      style={{ background: "rgba(255,255,255,0.88)", backdropFilter: "blur(14px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className="w-full max-w-sm rounded-2xl shadow-2xl animate-fadeIn overflow-hidden"
-        style={{ background: "#160e08", border: "1px solid rgba(220,80,0,0.25)" }}
+        style={{ background: "#f6f5f5", border: "1px solid rgba(0,0,0,0.25)" }}
       >
-        <div className="h-px w-full" style={{ background: "linear-gradient(90deg,transparent,#b84000,transparent)" }} />
+        <div className="h-px w-full" style={{ background: "linear-gradient(90deg,transparent,#0b252a,transparent)" }} />
         <div className="flex flex-col items-center gap-6 px-8 py-12 text-center">
           <div className="w-16 h-16 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(220,80,0,0.12)", border: "1.5px solid rgba(220,80,0,0.35)" }}
+            style={{ background: "rgba(0,0,0,0.12)", border: "1.5px solid rgba(0,0,0,0.35)" }}
           >
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-              <circle cx="15" cy="15" r="14" stroke="#b84000" strokeWidth="1.5" strokeOpacity="0.5"/>
-              <path d="M8 15.5l5 5 9-10" stroke="#b84000" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="15" cy="15" r="14" stroke="#0b252a" strokeWidth="1.5" strokeOpacity="0.5"/>
+              <path d="M8 15.5l5 5 9-10" stroke="#0b252a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <div>
-            <p className="text-xl font-black text-white mb-2 tracking-tight">{title}</p>
-            <p className="text-sm leading-relaxed" style={{ color: "#d4c4b4" }}>{subtitle}</p>
+            <p className="text-xl font-black mb-2 tracking-tight" style={{ color: "#000000" }}>{title}</p>
+            <p className="text-sm leading-relaxed" style={{ color: "#444444" }}>{subtitle}</p>
           </div>
           <button onClick={onClose}
             className="font-bold text-sm px-10 py-3 rounded-full cursor-pointer transition-all duration-200 border-0"
-            style={{ background: "#dc5000", color: "#fff" }}
-            onMouseEnter={e => e.target.style.background="#b84000"}
-            onMouseLeave={e => e.target.style.background="#dc5000"}
+            style={{ background: "#222222", color: "#fff" }}
+            onMouseEnter={e => e.target.style.background="#0b252a"}
+            onMouseLeave={e => e.target.style.background="#222222"}
           >Done</button>
         </div>
       </div>
@@ -736,12 +716,12 @@ function NatureModal({ onClose, children }) {
   return (
     <div
       className="fixed inset-0 z-[200] flex items-center justify-center p-4"
-      style={{ background: "rgba(22,14,8,0.88)", backdropFilter: "blur(12px)" }}
+      style={{ background: "rgba(246,245,245,0.88)", backdropFilter: "blur(12px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
         className="modal-container w-full max-w-md rounded-3xl shadow-2xl animate-fadeIn relative flex flex-col"
-        style={{ background: "#160e08" }}
+        style={{ background: "#f6f5f5" }}
       >
         <LeafDecor className="w-32 h-32 -top-6 -right-6 rotate-45" />
         <LeafDecor className="w-20 h-20 -bottom-4 -left-4 -rotate-12" />
@@ -779,10 +759,10 @@ function StartProjectModal({ onClose }) {
   };
 
   const inputStyle = {
-    background: "rgba(255,255,255,0.12)",
-    border: "1.5px solid rgba(255,255,255,0.2)",
+    background: "rgba(0,0,0,0.05)",
+    border: "1.5px solid rgba(0,0,0,0.18)",
     borderRadius: "14px",
-    color: "#fff",
+    color: "#000000",
     padding: "12px 16px",
     width: "100%",
     fontSize: "14px",
@@ -795,16 +775,16 @@ function StartProjectModal({ onClose }) {
 
   return (
     <NatureModal onClose={onClose}>
-      <div className="relative z-10 px-8 pt-8 pb-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+      <div className="relative z-10 px-8 pt-8 pb-5" style={{ borderBottom: "1px solid rgba(0,0,0,0.12)" }}>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: N.beigeLight }}>Let's Connect</p>
-            <h3 className="text-2xl font-black text-white leading-tight">Start a Project</h3>
+            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#222222" }}>Let's Connect</p>
+            <h3 className="text-2xl font-black leading-tight" style={{ color: "#000000" }}>Start a Project</h3>
           </div>
           <button
             onClick={onClose}
-            className="text-white opacity-50 hover:opacity-100 text-xl leading-none transition-opacity bg-transparent border-0 cursor-pointer w-8 h-8 flex items-center justify-center rounded-full"
-            style={{ background: "rgba(255,255,255,0.1)" }}
+            className="opacity-50 hover:opacity-100 text-xl leading-none transition-opacity bg-transparent border-0 cursor-pointer w-8 h-8 flex items-center justify-center rounded-full"
+            style={{ background: "rgba(0,0,0,0.08)", color: "#000000" }}
           >
             ✕
           </button>
@@ -819,7 +799,7 @@ function StartProjectModal({ onClose }) {
             { label: "Phone Number", name: "phone", type: "tel", placeholder: "+91 98765 43210" },
           ].map(({ label, name, type, placeholder }) => (
             <div key={name}>
-              <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: N.beigeLight }}>{label}</label>
+              <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: "#222222" }}>{label}</label>
               <input
                 name={name}
                 type={type}
@@ -829,19 +809,19 @@ function StartProjectModal({ onClose }) {
                 placeholder={placeholder}
                 style={inputStyle}
                 className="nature-input"
-                onFocus={(e) => { e.target.style.border = `1.5px solid ${N.beige}`; e.target.style.background = "rgba(255,255,255,0.18)"; }}
-                onBlur={(e) => { e.target.style.border = "1.5px solid rgba(255,255,255,0.2)"; e.target.style.background = "rgba(255,255,255,0.12)"; }}
+                onFocus={(e) => { e.target.style.border = "1.5px solid #222222"; e.target.style.background = "rgba(0,0,0,0.08)"; }}
+                onBlur={(e) => { e.target.style.border = "1.5px solid rgba(0,0,0,0.18)"; e.target.style.background = "rgba(0,0,0,0.05)"; }}
               />
             </div>
           ))}
-          {error && <p className="text-sm font-medium" style={{ color: "#ffb3a7" }}>{error}</p>}
+          {error && <p className="text-sm font-medium" style={{ color: "#ef4444" }}>{error}</p>}
         </div>
         <div className="px-8 pb-4 pt-2 shrink-0">
           <button
             type="submit"
             disabled={status === "loading"}
             className="w-full font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ background: "#dc5000", color: "#ffedd7" }}
+            style={{ background: "#222222", color: "#000000" }}
           >
             {status === "loading" ? "Submitting…" : "Submit →"}
           </button>
@@ -895,10 +875,10 @@ function ApplyNowModal({ onClose }) {
   };
 
   const inputStyle = {
-    background: "rgba(255,255,255,0.12)",
-    border: "1.5px solid rgba(255,255,255,0.2)",
+    background: "rgba(0,0,0,0.05)",
+    border: "1.5px solid rgba(0,0,0,0.18)",
     borderRadius: "14px",
-    color: "#fff",
+    color: "#000000",
     padding: "12px 16px",
     width: "100%",
     fontSize: "14px",
@@ -911,16 +891,16 @@ function ApplyNowModal({ onClose }) {
 
   return (
     <NatureModal onClose={onClose}>
-      <div className="relative z-10 px-8 pt-8 pb-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+      <div className="relative z-10 px-8 pt-8 pb-5" style={{ borderBottom: "1px solid rgba(0,0,0,0.12)" }}>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: N.beigeLight }}>Join Our Team</p>
-            <h3 className="text-2xl font-black text-white leading-tight">Apply Now</h3>
+            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#222222" }}>Join Our Team</p>
+            <h3 className="text-2xl font-black leading-tight" style={{ color: "#000000" }}>Apply Now</h3>
           </div>
           <button
             onClick={onClose}
-            className="text-white opacity-50 hover:opacity-100 text-xl leading-none transition-opacity bg-transparent border-0 cursor-pointer w-8 h-8 flex items-center justify-center rounded-full"
-            style={{ background: "rgba(255,255,255,0.1)" }}
+            className="opacity-50 hover:opacity-100 text-xl leading-none transition-opacity bg-transparent border-0 cursor-pointer w-8 h-8 flex items-center justify-center rounded-full"
+            style={{ background: "rgba(0,0,0,0.08)", color: "#000000" }}
           >
             ✕
           </button>
@@ -935,7 +915,7 @@ function ApplyNowModal({ onClose }) {
             { label: "Phone Number", name: "phone", type: "tel", placeholder: "+91 98765 43210" },
           ].map(({ label, name, type, placeholder }) => (
             <div key={name}>
-              <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: N.beigeLight }}>{label}</label>
+              <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: "#222222" }}>{label}</label>
               <input
                 name={name}
                 type={type}
@@ -945,44 +925,44 @@ function ApplyNowModal({ onClose }) {
                 placeholder={placeholder}
                 style={inputStyle}
                 className="nature-input"
-                onFocus={(e) => { e.target.style.border = `1.5px solid ${N.beige}`; e.target.style.background = "rgba(255,255,255,0.18)"; }}
-                onBlur={(e) => { e.target.style.border = "1.5px solid rgba(255,255,255,0.2)"; e.target.style.background = "rgba(255,255,255,0.12)"; }}
+                onFocus={(e) => { e.target.style.border = "1.5px solid #222222"; e.target.style.background = "rgba(0,0,0,0.08)"; }}
+                onBlur={(e) => { e.target.style.border = "1.5px solid rgba(0,0,0,0.18)"; e.target.style.background = "rgba(0,0,0,0.05)"; }}
               />
             </div>
           ))}
 
           <div>
-            <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: N.beigeLight }}>Resume</label>
+            <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: "#222222" }}>Resume</label>
             <div
               onClick={() => fileInputRef.current?.click()}
               className="rounded-2xl p-5 text-center cursor-pointer transition-all duration-200"
               style={{
-                border: `2px dashed ${file ? N.beige : "rgba(255,255,255,0.25)"}`,
-                background: file ? "rgba(200,169,122,0.12)" : "rgba(255,255,255,0.06)",
+                border: `2px dashed ${file ? "#222222" : "rgba(0,0,0,0.20)"}`,
+                background: file ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.04)",
               }}
             >
               {file ? (
                 <div className="flex items-center justify-center gap-2">
-                  <span style={{ color: N.beige }}>📄</span>
-                  <p className="text-sm font-semibold text-white truncate max-w-[220px]">{file.name}</p>
+                  <span style={{ color: "#222222" }}>📄</span>
+                  <p className="text-sm font-semibold truncate max-w-[220px]" style={{ color: "#000000" }}>{file.name}</p>
                 </div>
               ) : (
                 <>
-                  <p className="text-sm font-medium text-white opacity-70">Click to upload resume</p>
-                  <p className="text-xs mt-1 opacity-40 text-white">PDF, Word (.doc/.docx), TXT — max 10 MB</p>
+                  <p className="text-sm font-medium opacity-70" style={{ color: "#000000" }}>Click to upload resume</p>
+                  <p className="text-xs mt-1 opacity-50" style={{ color: "#444444" }}>PDF, Word (.doc/.docx), TXT — max 10 MB</p>
                 </>
               )}
             </div>
             <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFile} className="hidden" />
           </div>
-          {error && <p className="text-sm font-medium" style={{ color: "#ffb3a7" }}>{error}</p>}
+          {error && <p className="text-sm font-medium" style={{ color: "#ef4444" }}>{error}</p>}
         </div>
         <div className="px-8 pb-4 pt-2 shrink-0">
           <button
             type="submit"
             disabled={status === "loading"}
             className="w-full font-bold text-sm px-8 py-3.5 rounded-full transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ background: "#dc5000", color: "#ffedd7" }}
+            style={{ background: "#222222", color: "#000000" }}
           >
             {status === "loading" ? "Submitting…" : "Submit Application →"}
           </button>
@@ -994,13 +974,13 @@ function ApplyNowModal({ onClose }) {
 
 /* ── Careers Apply Modal — Midnight / Indigo theme ───────────────────────── */
 const M = {
-  bg:      "#160e08",
-  panel:   "#1a0e08",
-  border:  "rgba(220,80,0,0.25)",
-  indigo:  "#dc5000",
-  violet:  "#b84000",
+  bg:      "#f6f5f5",
+  panel:   "#f6f5f5",
+  border:  "rgba(0,0,0,0.25)",
+  indigo:  "#222222",
+  violet:  "#0b252a",
   muted:   "#CCCCCC",
-  text:    "#f0dfc4",
+  text:    "#444444",
 };
 
 function CareersApplyModal({ role, onClose }) {
@@ -1046,7 +1026,7 @@ function CareersApplyModal({ role, onClose }) {
   }, [onClose]);
 
   const inputSt = {
-    background: "rgba(255,255,255,0.06)", border: `1.5px solid ${M.border}`,
+    background: "rgba(0,0,0,0.05)", border: `1.5px solid ${M.border}`,
     borderRadius: "12px", color: M.text, padding: "11px 15px",
     width: "100%", fontSize: "14px", fontWeight: 500, outline: "none", transition: "border 0.2s, background 0.2s",
   };
@@ -1054,7 +1034,7 @@ function CareersApplyModal({ role, onClose }) {
   return (
     <div
       className="fixed inset-0 z-[200] flex items-center justify-center p-4"
-      style={{ background: "rgba(16,9,4,0.80)", backdropFilter: "blur(10px)" }}
+      style={{ background: "rgba(255,255,255,0.80)", backdropFilter: "blur(10px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className="modal-container w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col" style={{ background: M.bg, border: `1px solid ${M.border}` }}>
@@ -1064,13 +1044,13 @@ function CareersApplyModal({ role, onClose }) {
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: M.violet }}>Careers · Apply</p>
-              <h3 className="text-xl font-black text-white leading-tight">{role?.title || "Apply Now"}</h3>
+              <h3 className="text-xl font-black leading-tight" style={{ color: "#000000" }}>{role?.title || "Apply Now"}</h3>
               {role && (
                 <p className="text-xs mt-1" style={{ color: M.muted }}>{role.location} · {role.period}</p>
               )}
             </div>
             <button onClick={onClose} className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full text-sm transition-colors bg-transparent border-0 cursor-pointer"
-              style={{ background: "rgba(255,255,255,0.06)", color: M.muted }}
+              style={{ background: "rgba(0,0,0,0.08)", color: M.muted }}
             >✕</button>
           </div>
         </div>
@@ -1089,8 +1069,8 @@ function CareersApplyModal({ role, onClose }) {
                   <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: M.violet }}>{label}</label>
                   <input name={name} type={type} value={form[name]} onChange={handleChange} required placeholder={placeholder}
                     style={inputSt} className="nature-input"
-                    onFocus={(e) => { e.target.style.border = `1.5px solid ${M.indigo}`; e.target.style.background = "rgba(220,80,0,0.12)"; }}
-                    onBlur={(e) => { e.target.style.border = `1.5px solid ${M.border}`; e.target.style.background = "rgba(255,255,255,0.06)"; }}
+                    onFocus={(e) => { e.target.style.border = `1.5px solid ${M.indigo}`; e.target.style.background = "rgba(0,0,0,0.12)"; }}
+                    onBlur={(e) => { e.target.style.border = `1.5px solid ${M.border}`; e.target.style.background = "rgba(0,0,0,0.05)"; }}
                   />
                 </div>
               ))}
@@ -1098,12 +1078,12 @@ function CareersApplyModal({ role, onClose }) {
               <div>
                 <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: M.violet }}>Resume</label>
                 <div onClick={() => fileInputRef.current?.click()} className="rounded-xl p-5 text-center cursor-pointer transition-all duration-200"
-                  style={{ border: `2px dashed ${file ? M.indigo : M.border}`, background: file ? `${M.indigo}12` : "rgba(255,255,255,0.03)" }}
+                  style={{ border: `2px dashed ${file ? M.indigo : M.border}`, background: file ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.03)" }}
                 >
                   {file ? (
                     <div className="flex items-center justify-center gap-2">
                       <span style={{ color: M.violet }}>📄</span>
-                      <p className="text-sm font-semibold text-white truncate max-w-[220px]">{file.name}</p>
+                      <p className="text-sm font-semibold truncate max-w-[220px]" style={{ color: "#000000" }}>{file.name}</p>
                     </div>
                   ) : (
                     <>
@@ -1118,7 +1098,7 @@ function CareersApplyModal({ role, onClose }) {
             </div>
             <div className="px-7 pb-4 pt-2 shrink-0">
               <button type="submit" disabled={status === "loading"} className="w-full font-bold text-sm px-8 py-3.5 rounded-full cursor-pointer disabled:opacity-50 transition-all"
-                style={{ background: `linear-gradient(135deg, ${M.indigo}, ${M.violet})`, color: "#fff" }}
+                style={{ background: `linear-gradient(135deg, ${M.indigo}, ${M.violet})`, color: "#ffffff" }}
               >
                 {status === "loading" ? "Submitting…" : "Submit Application →"}
               </button>
@@ -1133,10 +1113,10 @@ function CareersApplyModal({ role, onClose }) {
 /* ── Testimonials Section ────────────────────────────────────────────────── */
 function TestimonialsSection() {
   return (
-    <section id="testimonials" style={{ background: "#100904", borderTop: "1px solid rgba(220,80,0,0.12)" }}>
+    <section id="testimonials" style={{ background: "#ffffff", borderTop: "1px solid rgba(0,0,0,0.12)" }}>
       <div className="px-5 md:px-12 py-14 md:py-20">
         <div className="eyebrow mb-3">Client Stories</div>
-        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-12" style={{ color: "#ffedd7" }}>
+        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-12" style={{ color: "#000000" }}>
           What our clients say
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
@@ -1144,21 +1124,21 @@ function TestimonialsSection() {
             <div
               key={i}
               className="p-7 rounded-2xl flex flex-col gap-5 transition-all duration-300"
-              style={{ background: "#160e08" }}
-              onMouseEnter={e => e.currentTarget.style.background="#1e1208"}
-              onMouseLeave={e => e.currentTarget.style.background="#160e08"}
+              style={{ background: "#f6f5f5", border: "1px solid #e1dad9" }}
+              onMouseEnter={e => e.currentTarget.style.background="#f5ece5"}
+              onMouseLeave={e => e.currentTarget.style.background="#f6f5f5"}
             >
               <div className="flex gap-1">
                 {Array.from({ length: t.stars }).map((_, s) => (
-                  <span key={s} style={{ color: "#F59E0B", fontSize: "16px" }}>★</span>
+                  <span key={s} style={{ color: "#000000", fontSize: "14px" }}>★</span>
                 ))}
               </div>
-              <p className="text-[15px] leading-relaxed font-medium flex-1" style={{ color: "#a09080" }}>
+              <p className="text-[15px] leading-relaxed font-medium flex-1" style={{ color: "#444444" }}>
                 "{t.quote}"
               </p>
               <div>
-                <p className="font-bold text-sm" style={{ color: "#ffedd7" }}>{t.name}</p>
-                <p className="text-xs mt-0.5" style={{ color: "#dc5000" }}>{t.title}</p>
+                <p className="font-bold text-sm" style={{ color: "#000000" }}>{t.name}</p>
+                <p className="text-xs mt-0.5" style={{ color: "#222222" }}>{t.title}</p>
               </div>
             </div>
           ))}
@@ -1280,23 +1260,23 @@ function ExitIntentPopup({ onContact }) {
   }, []);
   if (!show) return null;
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}>
-      <div className="relative w-full max-w-md rounded-2xl p-8 text-center" style={{ background: "#130c05", border: "1px solid rgba(220,80,0,0.3)", boxShadow: "0 0 60px rgba(220,80,0,0.15)" }}>
-        <button onClick={() => setShow(false)} className="absolute top-4 right-4 text-xl bg-transparent border-0 cursor-pointer" style={{ color: "#a09080" }}>✕</button>
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ background: "rgba(246,245,245,0.88)", backdropFilter: "blur(6px)" }}>
+      <div className="relative w-full max-w-md rounded-2xl p-8 text-center" style={{ background: "#f6f5f5", border: "1px solid rgba(0,0,0,0.3)", boxShadow: "0 0 60px rgba(0,0,0,0.15)" }}>
+        <button onClick={() => setShow(false)} className="absolute top-4 right-4 text-xl bg-transparent border-0 cursor-pointer" style={{ color: "#444444" }}>✕</button>
         <div className="text-4xl mb-4">🎯</div>
         <div className="eyebrow mb-2 justify-center">Wait — before you go!</div>
-        <h3 className="text-2xl font-black tracking-tighter mb-3" style={{ color: "#ffedd7" }}>Get a FREE 30-min Strategy Session</h3>
-        <p className="text-sm leading-relaxed mb-6" style={{ color: "#a09080" }}>No commitment. Just clarity on what's possible for your business. Our consultants have helped 120+ companies unlock breakthrough growth.</p>
+        <h3 className="text-2xl font-black tracking-tighter mb-3" style={{ color: "#000000" }}>Get a FREE 30-min Strategy Session</h3>
+        <p className="text-sm leading-relaxed mb-6" style={{ color: "#444444" }}>No commitment. Just clarity on what's possible for your business. Our consultants have helped 120+ companies unlock breakthrough growth.</p>
         <button
           onClick={() => { setShow(false); onContact(); }}
           className="w-full font-bold text-base py-3 rounded-xl transition-all duration-200 cursor-pointer"
-          style={{ background: "linear-gradient(135deg,#dc5000,#b84000)", color: "#ffedd7", border: "none" }}
+          style={{ background: "linear-gradient(135deg,#222222,#0b252a)", color: "#000000", border: "none" }}
           onMouseEnter={e => e.target.style.opacity="0.9"}
           onMouseLeave={e => e.target.style.opacity="1"}
         >
           Claim Free Session →
         </button>
-        <button onClick={() => setShow(false)} className="mt-3 text-xs bg-transparent border-0 cursor-pointer underline" style={{ color: "#887060" }}>No thanks, I'll pass</button>
+        <button onClick={() => setShow(false)} className="mt-3 text-xs bg-transparent border-0 cursor-pointer underline" style={{ color: "#222222" }}>No thanks, I'll pass</button>
       </div>
     </div>
   );
@@ -1312,13 +1292,13 @@ function CookieBanner() {
   const decline = () => { localStorage.setItem("cookieConsent", "declined"); setShow(false); };
   if (!show) return null;
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[9998] px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ background: "rgba(19,12,5,0.97)", borderTop: "1px solid rgba(220,80,0,0.2)", backdropFilter: "blur(12px)" }}>
-      <p className="text-sm text-center sm:text-left" style={{ color: "#a09080" }}>
-        🍪 We use cookies to improve your experience on 11xsquare.com. <span style={{ color: "#887060" }}>By continuing, you agree to our cookie policy.</span>
+    <div className="fixed bottom-0 left-0 right-0 z-[9998] px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ background: "rgba(246,245,245,0.97)", borderTop: "1px solid rgba(0,0,0,0.2)", backdropFilter: "blur(12px)" }}>
+      <p className="text-sm text-center sm:text-left" style={{ color: "#444444" }}>
+        🍪 We use cookies to improve your experience on 11xsquare.com. <span style={{ color: "#222222" }}>By continuing, you agree to our cookie policy.</span>
       </p>
       <div className="flex gap-3 flex-shrink-0">
-        <button onClick={decline} className="text-sm font-bold px-5 py-2 rounded-full cursor-pointer transition-all" style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.15)", color: "#a09080" }}>Decline</button>
-        <button onClick={accept} className="text-sm font-bold px-5 py-2 rounded-full cursor-pointer transition-all" style={{ background: "#dc5000", color: "#ffedd7", border: "none" }}>Accept All</button>
+        <button onClick={decline} className="text-sm font-bold px-5 py-2 rounded-full cursor-pointer transition-all" style={{ background: "transparent", border: "1px solid rgba(0,0,0,0.25)", color: "#444444" }}>Decline</button>
+        <button onClick={accept} className="text-sm font-bold px-5 py-2 rounded-full cursor-pointer transition-all" style={{ background: "#222222", color: "#000000", border: "none" }}>Accept All</button>
       </div>
     </div>
   );
@@ -1337,23 +1317,23 @@ const FAQ_ITEMS = [
 function FaqAccordion() {
   const [open, setOpen] = useState(null);
   return (
-    <section className="px-5 md:px-12 py-16 md:py-20 scroll-reveal" style={{ background: "#100904", borderTop: "1px solid rgba(220,80,0,0.12)" }}>
+    <section className="px-5 md:px-12 py-16 md:py-20 scroll-reveal" style={{ background: "#ffffff", borderTop: "1px solid rgba(0,0,0,0.12)" }}>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <div className="eyebrow mb-3">FAQ</div>
-        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-10" style={{ color: "#ffedd7" }}>Common questions</h2>
+        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-10" style={{ color: "#000000" }}>Common questions</h2>
         <div className="flex flex-col gap-3">
           {FAQ_ITEMS.map((item, i) => (
-            <div key={i} className="rounded-xl overflow-hidden transition-all duration-300" style={{ background: open === i ? "#1e1208" : "rgba(26,14,8,0.6)", border: `1px solid ${open === i ? "rgba(220,80,0,0.3)" : "rgba(255,255,255,0.07)"}` }}>
+            <div key={i} className="rounded-xl overflow-hidden transition-all duration-300" style={{ background: open === i ? "#f5ece5" : "#f6f5f5", border: `1px solid ${open === i ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.12)"}` }}>
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 className="w-full flex items-center justify-between px-6 py-4 text-left bg-transparent border-0 cursor-pointer gap-4"
               >
-                <span className="font-bold text-base" style={{ color: "#ffedd7" }}>{item.q}</span>
-                <span className="flex-shrink-0 text-xl font-light transition-transform duration-300" style={{ color: "#dc5000", transform: open === i ? "rotate(45deg)" : "rotate(0deg)" }}>+</span>
+                <span className="font-bold text-base" style={{ color: "#000000" }}>{item.q}</span>
+                <span className="flex-shrink-0 text-xl font-light transition-transform duration-300" style={{ color: "#222222", transform: open === i ? "rotate(45deg)" : "rotate(0deg)" }}>+</span>
               </button>
               {open === i && (
                 <div className="px-6 pb-5">
-                  <p className="text-sm leading-relaxed" style={{ color: "#a09080" }}>{item.a}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: "#444444" }}>{item.a}</p>
                 </div>
               )}
             </div>
@@ -1398,7 +1378,7 @@ function ChatBot() {
     }
   };
 
-  const C = { bg: "#160e08", header: "#1a0e08", accent: "#dc5000", moss: "#ffb87a", text: "#ffedd7", muted: "#c4b4a4" };
+  const C = { bg: "#f6f5f5", header: "#f6f5f5", accent: "#222222", moss: "#e1dad9", text: "#000000", muted: "#444444" };
 
   return (
     <div className="fixed bottom-6 right-6 z-[300] flex flex-col items-end gap-3">
@@ -1439,7 +1419,7 @@ function ChatBot() {
             top: "50%",
             transform: "translateY(-50%)",
             background: "#1a1a1a",
-            color: "#ffedd7",
+            color: "#000000",
             fontSize: "12px",
             fontWeight: 600,
             padding: "6px 12px",
@@ -1448,7 +1428,7 @@ function ChatBot() {
             pointerEvents: "none",
             opacity: 0,
             transition: "opacity 0.2s",
-            border: "1px solid rgba(255,255,255,0.1)",
+            border: "1px solid rgba(0,0,0,0.15)",
           }}
           className="group-hover/wa:opacity-100"
         >
@@ -1469,19 +1449,19 @@ function ChatBot() {
 
       {isOpen && (
         <div className="rounded-2xl overflow-hidden shadow-2xl animate-fadeIn flex flex-col"
-          style={{ width: 340, height: 480, background: C.bg, border: "1px solid rgba(220,80,0,0.2)" }}
+          style={{ width: 340, height: 480, background: C.bg, border: "1px solid rgba(0,0,0,0.2)" }}
         >
           {/* header */}
-          <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: C.header, borderBottom: "1px solid rgba(220,80,0,0.2)" }}>
+          <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: C.header, borderBottom: "1px solid rgba(0,0,0,0.2)" }}>
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#dc5000" }}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#222222" }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#dc5000" stroke="#dc5000" strokeWidth="1.5"/>
-                  <circle cx="8.5" cy="11" r="1.1" fill="#dc5000"/><circle cx="12" cy="11" r="1.1" fill="#dc5000"/><circle cx="15.5" cy="11" r="1.1" fill="#dc5000"/>
+                  <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#ffffff" stroke="#ffffff" strokeWidth="1.5"/>
+                  <circle cx="8.5" cy="11" r="1.1" fill="#222222"/><circle cx="12" cy="11" r="1.1" fill="#222222"/><circle cx="15.5" cy="11" r="1.1" fill="#222222"/>
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-bold leading-tight text-white">11x Assistant</p>
+                <p className="text-sm font-bold leading-tight" style={{ color: "#000000" }}>11x Assistant</p>
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-300 animate-pulse" />
                   <span className="text-xs" style={{ color: C.moss }}>Always online</span>
@@ -1489,7 +1469,7 @@ function ChatBot() {
               </div>
             </div>
             <button onClick={() => setIsOpen(false)} className="w-7 h-7 flex items-center justify-center rounded-lg text-sm bg-transparent border-0 cursor-pointer"
-              style={{ background: "rgba(255,255,255,0.06)", color: C.moss }}
+              style={{ background: "rgba(0,0,0,0.08)", color: C.muted }}
             >✕</button>
           </div>
 
@@ -1498,20 +1478,20 @@ function ChatBot() {
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}>
                 {msg.from === "bot" && (
-                  <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs mr-2 shrink-0 mt-0.5" style={{ background: "#dc5000", color: "#fff", fontWeight: 700, fontSize: 10 }}>11x</div>
+                  <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs mr-2 shrink-0 mt-0.5" style={{ background: "#222222", color: "#fff", fontWeight: 700, fontSize: 10 }}>11x</div>
                 )}
                 <div className="max-w-[78%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed whitespace-pre-line"
                   style={msg.from === "user"
-                    ? { background: "linear-gradient(135deg,#dc5000,#b84000)", color: "#fff", borderBottomRightRadius: 4 }
-                    : { background: "rgba(220,80,0,0.12)", color: C.text, borderBottomLeftRadius: 4, border: "1px solid rgba(220,80,0,0.2)" }
+                    ? { background: "linear-gradient(135deg,#222222,#0b252a)", color: "#fff", borderBottomRightRadius: 4 }
+                    : { background: "rgba(0,0,0,0.12)", color: C.text, borderBottomLeftRadius: 4, border: "1px solid rgba(0,0,0,0.2)" }
                   }
                 >{msg.text}</div>
               </div>
             ))}
             {isTyping && (
               <div className="flex justify-start items-end gap-2">
-                <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0" style={{ background: "#dc5000", color: "#fff", fontWeight: 700, fontSize: 10 }}>11x</div>
-                <div className="px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1" style={{ background: "rgba(220,80,0,0.12)", border: "1px solid rgba(220,80,0,0.2)" }}>
+                <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0" style={{ background: "#222222", color: "#fff", fontWeight: 700, fontSize: 10 }}>11x</div>
+                <div className="px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1" style={{ background: "rgba(0,0,0,0.12)", border: "1px solid rgba(0,0,0,0.2)" }}>
                   {[0,1,2].map((j) => <span key={j} className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: C.moss, animationDelay: `${j*0.15}s` }} />)}
                 </div>
               </div>
@@ -1520,32 +1500,32 @@ function ChatBot() {
           </div>
 
           {/* quick reply chips */}
-          <div className="px-4 pt-2.5 pb-1.5 flex flex-wrap gap-1.5 shrink-0" style={{ borderTop: "1px solid rgba(220,80,0,0.08)" }}>
+          <div className="px-4 pt-2.5 pb-1.5 flex flex-wrap gap-1.5 shrink-0" style={{ borderTop: "1px solid rgba(0,0,0,0.08)" }}>
             {["Services", "Careers", "Pricing", "Contact Us"].map((label) => (
               <button
                 key={label}
                 onClick={() => sendMessage(label)}
                 disabled={isTyping}
                 className="text-xs px-3 py-1 rounded-full cursor-pointer border-0 transition-all duration-150 disabled:opacity-40"
-                style={{ background: "rgba(220,80,0,0.10)", color: "#f07030", border: "1px solid rgba(220,80,0,0.22)", fontWeight: 600 }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(220,80,0,0.22)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "rgba(220,80,0,0.10)"; }}
+                style={{ background: "rgba(0,0,0,0.10)", color: "#222222", border: "1px solid rgba(0,0,0,0.22)", fontWeight: 600 }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(0,0,0,0.22)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(0,0,0,0.10)"; }}
               >{label}</button>
             ))}
           </div>
 
           {/* input */}
-          <div className="px-4 py-3 shrink-0 flex gap-2" style={{ borderTop: "1px solid rgba(220,80,0,0.12)" }}>
+          <div className="px-4 py-3 shrink-0 flex gap-2" style={{ borderTop: "1px solid rgba(0,0,0,0.12)" }}>
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
               placeholder="Type a message…"
               className="nature-input flex-1 rounded-xl px-4 py-2.5 text-sm outline-none"
-              style={{ background: "rgba(220,80,0,0.08)", border: "1.5px solid rgba(220,80,0,0.25)", color: C.text, fontWeight: 500 }}
+              style={{ background: "rgba(0,0,0,0.08)", border: "1.5px solid rgba(0,0,0,0.25)", color: C.text, fontWeight: 500 }}
             />
             <button onClick={sendMessage} disabled={!input.trim()} className="w-10 h-10 rounded-xl flex items-center justify-center transition-all cursor-pointer disabled:opacity-40 border-0 shrink-0"
-              style={{ background: "linear-gradient(135deg,#dc5000,#b84000)" }}
+              style={{ background: "linear-gradient(135deg,#222222,#0b252a)" }}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M2 8h12M9 3l5 5-5 5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1559,19 +1539,19 @@ function ChatBot() {
       <button
         onClick={() => setIsOpen((o) => !o)}
         className="w-14 h-14 rounded-2xl shadow-2xl flex items-center justify-center border-0 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-green-900/40"
-        style={{ background: "linear-gradient(135deg, #dc5000, #b84000)", border: "1px solid rgba(220,80,0,0.4)" }}
+        style={{ background: "linear-gradient(135deg, #222222, #0b252a)", border: "1px solid rgba(0,0,0,0.4)" }}
         aria-label="Open chat"
       >
         {isOpen ? (
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M2 2L16 16M16 2L2 16" stroke="#dc5000" strokeWidth="2.2" strokeLinecap="round"/>
+            <path d="M2 2L16 16M16 2L2 16" stroke="#222222" strokeWidth="2.2" strokeLinecap="round"/>
           </svg>
         ) : (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#dc5000" stroke="#dc5000" strokeWidth="1.5" strokeLinejoin="round"/>
-            <circle cx="8.5" cy="11" r="1.2" fill="#dc5000"/>
-            <circle cx="12" cy="11" r="1.2" fill="#dc5000"/>
-            <circle cx="15.5" cy="11" r="1.2" fill="#dc5000"/>
+            <path d="M12 2C6.48 2 2 6.02 2 11c0 2.4.96 4.6 2.54 6.24L3 21l4.1-1.3A10.1 10.1 0 0012 20c5.52 0 10-4.02 10-9S17.52 2 12 2Z" fill="#222222" stroke="#222222" strokeWidth="1.5" strokeLinejoin="round"/>
+            <circle cx="8.5" cy="11" r="1.2" fill="#222222"/>
+            <circle cx="12" cy="11" r="1.2" fill="#222222"/>
+            <circle cx="15.5" cy="11" r="1.2" fill="#222222"/>
           </svg>
         )}
       </button>
@@ -1608,21 +1588,21 @@ function NewsletterSection() {
   };
 
   return (
-    <section style={{ background: "#130c05", borderTop: "1px solid rgba(220,80,0,0.15)", borderBottom: "1px solid rgba(220,80,0,0.15)" }}>
+    <section style={{ background: "#f6f5f5", borderTop: "1px solid rgba(0,0,0,0.15)", borderBottom: "1px solid rgba(0,0,0,0.15)" }}>
       <div className="px-5 md:px-12 py-12 md:py-16">
         <div style={{ maxWidth: "640px", margin: "0 auto", textAlign: "center" }}>
           <div className="eyebrow mb-3">Stay Informed</div>
-          <h2 className="text-[clamp(1.6rem,4vw,2.5rem)] font-black tracking-tighter mb-3" style={{ color: "#ffedd7" }}>
+          <h2 className="text-[clamp(1.6rem,4vw,2.5rem)] font-black tracking-tighter mb-3" style={{ color: "#000000" }}>
             Insights delivered to your inbox
           </h2>
-          <p className="text-sm font-medium mb-8" style={{ color: "#a09080" }}>
+          <p className="text-sm font-medium mb-8" style={{ color: "#444444" }}>
             Strategy, engineering, and talent — one newsletter, no noise.
           </p>
 
           {status === "success" ? (
-            <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl" style={{ background: "rgba(220,80,0,0.12)", border: "1px solid rgba(220,80,0,0.3)" }}>
-              <span style={{ color: "#dc5000", fontSize: "20px" }}>✓</span>
-              <p className="font-bold text-sm" style={{ color: "#dc5000" }}>{message}</p>
+            <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl" style={{ background: "rgba(0,0,0,0.12)", border: "1px solid rgba(0,0,0,0.3)" }}>
+              <span style={{ color: "#222222", fontSize: "20px" }}>✓</span>
+              <p className="font-bold text-sm" style={{ color: "#222222" }}>{message}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
@@ -1636,25 +1616,25 @@ function NewsletterSection() {
                 style={{
                   flex: "1 1 240px",
                   maxWidth: "360px",
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1.5px solid rgba(220,80,0,0.25)",
+                  background: "rgba(0,0,0,0.05)",
+                  border: "1.5px solid rgba(0,0,0,0.25)",
                   borderRadius: "12px",
-                  color: "#ffedd7",
+                  color: "#000000",
                   padding: "12px 18px",
                   fontSize: "14px",
                   fontWeight: 500,
                   outline: "none",
                   transition: "border 0.2s, background 0.2s",
                 }}
-                onFocus={e => { e.target.style.border = "1.5px solid #dc5000"; e.target.style.background = "rgba(220,80,0,0.1)"; }}
-                onBlur={e => { e.target.style.border = "1.5px solid rgba(220,80,0,0.25)"; e.target.style.background = "rgba(255,255,255,0.06)"; }}
+                onFocus={e => { e.target.style.border = "1.5px solid #222222"; e.target.style.background = "rgba(0,0,0,0.1)"; }}
+                onBlur={e => { e.target.style.border = "1.5px solid rgba(0,0,0,0.25)"; e.target.style.background = "rgba(0,0,0,0.05)"; }}
               />
               <button
                 type="submit"
                 disabled={status === "loading"}
                 style={{
-                  background: "#dc5000",
-                  color: "#ffedd7",
+                  background: "#222222",
+                  color: "#000000",
                   border: "none",
                   borderRadius: "12px",
                   padding: "12px 28px",
@@ -1665,8 +1645,8 @@ function NewsletterSection() {
                   whiteSpace: "nowrap",
                   opacity: status === "loading" ? 0.7 : 1,
                 }}
-                onMouseEnter={e => { e.target.style.background = "#b84000"; }}
-                onMouseLeave={e => { e.target.style.background = "#dc5000"; }}
+                onMouseEnter={e => { e.target.style.background = "#0b252a"; }}
+                onMouseLeave={e => { e.target.style.background = "#222222"; }}
               >
                 {status === "loading" ? "Subscribing…" : "Subscribe"}
               </button>
@@ -1693,7 +1673,7 @@ function WolfSection({ src, heading, sub }) {
       <div className="relative z-10 text-center px-6 max-w-3xl">
         <h2
           className="wolf-heading font-black tracking-tighter leading-none mb-6 text-white"
-          style={{ fontSize: "clamp(3rem,8vw,6rem)", textShadow: "0 2px 24px rgba(0,0,0,0.85), 0 1px 4px rgba(0,0,0,1)", fontFamily: "'Cinzel', serif", textTransform: "uppercase", letterSpacing: "0.04em" }}
+          style={{ fontSize: "clamp(3rem,8vw,6rem)", textShadow: "0 2px 24px rgba(0,0,0,0.85), 0 1px 4px rgba(0,0,0,1)", fontFamily: "'Playfair Display', ui-serif, Georgia, serif", textTransform: "uppercase", letterSpacing: "-0.02em" }}
         >
           {heading}
         </h2>
@@ -1746,23 +1726,23 @@ function ScrollToContinue({ activeSection }) {
         gap: 10,
         padding: "10px 22px",
         borderRadius: 999,
-        background: "rgba(16,9,4,0.72)",
-        border: "1px solid rgba(220,80,0,0.35)",
+        background: "rgba(255,255,255,0.72)",
+        border: "1px solid rgba(0,0,0,0.35)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
-        color: "#ffedd7",
+        color: "#000000",
         fontSize: 11,
         fontWeight: 600,
         letterSpacing: "0.16em",
         textTransform: "uppercase",
         cursor: "pointer",
-        boxShadow: "0 4px 32px rgba(220,80,0,0.12)",
+        boxShadow: "0 4px 32px rgba(0,0,0,0.12)",
       }}
-      onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(220,80,0,0.7)"; e.currentTarget.style.boxShadow = "0 4px 32px rgba(220,80,0,0.25)"; }}
-      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(220,80,0,0.35)"; e.currentTarget.style.boxShadow = "0 4px 32px rgba(220,80,0,0.12)"; }}
+      onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.7)"; e.currentTarget.style.boxShadow = "0 4px 32px rgba(0,0,0,0.25)"; }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.35)"; e.currentTarget.style.boxShadow = "0 4px 32px rgba(0,0,0,0.12)"; }}
     >
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ animation: "scrollBounce 1.6s ease-in-out infinite" }}>
-        <path d="M2 4.5L7 9.5L12 4.5" stroke="#dc5000" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M2 4.5L7 9.5L12 4.5" stroke="#222222" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
       Scroll to continue
     </button>
@@ -1786,10 +1766,10 @@ function BusinessHours() {
   }, []);
   return (
     <div className="hidden lg:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full"
-      style={{ background: status.available ? "rgba(220,80,0,0.10)" : "rgba(255,255,255,0.05)", border: `1px solid ${status.available ? "rgba(220,80,0,0.30)" : "rgba(255,255,255,0.10)"}` }}
+      style={{ background: status.available ? "rgba(0,0,0,0.10)" : "rgba(0,0,0,0.06)", border: `1px solid ${status.available ? "rgba(0,0,0,0.30)" : "rgba(0,0,0,0.15)"}` }}
     >
       <span className={`w-1.5 h-1.5 rounded-full ${status.available ? "bg-emerald-400 animate-pulse" : "bg-gray-500"}`} />
-      <span style={{ color: status.available ? "#888888" : "#6B7280" }}>
+      <span style={{ color: status.available ? "#444444" : "#6B7280" }}>
         {status.available ? "Team available" : "Offline"} · {status.timeStr} IST
       </span>
     </div>
@@ -1850,18 +1830,17 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#100904", color: "#ffedd7" }}>
+    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#ffffff", color: "#000000" }}>
       <LoadingScreen />
       <CustomCursor />
       <MouseSpotlight />
       <ScrollProgress />
-      <ScrollToContinue activeSection={activeSection} />
 
       {/* Floating Background Blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(220,80,0,0.08)" }} />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(184,64,0,0.07)", animationDelay: "2s" }} />
-        <div className="absolute top-[40%] left-[55%] w-[30%] h-[30%] rounded-full blur-[110px] animate-pulse" style={{ background: "rgba(255,184,122,0.05)", animationDelay: "4s" }} />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(197,213,232,0.25)" }} />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(231,211,191,0.20)", animationDelay: "2s" }} />
+        <div className="absolute top-[40%] left-[55%] w-[30%] h-[30%] rounded-full blur-[110px] animate-pulse" style={{ background: "rgba(239,229,249,0.18)", animationDelay: "4s" }} />
       </div>
 
       {/* NAV */}
@@ -1874,8 +1853,8 @@ export default function App() {
           height: 64,
           backdropFilter: scrolled ? "blur(16px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
-          background: scrolled ? "rgba(0,0,0,0.88)" : "transparent",
-          borderBottom: scrolled ? "1px solid rgba(220,80,0,0.10)" : "none",
+          background: scrolled ? "rgba(255,255,255,0.96)" : "transparent",
+          borderBottom: scrolled ? "1px solid #e1dad9" : "none",
         }}
       >
         <Logo onClick={() => scrollToSection("home")} dark={false} />
@@ -1887,14 +1866,14 @@ export default function App() {
                 onClick={() => scrollToSection(id)}
                 className="transition-all duration-200 bg-transparent border-0 cursor-pointer"
                 style={{
-                  color: activeSection === id ? "#ffedd7" : "#a09080",
+                  color: activeSection === id ? "#000000" : "#444444",
                   fontSize: 12,
                   fontWeight: 500,
                   letterSpacing: "1.44px",
                   textTransform: "uppercase",
                 }}
-                onMouseEnter={e => { if (activeSection !== id) e.target.style.color = "#ffedd7"; }}
-                onMouseLeave={e => { if (activeSection !== id) e.target.style.color = "#a09080"; }}
+                onMouseEnter={e => { if (activeSection !== id) e.target.style.color = "#000000"; }}
+                onMouseLeave={e => { if (activeSection !== id) e.target.style.color = "#444444"; }}
               >
                 {label}
               </button>
@@ -1910,7 +1889,7 @@ export default function App() {
             fontWeight: 500,
             letterSpacing: "1.44px",
             textTransform: "uppercase",
-            color: "#ffedd7",
+            color: "#000000",
             padding: "10px 22px",
           }}
         >
@@ -1919,7 +1898,7 @@ export default function App() {
 
         <button
           className="md:hidden bg-transparent border-0 cursor-pointer text-2xl"
-          style={{ color: "#dc5000" }}
+          style={{ color: "#222222" }}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation"
           aria-expanded={menuOpen}
@@ -1931,15 +1910,15 @@ export default function App() {
 
       {/* MOBILE MENU */}
       {menuOpen && (
-        <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "rgba(0,0,0,0.98)" }}>
+        <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "#ffffff" }}>
           {NAV_LINKS.map(({ label, id }) => (
             <button
               key={id}
               onClick={() => scrollToSection(id)}
               className="text-2xl font-bold transition-colors duration-200 bg-transparent border-0 cursor-pointer"
-              style={{ color: "#a09080" }}
-              onMouseEnter={e => e.target.style.color="#dc5000"}
-              onMouseLeave={e => e.target.style.color="#9a9a9a"}
+              style={{ color: "#444444" }}
+              onMouseEnter={e => e.target.style.color="#222222"}
+              onMouseLeave={e => e.target.style.color="#888888"}
             >
               {label}
             </button>
@@ -1952,38 +1931,38 @@ export default function App() {
         {/* ── HOME ─────────────────────────────────────────────────────── */}
         <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ height: "100svh" }}>
           <video src="/11xlogo-video.mp4" autoPlay muted playsInline loop className="hero-bg-video" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(16,9,4,0.60) 0%, rgba(22,14,8,0.30) 40%, rgba(16,9,4,0.65) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.55) 100%)" }} />
           <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
 
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
             <div className="flex-1 min-w-0">
-              <div className="eyebrow mb-7 lusion-fade d1">Consulting · Talent · Technology</div>
+              <div className="eyebrow mb-7 lusion-fade d1" style={{ color: "rgba(255,255,255,0.80)" }}>Consulting · Talent · Technology</div>
 
               <h1 className="text-[clamp(3rem,8vw,7.5rem)] display-headline mb-6 md:mb-10"
-                style={{ color: "#ffedd7", textShadow: "0 2px 24px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,1)" }}>
+                style={{ color: "#ffffff" }}>
                 <span className="lusion-line d2"><span className="lusion-line-inner">Scale your</span></span>
-                <span className="lusion-line d3"><span className="lusion-line-inner" style={{ color: "#ffb87a", textShadow: "0 0 32px rgba(220,80,0,0.35), 0 2px 16px rgba(0,0,0,0.9)" }}>
+                <span className="lusion-line d3"><span className="lusion-line-inner" style={{ color: "#ede2d7" }}>
                   <TypingText words={["ambition", "vision", "growth", "impact"]} />
                 </span></span>
               </h1>
 
-              <p className="text-[clamp(1rem,1.6vw,1.2rem)] font-medium leading-[1.6] max-w-xl mb-10 lusion-fade d3"
-                style={{ color: "#f0dfc4", textShadow: "0 1px 8px rgba(0,0,0,0.95)" }}>
+              <p className="text-[clamp(1rem,1.6vw,1.2rem)] leading-[1.6] max-w-xl mb-10 lusion-fade d3"
+                style={{ color: "rgba(255,255,255,0.80)", fontWeight: 400 }}>
                 Bridging the gap between elite engineering and strategic growth with a platform-first approach.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center lusion-fade d4">
                 <MagneticButton
                   onClick={() => scrollToSection("services")}
-                  className="btn-gradient text-center"
-                  style={{ padding: "14px 32px" }}
+                  className="text-center"
+                  style={{ padding: "14px 32px", background: "#ffffff", color: "#000000", border: "1px solid #ffffff", borderRadius: "999px", fontSize: 14, fontWeight: 500, cursor: "pointer" }}
                 >
                   Start Building ↗
                 </MagneticButton>
                 <MagneticButton
                   onClick={() => scrollToSection("careers")}
-                  className="ghost-aurora text-center"
-                  style={{ padding: "14px 28px", color: "#ffedd7", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}
+                  className="text-center"
+                  style={{ padding: "14px 28px", color: "#ffffff", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase", background: "transparent", border: "1px solid rgba(255,255,255,0.60)", borderRadius: "999px" }}
                 >
                   Explore Roles
                 </MagneticButton>
@@ -1992,7 +1971,7 @@ export default function App() {
               <motion.div
                 ref={statsRef}
                 className="mt-8 md:mt-10 pt-7 md:pt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10"
-                style={{ borderTop: "1px solid rgba(220,80,0,0.15)" }}
+                style={{ borderTop: "1px solid rgba(255,255,255,0.20)" }}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: sessionStorage.getItem("11x_loaded") ? 0.9 : 3.6 }}
@@ -2010,38 +1989,38 @@ export default function App() {
               transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: sessionStorage.getItem("11x_loaded") ? 0.4 : 3.1 }}
             >
               <img src={logo} alt="11x Square" className="object-cover"
-                style={{ width: 320, height: 320, borderRadius: 40, border: "1px solid rgba(220,80,0,0.35)" }} />
+                style={{ width: 320, height: 320, borderRadius: 40, border: "1px solid rgba(255,255,255,0.25)" }} />
             </motion.div>
           </div>
         </section>
 
         {/* MARQUEE */}
-        <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#120b05", borderTop: "1px solid rgba(220,80,0,0.2)", borderBottom: "1px solid rgba(220,80,0,0.2)" }}>
+        <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#000000", borderTop: "1px solid #000000", borderBottom: "1px solid #000000" }}>
           <div className="marquee-track flex gap-14 w-max">
             {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-              <span key={i} className="mono text-[12px] font-bold uppercase tracking-wider whitespace-nowrap flex items-center gap-4" style={{ color: "#dc5000" }}>
+              <span key={i} className="mono text-[11px] font-medium uppercase tracking-widest whitespace-nowrap flex items-center gap-4" style={{ color: "#ffffff" }}>
                 {item}
-                <span className="text-[10px]" style={{ color: "#b84000" }}>✦</span>
+                <span className="text-[8px]" style={{ color: "rgba(255,255,255,0.40)" }}>✦</span>
               </span>
             ))}
           </div>
         </div>
 
         {/* ── SERVICES ──────────────────────────────────────────────────── */}
-        <section id="services" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#100904" }}>
+        <section id="services" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#ffffff" }}>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div>
               <div className="eyebrow mb-4 lusion-fade d1">Our Solutions</div>
-              <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#ffedd7" }}>
+              <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#000000" }}>
                 <span className="lusion-clip d2" style={{ display: "block" }}>Consulting for the</span>
                 <span className="lusion-clip d3" style={{ display: "block" }}>bold &amp; ambitious</span>
               </h2>
             </div>
-            <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md lusion-fade d4" style={{ color: "#a09080" }}>
+            <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md lusion-fade d4" style={{ color: "#444444" }}>
               Platform-driven consulting that solves deep engineering and product problems in record time.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lusion-fade d5" style={{ borderTop: "1px solid rgba(255,255,255,0.08)", borderLeft: "1px solid rgba(255,255,255,0.08)" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lusion-fade d5">
             {SERVICES.map((s, i) => (
               <ServiceCard key={s.num} {...s} delay={0.1 * i} />
             ))}
@@ -2056,20 +2035,20 @@ export default function App() {
         />
 
         {/* ── CAREERS ───────────────────────────────────────────────────── */}
-        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh", background: "#100904" }}>
+        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh", background: "#ffffff" }}>
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
             <div>
               <div className="eyebrow mb-4 lusion-fade d1">Careers</div>
-              <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6" style={{ color: "#ffedd7" }}>
+              <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6" style={{ color: "#000000" }}>
                 <span className="lusion-clip d2" style={{ display: "block" }}>Find your next</span>
-                <span className="lusion-clip d3" style={{ display: "block" }}>challenge at <span style={{ color: "#dc5000" }}>11x</span></span>
+                <span className="lusion-clip d3" style={{ display: "block" }}>challenge at <span style={{ color: "#222222" }}>11x</span></span>
               </h2>
-              <p className="text-lg font-medium leading-relaxed mb-10 max-w-md lusion-fade d4" style={{ color: "#a09080" }}>
+              <p className="text-lg font-medium leading-relaxed mb-10 max-w-md lusion-fade d4" style={{ color: "#444444" }}>
                 Whether you're a seasoned consultant or a fresh grad ready to make your mark — we have a seat for you.
               </p>
 
-              <div className="p-7 rounded-xl shadow-sm lusion-fade d5" style={{ background: "rgba(26,14,8,0.80)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(220,80,0,0.25)" }}>
-                <p className="mono text-[10px] font-bold uppercase tracking-[0.15em] mb-4" style={{ color: "#dc5000" }}>Intern Program Highlights</p>
+              <div className="p-7 rounded-2xl lusion-fade d5" style={{ background: "#f6f5f5", border: "1px solid #e1dad9" }}>
+                <p className="mono text-[10px] font-medium uppercase tracking-[0.15em] mb-4" style={{ color: "#888888" }}>Intern Program Highlights</p>
                 <ul className="flex flex-col gap-3">
                   {[
                     "3-month structured cohort program",
@@ -2077,15 +2056,15 @@ export default function App() {
                     "Mentorship from senior consultants",
                     "Full-time conversion for top performers",
                   ].map((item) => (
-                    <li key={item} className="flex gap-3 text-sm font-medium" style={{ color: "#988878" }}>
-                      <span className="flex-shrink-0 text-xl" style={{ color: "#b84000" }}>→</span> {item}
+                    <li key={item} className="flex gap-3 text-sm" style={{ color: "#222222", fontWeight: 400 }}>
+                      <span className="flex-shrink-0 text-base" style={{ color: "#000000" }}>→</span> {item}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
 
-            <div className="flex flex-col lusion-fade d5 rounded-xl overflow-hidden" style={{ border: "1px solid rgba(220,80,0,0.20)" }}>
+            <div className="flex flex-col lusion-fade d5 rounded-2xl overflow-hidden" style={{ border: "1px solid #e1dad9" }}>
               {ROLES.map((r, i) => (
                 <RoleItem key={r.title} {...r} delay={0.1 * i} onApply={() => setCareersApplyRole(r)} />
               ))}
@@ -2101,16 +2080,16 @@ export default function App() {
         />
 
         {/* ── PROCESS ───────────────────────────────────────────────────── */}
-        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh", background: "#100904" }}>
+        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh", background: "#ffffff" }}>
           <div className="relative z-10">
             <div className="eyebrow mb-3 lusion-fade d1">The Process</div>
             <h2 className="text-[clamp(1.5rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-6 md:mb-14 max-w-xl"
-              style={{ color: "#ffedd7", textShadow: "0 2px 20px rgba(0,0,0,0.95), 0 1px 4px rgba(0,0,0,1)" }}>
+              style={{ color: "#000000" }}>
               <span className="lusion-clip d2" style={{ display: "block" }}>From discovery</span>
               <span className="lusion-clip d3" style={{ display: "block" }}>to results in weeks</span>
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden lusion-fade d4" style={{ border: "1px solid rgba(220,80,0,0.25)" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden lusion-fade d4" style={{ border: "1px solid #e1dad9" }}>
               {STEPS.map((s, i) => (
                 <motion.div
                   key={s.num}
@@ -2119,19 +2098,17 @@ export default function App() {
                   transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
                   viewport={{ once: true, margin: "-40px" }}
                   style={{
-                    background: "rgba(16,9,4,0.82)",
-                    backdropFilter: "blur(16px)",
-                    WebkitBackdropFilter: "blur(16px)",
-                    borderRight: i < STEPS.length - 1 ? "1px solid rgba(220,80,0,0.2)" : undefined,
-                    borderBottom: "1px solid rgba(220,80,0,0.15)",
+                    background: "#ffffff",
+                    borderRight: i < STEPS.length - 1 ? "1px solid #e1dad9" : undefined,
+                    borderBottom: "1px solid #e1dad9",
                   }}
-                  className="p-5 sm:p-6 lg:p-8 relative group transition-colors duration-500"
-                  onMouseEnter={e => e.currentTarget.style.background="rgba(36,20,8,0.88)"}
-                  onMouseLeave={e => e.currentTarget.style.background="rgba(16,9,4,0.82)"}
+                  className="p-5 sm:p-6 lg:p-8 relative group transition-colors duration-300"
+                  onMouseEnter={e => e.currentTarget.style.background="#f5ece5"}
+                  onMouseLeave={e => e.currentTarget.style.background="#ffffff"}
                 >
-                  <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(220,80,0,0.30)" }}>{s.num}</div>
-                  <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#ffedd7" }}>{s.title}</h4>
-                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#e0cdb8" }}>{s.desc}</p>
+                  <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(0,0,0,0.30)" }}>{s.num}</div>
+                  <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#000000" }}>{s.title}</h4>
+                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#444444" }}>{s.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -2143,21 +2120,21 @@ export default function App() {
 
         {/* ── FAQ ───────────────────────────────────────────────────────── */}
         {/* ── CONTACT ───────────────────────────────────────────────────── */}
-        <section id="contact" className="px-5 md:px-12 relative overflow-hidden flex flex-col justify-center" style={{ minHeight: "100svh", background: "#100904" }}>
+        <section id="contact" className="px-5 md:px-12 relative overflow-hidden flex flex-col justify-center" style={{ minHeight: "100svh", background: "#ffffff" }}>
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
-            <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
+            <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="#e1dad9"/><path d="M100 10 L100 160" stroke="#e1dad9" strokeWidth="2"/></svg>
           </div>
           <div className="absolute -bottom-8 -left-8 w-48 h-48 opacity-10" style={{ transform: "rotate(45deg)" }}>
-            <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/></svg>
+            <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="#e1dad9"/></svg>
           </div>
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 relative z-10">
             <div>
               <div className="eyebrow mb-3 lusion-fade d1">Get In Touch</div>
-              <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl" style={{ color: "#ffedd7" }}>
+              <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl" style={{ color: "#000000" }}>
                 <span className="lusion-clip d2" style={{ display: "block" }}>Accelerate your team's</span>
                 <span className="lusion-clip d3" style={{ display: "block" }}>potential today.</span>
               </h2>
-              <p className="text-[18px] font-medium mt-4 max-w-md lusion-fade d4" style={{ color: "#a09080" }}>
+              <p className="text-[18px] font-medium mt-4 max-w-md lusion-fade d4" style={{ color: "#444444" }}>
                 Connect with our leadership to explore high-impact consulting or talent solutions.
               </p>
             </div>
@@ -2166,7 +2143,7 @@ export default function App() {
                 Start a Project ↗
               </button>
               <button onClick={() => setActiveModal("apply")} className="ghost-aurora"
-                style={{ padding: "16px 44px", color: "#ffedd7", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}>
+                style={{ padding: "16px 44px", color: "#000000", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}>
                 Apply Now
               </button>
             </div>
@@ -2199,58 +2176,116 @@ export default function App() {
 
       <CookieBanner />
 
-      {/* FOOTER */}
-      <footer className="px-5 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10 fade-up d1" style={{ background: "#130c05", borderTop: "1px solid rgba(220,80,0,0.2)" }}>
-        <div className="flex flex-col lg:flex-row justify-between gap-10 lg:gap-16 mb-8 md:mb-10 fade-up d2">
-          <div className="max-w-xs fade-up d3">
-            <Logo onClick={() => scrollToSection("home")} className="mb-4" size="footer" dark={false} />
-            <p className="text-sm leading-relaxed" style={{ color: "#a09080" }}>
-              Bridging elite consulting with the next generation of tech talent.
-            </p>
-          </div>
+      {/* FOOTER — cinematic bento */}
+      <footer className="relative overflow-hidden" style={{ minHeight: "400px" }}>
+        <video
+          src="/Group_of_wolves_on_path_202606211412.mp4"
+          autoPlay muted playsInline loop
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.48)" }} />
 
-          <div className="flex flex-wrap gap-8 sm:gap-16 fade-up d4">
-            {[
-              { heading: "Company", links: [
+        <div className="relative z-10 px-5 md:px-10 py-10 md:py-12">
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+            gap: "10px",
+            maxWidth: "1200px",
+            margin: "0 auto",
+          }}>
+            {/* Logo card */}
+            <div style={{ background: "#f6f5f5", borderRadius: 16, padding: "18px 18px" }}>
+              <Logo onClick={() => scrollToSection("home")} size="footer" dark={false} />
+              <p className="mt-3 text-xs leading-relaxed" style={{ color: "#666666", fontWeight: 400 }}>
+                Bridging elite consulting with the next generation of tech talent.
+              </p>
+            </div>
+
+            {/* Quicklinks */}
+            <div style={{ background: "#f6f5f5", borderRadius: 16, padding: "18px 18px" }}>
+              <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "#888888" }}>Quicklinks</p>
+              <ul className="flex flex-col gap-2 list-none">
+                {[
                   { label: "Services", dest: "services" },
+                  { label: "Careers",  dest: "careers" },
                   { label: "Process",  dest: "process" },
                   { label: "Contact",  dest: "contact" },
-              ]},
-              { heading: "Careers", links: [
-                  { label: "Internships", dest: "careers" },
-                  { label: "Full-time",   dest: "careers" },
-                  { label: "Freelance",   dest: "careers" },
-              ]},
-              { heading: "Contact", links: [
-                  { label: "11xsquarebusiness@gmail.com", dest: "contact" },
-                  { label: "United Kingdom",       dest: "contact" },
-                  { label: "LinkedIn",             dest: "contact" },
-                  { label: "Twitter",              dest: "contact" },
-              ]},
-            ].map((col) => (
-              <div key={col.heading}>
-                <h5 className="mono text-[10px] font-bold uppercase tracking-[0.18em] mb-5" style={{ color: "#dc5000" }}>{col.heading}</h5>
-                <ul className="flex flex-col gap-1.5 list-none">
-                  {col.links.map(({ label, dest }) => (
-                    <li key={label}>
-                      <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(dest); }}
-                        className="text-sm transition-colors duration-200 no-underline" style={{ color: "#a09080" }}
-                        onMouseEnter={e => e.target.style.color="#dc5000"}
-                        onMouseLeave={e => e.target.style.color="#9a9a9a"}
-                      >{label}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
+                ].map(({ label, dest }) => (
+                  <li key={label}>
+                    <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(dest); }}
+                      className="text-sm no-underline transition-colors" style={{ color: "#222222", fontWeight: 400 }}
+                      onMouseEnter={e => e.target.style.color="#000000"}
+                      onMouseLeave={e => e.target.style.color="#222222"}
+                    >{label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        <div className="pt-7 flex flex-col sm:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(220,80,0,0.2)" }}>
-          <p className="mono text-[11px]" style={{ color: "#a09080" }}>
-            © 2025 <span style={{ color: "#dc5000" }}>11x Square</span>. All rights reserved.
-          </p>
-          <p className="mono text-[11px]" style={{ color: "#a09080" }}>✦ Built for the bold.</p>
+            {/* Services */}
+            <div style={{ background: "#f5ece5", borderRadius: 16, padding: "18px 18px" }}>
+              <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "#888888" }}>Services</p>
+              <ul className="flex flex-col gap-1.5 list-none">
+                {["Tech Consulting", "Product & Strategy", "Data & Intelligence", "Startup Acceleration"].map((s) => (
+                  <li key={s}>
+                    <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection("services"); }}
+                      className="text-xs no-underline transition-colors" style={{ color: "#444444" }}
+                      onMouseEnter={e => e.target.style.color="#000000"}
+                      onMouseLeave={e => e.target.style.color="#444444"}
+                    >{s}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Location */}
+            <div style={{ background: "#f6f5f5", borderRadius: 16, padding: "18px 18px" }}>
+              <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "#888888" }}>Location</p>
+              <div style={{ marginBottom: 12 }}>
+                <p className="text-sm font-semibold" style={{ color: "#000000", letterSpacing: "-0.02em" }}>Chennai</p>
+                <p className="text-xs mt-0.5" style={{ color: "#666666" }}>India · Hybrid</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold" style={{ color: "#000000", letterSpacing: "-0.02em" }}>United Kingdom</p>
+                <p className="text-xs mt-0.5" style={{ color: "#666666" }}>Remote · Global</p>
+              </div>
+            </div>
+
+            {/* Contact */}
+            <div style={{ background: "#efe5f9", borderRadius: 16, padding: "18px 18px" }}>
+              <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "#888888" }}>Contact</p>
+              <a href="mailto:11xsquarebusiness@gmail.com"
+                className="text-xs no-underline block mb-4" style={{ color: "#000000", wordBreak: "break-all", lineHeight: 1.5 }}>
+                11xsquarebusiness@gmail.com
+              </a>
+              <div className="flex gap-2">
+                {["LinkedIn", "X"].map((s) => (
+                  <a key={s} href="#"
+                    className="mono text-[9px] no-underline px-2.5 py-1.5"
+                    style={{ background: "#000000", color: "#ffffff", borderRadius: 8 }}
+                  >{s}</a>
+                ))}
+              </div>
+            </div>
+
+            {/* Legal + copyright */}
+            <div style={{ background: "#f6f5f5", borderRadius: 16, padding: "18px 18px" }}>
+              <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "#888888" }}>Legal</p>
+              <ul className="flex flex-col gap-1.5 list-none">
+                {["Privacy Policy", "Terms & Conditions", "Cookie Policy"].map((l) => (
+                  <li key={l}>
+                    <a href="#" className="text-xs no-underline transition-colors" style={{ color: "#444444" }}
+                      onMouseEnter={e => e.target.style.color="#000000"}
+                      onMouseLeave={e => e.target.style.color="#444444"}
+                    >{l}</a>
+                  </li>
+                ))}
+              </ul>
+              <p className="mono text-[9px] mt-4" style={{ color: "#888888" }}>
+                © 2025 11x Square Inc.<br/>All rights reserved.
+              </p>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
