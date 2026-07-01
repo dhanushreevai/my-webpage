@@ -1004,6 +1004,118 @@ function TestimonialsSection() {
   );
 }
 
+/* ── Scroll Reveal Hook ───────────────────────────────────────────────────── */
+function useScrollReveal(dep) {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("revealed"); observer.unobserve(e.target); } }),
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+    document.querySelectorAll(".scroll-reveal").forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, [dep]);
+}
+
+/* ── Exit Intent Popup ────────────────────────────────────────────────────── */
+function ExitIntentPopup({ onContact }) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (sessionStorage.getItem("exitShown")) return;
+    const handle = (e) => {
+      if (e.clientY <= 0) {
+        setShow(true);
+        sessionStorage.setItem("exitShown", "1");
+      }
+    };
+    document.addEventListener("mouseleave", handle);
+    return () => document.removeEventListener("mouseleave", handle);
+  }, []);
+  if (!show) return null;
+  return (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}>
+      <div className="relative w-full max-w-md rounded-2xl p-8 text-center" style={{ background: "#0D1117", border: "1px solid rgba(14,165,233,0.3)", boxShadow: "0 0 60px rgba(14,165,233,0.15)" }}>
+        <button onClick={() => setShow(false)} className="absolute top-4 right-4 text-xl bg-transparent border-0 cursor-pointer" style={{ color: "#94A3B8" }}>✕</button>
+        <div className="text-4xl mb-4">🎯</div>
+        <p className="font-mono text-[11px] uppercase tracking-widest mb-2" style={{ color: "#0EA5E9" }}>Wait — before you go!</p>
+        <h3 className="text-2xl font-black tracking-tighter mb-3" style={{ color: "#FFFFFF" }}>Get a FREE 30-min Strategy Session</h3>
+        <p className="text-sm leading-relaxed mb-6" style={{ color: "#94A3B8" }}>No commitment. Just clarity on what's possible for your business. Our consultants have helped 120+ companies unlock breakthrough growth.</p>
+        <button
+          onClick={() => { setShow(false); onContact(); }}
+          className="w-full font-bold text-base py-3 rounded-xl transition-all duration-200 cursor-pointer"
+          style={{ background: "linear-gradient(135deg,#0EA5E9,#0284C7)", color: "#FFFFFF", border: "none" }}
+          onMouseEnter={e => e.target.style.opacity="0.9"}
+          onMouseLeave={e => e.target.style.opacity="1"}
+        >
+          Claim Free Session →
+        </button>
+        <button onClick={() => setShow(false)} className="mt-3 text-xs bg-transparent border-0 cursor-pointer underline" style={{ color: "#64748B" }}>No thanks, I'll pass</button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Cookie Consent Banner ────────────────────────────────────────────────── */
+function CookieBanner() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (!localStorage.getItem("cookieConsent")) setShow(true);
+  }, []);
+  const accept = () => { localStorage.setItem("cookieConsent", "accepted"); setShow(false); };
+  const decline = () => { localStorage.setItem("cookieConsent", "declined"); setShow(false); };
+  if (!show) return null;
+  return (
+    <div className="fixed bottom-0 left-0 right-0 z-[9998] px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ background: "rgba(13,17,23,0.97)", borderTop: "1px solid rgba(14,165,233,0.2)", backdropFilter: "blur(12px)" }}>
+      <p className="text-sm text-center sm:text-left" style={{ color: "#94A3B8" }}>
+        🍪 We use cookies to improve your experience on 11xsquare.com. <span style={{ color: "#64748B" }}>By continuing, you agree to our cookie policy.</span>
+      </p>
+      <div className="flex gap-3 flex-shrink-0">
+        <button onClick={decline} className="text-sm font-bold px-5 py-2 rounded-full cursor-pointer transition-all" style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.15)", color: "#94A3B8" }}>Decline</button>
+        <button onClick={accept} className="text-sm font-bold px-5 py-2 rounded-full cursor-pointer transition-all" style={{ background: "#0EA5E9", color: "#FFFFFF", border: "none" }}>Accept All</button>
+      </div>
+    </div>
+  );
+}
+
+/* ── FAQ Accordion ────────────────────────────────────────────────────────── */
+const FAQ_ITEMS = [
+  { q: "What types of companies do you work with?", a: "We work with startups (Seed to Series B), scale-ups, and enterprise teams across the UK and India. Our sweet spot is companies with 10–200 employees ready to scale their technology or talent." },
+  { q: "How long does a typical engagement last?", a: "Project-based engagements typically run 8–16 weeks. Ongoing retainers are month-to-month. Talent placements are permanent or contract-based depending on your needs." },
+  { q: "What does it cost?", a: "Engagements start from £3,000/month for advisory work, with project-based pricing available. Fill out our contact form for a custom proposal tailored to your goals." },
+  { q: "How quickly can you start?", a: "Most engagements kick off within 1–2 weeks of signing. For urgent talent needs, we can activate our network within 48 hours." },
+  { q: "Do you work remotely or on-site?", a: "Both. Most consulting is delivered remotely, with optional on-site days for strategy sessions and workshops. We have teams in the UK and India." },
+  { q: "What makes 11x Square different from other consultancies?", a: "We're a hybrid — part consulting firm, part talent network, part technology partner. We don't just advise; we embed, execute, and deliver measurable results. Our average client sees 11x ROI on their engagement." },
+];
+
+function FaqAccordion() {
+  const [open, setOpen] = useState(null);
+  return (
+    <section className="px-5 md:px-12 py-16 md:py-20 scroll-reveal" style={{ background: "#080B12", borderTop: "1px solid rgba(14,165,233,0.12)" }}>
+      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] mb-3" style={{ color: "#0EA5E9" }}>// FAQ</p>
+        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-10" style={{ color: "#FFFFFF" }}>Common questions</h2>
+        <div className="flex flex-col gap-3">
+          {FAQ_ITEMS.map((item, i) => (
+            <div key={i} className="rounded-xl overflow-hidden transition-all duration-300" style={{ background: open === i ? "#111827" : "rgba(17,24,39,0.6)", border: `1px solid ${open === i ? "rgba(14,165,233,0.3)" : "rgba(255,255,255,0.07)"}` }}>
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full flex items-center justify-between px-6 py-4 text-left bg-transparent border-0 cursor-pointer gap-4"
+              >
+                <span className="font-bold text-base" style={{ color: "#FFFFFF" }}>{item.q}</span>
+                <span className="flex-shrink-0 text-xl font-light transition-transform duration-300" style={{ color: "#0EA5E9", transform: open === i ? "rotate(45deg)" : "rotate(0deg)" }}>+</span>
+              </button>
+              {open === i && (
+                <div className="px-6 pb-5">
+                  <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{item.a}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ── Chatbot Widget ───────────────────────────────────────────────────────── */
 function ChatBot() {
   const WELCOME = { text: "👋 Welcome to 11x Square! I'm your virtual assistant. Ask me about our services, careers, or how to get in touch!", from: "bot", time: new Date().toISOString() };
@@ -1367,6 +1479,7 @@ export default function App() {
   const [careersApplyRole, setCareersApplyRole] = useState(null);
   const statsRef = useRef(null);
   const lastScrollY = useRef(0);
+  useScrollReveal(view);
 
   useEffect(() => {
     const onScroll = () => {
@@ -1571,7 +1684,7 @@ export default function App() {
       )}
 
       {view === "Services" && (
-        <section id="services" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#080B12" }}>
+        <section id="services" className="scroll-reveal px-5 md:px-12 py-14 md:py-20" style={{ background: "#080B12" }}>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 fade-up d1">
           <div className="fade-up d2">
             <p className="mono text-[11px] uppercase tracking-[0.18em] mb-4 fade-up d3" style={{ color: "#888888" }}>// Our Solutions</p>
@@ -1776,7 +1889,7 @@ export default function App() {
       )}
 
       {view === "Contact" && (
-        <section id="contact" className="px-5 md:px-12 py-16 md:py-24 fade-up d1 relative overflow-hidden" style={{ background: "#080B12" }}>
+        <section id="contact" className="scroll-reveal px-5 md:px-12 py-16 md:py-24 relative overflow-hidden" style={{ background: "#080B12" }}>
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
           </div>
@@ -1825,6 +1938,12 @@ export default function App() {
 
       {/* CHATBOT + WHATSAPP */}
       <ChatBot />
+
+      <ExitIntentPopup onContact={() => navigateTo("Contact")} />
+      <CookieBanner />
+
+      {/* FAQ */}
+      <FaqAccordion />
 
       {/* FOOTER */}
       <footer className="px-5 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)" }}>
