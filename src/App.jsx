@@ -1636,6 +1636,8 @@ function BusinessHours() {
 
 export default function App() {
   const [view, setView] = useState("Home");
+  const [curtainPhase, setCurtainPhase] = useState("idle"); // "idle" | "enter" | "exit"
+  const [isBusy, setIsBusy] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
@@ -1672,15 +1674,50 @@ export default function App() {
 
 
   const navigateTo = (v) => {
-    setView(v);
+    if (v === view || isBusy) return;
     setMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: "instant" });
+    setIsBusy(true);
+    setCurtainPhase("enter");
+    setTimeout(() => {
+      setView(v);
+      window.scrollTo({ top: 0, behavior: "instant" });
+      setCurtainPhase("exit");
+      setTimeout(() => {
+        setCurtainPhase("idle");
+        setIsBusy(false);
+      }, 560);
+    }, 560);
   };
 
   return (
     <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#000000", color: "#ffffff" }}>
       <LoadingScreen />
       <MouseSpotlight />
+
+      {/* Curtain transition overlay */}
+      {curtainPhase !== "idle" && (
+        <div
+          className={curtainPhase === "enter" ? "curtain-enter" : "curtain-exit"}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 99998,
+            background: "linear-gradient(105deg, #000000 0%, #0d0520 45%, #1a0840 55%, #000000 100%)",
+            pointerEvents: "all",
+          }}
+        >
+          {/* Glowing leading edge */}
+          <div style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: 2,
+            height: "100%",
+            background: "linear-gradient(180deg, transparent 0%, #8052ff 30%, #c4b5fd 50%, #8052ff 70%, transparent 100%)",
+            boxShadow: "0 0 24px 4px rgba(128,82,255,0.6)",
+          }} />
+        </div>
+      )}
 
       {/* Floating Background Blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">

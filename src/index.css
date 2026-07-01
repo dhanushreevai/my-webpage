@@ -35,7 +35,23 @@ html, body { background: #000000; margin: 0; padding: 0; }
   50%       { opacity: 0; }
 }
 
-.page-transition  { animation: pageEnter 0.6s cubic-bezier(0.22,1,0.36,1) forwards; }
+.page-transition  { animation: pageEnter 0.5s cubic-bezier(0.22,1,0.36,1) forwards; }
+
+/* ── Curtain page transition ── */
+@keyframes curtainEnter {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0%); }
+}
+@keyframes curtainExit {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(101%); }
+}
+.curtain-enter {
+  animation: curtainEnter 0.52s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+.curtain-exit {
+  animation: curtainExit 0.52s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
 .marquee-track    { animation: marquee 24s linear infinite; }
 .animate-fadeIn   { animation: fadeIn 0.25s cubic-bezier(0.22,1,0.36,1) forwards; }
 .leaf-sway        { animation: sway 4s ease-in-out infinite; }
