@@ -2190,11 +2190,11 @@ export default function App() {
         />
         <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.48)" }} />
 
-        <div className="relative z-10 px-5 md:px-10 py-10 md:py-12">
+        <div className="relative z-10 px-6 md:px-14 py-14 md:py-20">
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
-            gap: "10px",
+            gap: "20px",
             maxWidth: "1200px",
             margin: "0 auto",
           }}>
