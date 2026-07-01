@@ -1776,7 +1776,7 @@ export default function App() {
         <>
         <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ minHeight: "100svh" }}>
         <video
-          src="/wolf_howling_in_moon_202606211229.mp4"
+          src="/11xlogo-video.mp4"
           autoPlay muted playsInline loop
           style={{ position: "absolute", top: "50%", left: "50%", minWidth: "100%", minHeight: "100%", width: "auto", height: "auto", transform: "translate(-50%,-50%)", objectFit: "cover", objectPosition: "center 30%", opacity: 0.75 }}
         />
