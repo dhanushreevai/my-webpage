@@ -96,9 +96,13 @@ html, body { background: #000000; margin: 0; padding: 0; }
 .nature-input::placeholder { color: rgba(255,255,255,0.35); }
 .typing-cursor { animation: blink 1s step-end infinite; color: #a78bff; -webkit-text-stroke: 0; }
 
-::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar       { width: 3px; }
 ::-webkit-scrollbar-track { background: #000000; }
-::-webkit-scrollbar-thumb { background: linear-gradient(#8052ff,#6b3fd4); border-radius: 3px; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8052ff 0%, #a78bff 55%, #fde9ff 100%);
+  border-radius: 2px;
+}
+* { scrollbar-width: thin; scrollbar-color: #8052ff #000000; }
 
 /* ── Space view ── */
 @keyframes spBlurIn {
@@ -165,3 +169,60 @@ html, body { background: #000000; margin: 0; padding: 0; }
 .scroll-reveal.delay-2 { transition-delay: 0.2s; }
 .scroll-reveal.delay-3 { transition-delay: 0.3s; }
 .scroll-reveal.delay-4 { transition-delay: 0.4s; }
+
+/* ── Auros-style design tokens ── */
+
+/* Eyebrow label — 6px violet dot + uppercase tracked text */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.44px;
+  text-transform: uppercase;
+  color: #9a9a9a;
+  font-family: 'Archivo', sans-serif;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8052ff;
+  flex-shrink: 0;
+}
+
+/* Primary gradient button */
+.btn-gradient {
+  background: linear-gradient(90deg, #5a2fd4 0%, #8052ff 100%);
+  border-radius: 6px;
+  border: none;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.44px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.btn-gradient:hover {
+  background: linear-gradient(90deg, #4a25b0 0%, #6b3fd4 100%);
+}
+
+/* Ghost button — aurora gradient border (dual-background trick) */
+.ghost-aurora {
+  background-image: linear-gradient(#000000, #000000),
+    linear-gradient(90deg, #8052ff 0%, #a78bff 40%, #ffffff 70%, #fde9ff 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.ghost-aurora:hover { opacity: 0.8; }
+
+/* Tonal surface — one shade above void black */
+.surface-card  { background: #080808; }
+.surface-lift  { background: #0f0f0f; }
