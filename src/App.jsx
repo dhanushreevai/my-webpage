@@ -1778,12 +1778,22 @@ export default function App() {
         <video
           src="/11xlogo-video.mp4"
           autoPlay muted playsInline loop
-          style={{ position: "absolute", top: "50%", left: "50%", width: "100%", height: "100%", transform: "translate(-50%,-50%)", objectFit: "contain", opacity: 0.75 }}
+          className="hero-bg-video"
         />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(13,24,38,0.30) 40%, rgba(8,11,18,0.65) 100%)" }} />
         <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
+
+          {/* Logo — mobile only, shown above text */}
+          <div className="flex lg:hidden items-center justify-center fade-up d1 mt-4">
+            <img
+              src={logo}
+              alt="11x Square"
+              className="object-cover"
+              style={{ width: 120, height: 120, borderRadius: 24, border: "1px solid rgba(128,82,255,0.35)" }}
+            />
+          </div>
 
           <div className="flex-1 min-w-0">
             <div className="eyebrow mb-7 fade-up d1">

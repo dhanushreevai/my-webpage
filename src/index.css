@@ -170,6 +170,24 @@ html, body { background: #000000; margin: 0; padding: 0; }
 .scroll-reveal.delay-3 { transition-delay: 0.3s; }
 .scroll-reveal.delay-4 { transition-delay: 0.4s; }
 
+/* ── Hero background video — cover on mobile, contain on desktop ── */
+.hero-bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0.75;
+}
+@media (min-width: 1024px) {
+  .hero-bg-video {
+    object-fit: contain;
+  }
+}
+
 /* ── Auros-style design tokens ── */
 
 /* Eyebrow label — 6px violet dot + uppercase tracked text */
