@@ -1,6 +1,5 @@
 import { connectDB, Contact } from "./_db.js";
 import { rateLimit, getIP, sanitize, isValidEmail, isValidPhone, setSecurityHeaders } from "./_security.js";
-import { sendContactEmails } from "./_email.js";
 
 export default async function handler(req, res) {
   setSecurityHeaders(res);
@@ -22,8 +21,6 @@ export default async function handler(req, res) {
   try {
     await connectDB();
     const contact = await Contact.create({ name, email, phone });
-    // Fire-and-forget — don't block the response
-    sendContactEmails(name, email, phone).catch(err => console.error("Contact email error:", err));
     res.status(201).json({ message: "Contact saved successfully.", id: contact._id });
   } catch (err) {
     console.error(err);
