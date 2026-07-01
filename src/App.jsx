@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import logo from "./image/11x-logo.jpeg";
 
-const NAV_LINKS = ["Services", "Careers", "Process", "Contact"];
+const NAV_LINKS = ["Services", "About", "Insights", "Careers", "Process", "Contact"];
 
 const SERVICES = [
   {
@@ -19,7 +19,7 @@ const SERVICES = [
     title: "Product & Strategy",
     desc: "Market positioning, product-market fit analysis, and go-to-market strategies that build lasting competitive advantage.",
     tags: ["GTM", "Research", "OKRs"],
-    color: "orange", 
+    color: "orange",
     image: "/product-strategy.png",
   },
   {
@@ -28,7 +28,7 @@ const SERVICES = [
     title: "Data & Intelligence",
     desc: "Build data pipelines, dashboards, and ML systems that turn raw numbers into actionable business intelligence.",
     tags: ["Analytics", "BI", "Python"],
-    color: "purple", 
+    color: "purple",
     image: "/data-intelligence.png",
   },
   {
@@ -37,7 +37,7 @@ const SERVICES = [
     title: "Startup Acceleration",
     desc: "Hands-on support for early-stage founders — from MVP to investor-ready product and pitch decks.",
     tags: ["MVP", "Pitch", "Scale"],
-    color: "pink", 
+    color: "pink",
     image: "/startup-acceleration.png",
   },
   {
@@ -46,7 +46,7 @@ const SERVICES = [
     title: "Engineering Teams",
     desc: "We source, vet, and deploy high-performing engineering squads — full-time, contract, or project-based.",
     tags: ["Hiring", "Remote", "Teams"],
-    color: "emerald", 
+    color: "emerald",
     image: "/engineering-teams.png",
   },
   {
@@ -55,7 +55,7 @@ const SERVICES = [
     title: "Innovation Workshops",
     desc: "Facilitated design sprints and innovation sessions that solve deep problems in days, not months.",
     tags: ["Sprint", "UX", "Ideation"],
-    color: "amber", 
+    color: "amber",
     image: "/innovation-workshops.png",
   },
 ];
@@ -88,6 +88,135 @@ const MARQUEE_ITEMS = [
   "Software Architecture", "Product Strategy", "Data & Analytics",
   "Digital Transformation", "Team Building",
 ];
+
+const TESTIMONIALS = [
+  {
+    quote: "11x Square transformed our engineering culture in just 90 days. Their embedded team approach is unlike anything we've seen — actual results, not slide decks.",
+    name: "James Whitfield",
+    title: "CTO, NovaBridge Technologies",
+    stars: 5,
+  },
+  {
+    quote: "We raised our Series B after implementing 11x Square's data infrastructure recommendations. The ROI was immediate and measurable. Truly elite consulting.",
+    name: "Priya Nair",
+    title: "CEO, Luminary FinTech",
+    stars: 5,
+  },
+  {
+    quote: "Their intern placement program brought us three exceptional engineers who are now full-time leads. The talent quality is exceptional — vetted, sharp, and ready.",
+    name: "Daniel Okonkwo",
+    title: "Head of Engineering, Scalify",
+    stars: 5,
+  },
+];
+
+const TEAM = [
+  {
+    emoji: "👩‍💼",
+    name: "Dhanushree V",
+    role: "Founder & CEO",
+    bio: "Serial entrepreneur with 10+ years scaling tech startups across the UK and India. Passionate about bridging elite talent with high-growth companies.",
+  },
+  {
+    emoji: "👨‍💻",
+    name: "Arjun Mehta",
+    role: "Head of Engineering",
+    bio: "Former principal engineer at two unicorns. Leads our technical consulting practice with expertise in distributed systems and cloud architecture.",
+  },
+  {
+    emoji: "👩‍🔬",
+    name: "Sophia Reynolds",
+    role: "Strategy Director",
+    bio: "Ex-McKinsey consultant turned startup advisor. Specialises in product-market fit, OKR frameworks, and go-to-market execution for SaaS companies.",
+  },
+  {
+    emoji: "👨‍🎓",
+    name: "Marcus Osei",
+    role: "Talent Lead",
+    bio: "Built intern and grad hiring programmes at Fortune 500 companies. Leads our talent placement division, connecting exceptional engineers with the right opportunities.",
+  },
+];
+
+const CASE_STUDIES = [
+  {
+    client: "FinTech Startup",
+    industry: "Financial Services",
+    challenge: "Legacy monolith causing 40% downtime, blocking Series B due diligence and preventing international expansion.",
+    solution: "Full cloud migration to microservices architecture, implemented CI/CD pipeline, and deployed 99.99% SLA monitoring.",
+    metrics: ["340% capacity", "99.99% uptime", "£8M Series B"],
+    color: "#0EA5E9",
+  },
+  {
+    client: "EdTech Platform",
+    industry: "Education Technology",
+    challenge: "High churn rate of 35% monthly due to poor UX and lack of personalisation in learning pathways.",
+    solution: "Redesigned onboarding flow, built ML-based personalisation engine, and ran 4-week design sprint with the product team.",
+    metrics: ["70% less churn", "3x DAU", "90d results"],
+    color: "#8B5CF6",
+  },
+  {
+    client: "Global Retailer",
+    industry: "E-Commerce & Retail",
+    challenge: "Manual inventory management across 12 markets costing £1.8M annually in overstock and stockout losses.",
+    solution: "Deployed predictive inventory system with real-time demand forecasting and automated supplier integrations.",
+    metrics: ["£1.8M saved", "94% accuracy", "12 markets"],
+    color: "#10B981",
+  },
+];
+
+const BLOG_POSTS = [
+  {
+    category: "Engineering",
+    title: "Why Your Microservices Are Slower Than Your Monolith",
+    excerpt: "The promise of microservices is speed and scale — but most teams end up with distributed complexity. Here's how to avoid the common traps.",
+    date: "12 Jun 2025",
+    readTime: "6 min read",
+  },
+  {
+    category: "Strategy",
+    title: "The OKR Framework That Actually Works for Startups",
+    excerpt: "Most OKR implementations fail because they're copied from enterprise playbooks. We share the lightweight version that scales with your team.",
+    date: "5 Jun 2025",
+    readTime: "8 min read",
+  },
+  {
+    category: "Talent",
+    title: "How We Vet 1,000 Applicants to Place the Top 1%",
+    excerpt: "Our multi-stage evaluation framework goes beyond LeetCode. We look for the engineers who thrive in ambiguous, high-stakes environments.",
+    date: "28 May 2025",
+    readTime: "5 min read",
+  },
+  {
+    category: "AI & Data",
+    title: "Building Production ML Pipelines That Don't Break in 6 Months",
+    excerpt: "Most ML projects fail post-deployment. We outline the data contracts, monitoring, and retraining loops that keep models healthy in production.",
+    date: "20 May 2025",
+    readTime: "10 min read",
+  },
+  {
+    category: "Consulting",
+    title: "The Discovery Call That Changes Everything",
+    excerpt: "The first client call sets the tone for the entire engagement. We share our 12-question framework that uncovers the real problem, not the stated one.",
+    date: "14 May 2025",
+    readTime: "4 min read",
+  },
+  {
+    category: "Startup",
+    title: "From MVP to Series A: A Technical Roadmap",
+    excerpt: "The architecture decisions you make at MVP stage define your ceiling at Series A. Here's how to build for growth without over-engineering.",
+    date: "7 May 2025",
+    readTime: "9 min read",
+  },
+];
+
+const CATEGORY_COLORS = {
+  Engineering: { bg: "rgba(14,165,233,0.12)", text: "#0EA5E9" },
+  Strategy:    { bg: "rgba(245,158,11,0.12)",  text: "#F59E0B" },
+  Talent:      { bg: "rgba(16,185,129,0.12)",  text: "#10B981" },
+  "AI & Data": { bg: "rgba(139,92,246,0.12)", text: "#8B5CF6" },
+  Consulting:  { bg: "rgba(249,115,22,0.12)",  text: "#F97316" },
+  Startup:     { bg: "rgba(20,184,166,0.12)",  text: "#14B8A6" },
+};
 
 function useCountUp(target, duration = 1500, start = false) {
   const [count, setCount] = useState(0);
@@ -191,7 +320,7 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const multiplier = 12; // Controls tilt intensity
+    const multiplier = 12;
     const xRotation = (multiplier * (y - rect.height / 2)) / rect.height;
     const yRotation = (multiplier * (rect.width / 2 - x)) / rect.width;
 
@@ -236,7 +365,7 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
           borderRight: "1px solid rgba(255,255,255,0.08)",
         }}
       >
-        <div 
+        <div
           className="absolute inset-0 pointer-events-none transition-opacity duration-300"
           style={{
             background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,0.4) 0%, transparent 80%)`,
@@ -450,7 +579,6 @@ function NatureModal({ onClose, children }) {
         className="modal-container w-full max-w-md rounded-3xl shadow-2xl animate-fadeIn relative flex flex-col"
         style={{ background: "#0D1B2E" }}
       >
-        {/* decorative leaves */}
         <LeafDecor className="w-32 h-32 -top-6 -right-6 rotate-45" />
         <LeafDecor className="w-20 h-20 -bottom-4 -left-4 -rotate-12" />
         {children}
@@ -503,7 +631,6 @@ function StartProjectModal({ onClose }) {
 
   return (
     <NatureModal onClose={onClose}>
-      {/* header */}
       <div className="relative z-10 px-8 pt-8 pb-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
         <div className="flex items-center justify-between">
           <div>
@@ -520,7 +647,6 @@ function StartProjectModal({ onClose }) {
         </div>
       </div>
 
-      {/* form */}
       <form onSubmit={handleSubmit} className="relative z-10 flex flex-col flex-1 min-h-0">
         <div className="px-8 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1 min-h-0" style={{ WebkitOverflowScrolling: "touch" }}>
           {[
@@ -621,7 +747,6 @@ function ApplyNowModal({ onClose }) {
 
   return (
     <NatureModal onClose={onClose}>
-      {/* header */}
       <div className="relative z-10 px-8 pt-8 pb-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
         <div className="flex items-center justify-between">
           <div>
@@ -638,7 +763,6 @@ function ApplyNowModal({ onClose }) {
         </div>
       </div>
 
-      {/* form */}
       <form onSubmit={handleSubmit} className="relative z-10 flex flex-col flex-1 min-h-0">
         <div className="px-8 pt-5 pb-2 flex flex-col gap-4 overflow-y-auto flex-1 min-h-0" style={{ WebkitOverflowScrolling: "touch" }}>
           {[
@@ -663,7 +787,6 @@ function ApplyNowModal({ onClose }) {
             </div>
           ))}
 
-          {/* resume upload */}
           <div>
             <label className="text-xs font-bold uppercase tracking-wider mb-2 block" style={{ color: N.beigeLight }}>Resume</label>
             <div
@@ -771,10 +894,8 @@ function CareersApplyModal({ role, onClose }) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className="modal-container w-full max-w-md rounded-2xl shadow-2xl animate-fadeIn flex flex-col" style={{ background: M.bg, border: `1px solid ${M.border}` }}>
-        {/* top accent bar */}
         <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${M.indigo}, ${M.violet})` }} />
 
-        {/* header */}
         <div className="px-7 pt-6 pb-5" style={{ borderBottom: `1px solid ${M.border}` }}>
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -845,6 +966,44 @@ function CareersApplyModal({ role, onClose }) {
   );
 }
 
+/* ── Testimonials Section ────────────────────────────────────────────────── */
+function TestimonialsSection() {
+  return (
+    <section style={{ background: "#080B12", borderTop: "1px solid rgba(14,165,233,0.12)" }}>
+      <div className="px-5 md:px-12 py-14 md:py-20">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] mb-3" style={{ color: "#888888" }}>// Client Stories</p>
+        <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-12" style={{ color: "#FFFFFF" }}>
+          What our clients say
+        </h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
+          {TESTIMONIALS.map((t, i) => (
+            <div
+              key={i}
+              className="p-7 rounded-2xl flex flex-col gap-5 transition-all duration-300"
+              style={{ background: "#111827", border: "1px solid rgba(255,255,255,0.07)" }}
+              onMouseEnter={e => e.currentTarget.style.background="#1E293B"}
+              onMouseLeave={e => e.currentTarget.style.background="#111827"}
+            >
+              <div className="flex gap-1">
+                {Array.from({ length: t.stars }).map((_, s) => (
+                  <span key={s} style={{ color: "#F59E0B", fontSize: "16px" }}>★</span>
+                ))}
+              </div>
+              <p className="text-[15px] leading-relaxed font-medium flex-1" style={{ color: "#94A3B8" }}>
+                "{t.quote}"
+              </p>
+              <div>
+                <p className="font-bold text-sm" style={{ color: "#FFFFFF" }}>{t.name}</p>
+                <p className="text-xs mt-0.5" style={{ color: "#0EA5E9" }}>{t.title}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ── Chatbot Widget ───────────────────────────────────────────────────────── */
 function ChatBot() {
   const WELCOME = { text: "👋 Welcome to 11x Square! I'm your virtual assistant. Ask me about our services, careers, or how to get in touch!", from: "bot", time: new Date().toISOString() };
@@ -883,6 +1042,71 @@ function ChatBot() {
 
   return (
     <div className="fixed bottom-6 right-6 z-[300] flex flex-col items-end gap-3">
+      {/* WhatsApp floating button */}
+      <div style={{ position: "relative" }} className="group/wa">
+        <a
+          href="https://wa.me/447700000000"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "56px",
+            height: "56px",
+            borderRadius: "50%",
+            background: "#25D366",
+            boxShadow: "0 4px 20px rgba(37,211,102,0.4)",
+            border: "none",
+            cursor: "pointer",
+            transition: "transform 0.2s, box-shadow 0.2s",
+            textDecoration: "none",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.boxShadow = "0 6px 28px rgba(37,211,102,0.55)"; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(37,211,102,0.4)"; }}
+        >
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 2C8.268 2 2 8.268 2 16c0 2.478.665 4.8 1.822 6.8L2 30l7.4-1.8A13.934 13.934 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2Z" fill="#25D366"/>
+            <path d="M23.5 19.8c-.3-.15-1.78-.88-2.06-.98-.27-.1-.47-.15-.67.15-.2.3-.77.98-.95 1.18-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.89-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.92-2.2-.24-.57-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.03 1.01-1.03 2.46s1.06 2.86 1.2 3.06c.15.2 2.07 3.17 5.02 4.44.7.3 1.25.48 1.67.62.7.22 1.34.19 1.84.12.56-.08 1.73-.71 1.97-1.4.24-.69.24-1.28.17-1.4-.07-.12-.27-.19-.57-.34Z" fill="white"/>
+          </svg>
+        </a>
+        {/* Tooltip */}
+        <div
+          style={{
+            position: "absolute",
+            right: "68px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            background: "#1E293B",
+            color: "#FFFFFF",
+            fontSize: "12px",
+            fontWeight: 600,
+            padding: "6px 12px",
+            borderRadius: "8px",
+            whiteSpace: "nowrap",
+            pointerEvents: "none",
+            opacity: 0,
+            transition: "opacity 0.2s",
+            border: "1px solid rgba(255,255,255,0.1)",
+          }}
+          className="group-hover/wa:opacity-100"
+        >
+          Chat on WhatsApp
+          <div style={{
+            position: "absolute",
+            right: "-5px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: 0,
+            height: 0,
+            borderTop: "5px solid transparent",
+            borderBottom: "5px solid transparent",
+            borderLeft: "5px solid #1E293B",
+          }} />
+        </div>
+      </div>
+
       {isOpen && (
         <div className="rounded-2xl overflow-hidden shadow-2xl animate-fadeIn flex flex-col"
           style={{ width: 340, height: 480, background: C.bg, border: "1px solid rgba(14,165,233,0.2)" }}
@@ -980,6 +1204,109 @@ function ChatBot() {
   );
 }
 
+/* ── Newsletter Section ───────────────────────────────────────────────────── */
+function NewsletterSection() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle"); // idle | loading | success | error
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setStatus("loading");
+    setMessage("");
+    try {
+      const res = await fetch(`${API_BASE}/newsletter`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Subscription failed.");
+      setStatus("success");
+      setMessage(data.message || "You're subscribed!");
+      setEmail("");
+    } catch (err) {
+      setStatus("error");
+      setMessage(err.message);
+    }
+  };
+
+  return (
+    <section style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.15)", borderBottom: "1px solid rgba(14,165,233,0.15)" }}>
+      <div className="px-5 md:px-12 py-12 md:py-16">
+        <div style={{ maxWidth: "640px", margin: "0 auto", textAlign: "center" }}>
+          <p className="font-mono text-[11px] uppercase tracking-[0.18em] mb-3" style={{ color: "#0EA5E9" }}>// Stay Informed</p>
+          <h2 className="text-[clamp(1.6rem,4vw,2.5rem)] font-black tracking-tighter mb-3" style={{ color: "#FFFFFF" }}>
+            Insights delivered to your inbox
+          </h2>
+          <p className="text-sm font-medium mb-8" style={{ color: "#94A3B8" }}>
+            Strategy, engineering, and talent — one newsletter, no noise.
+          </p>
+
+          {status === "success" ? (
+            <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl" style={{ background: "rgba(14,165,233,0.12)", border: "1px solid rgba(14,165,233,0.3)" }}>
+              <span style={{ color: "#0EA5E9", fontSize: "20px" }}>✓</span>
+              <p className="font-bold text-sm" style={{ color: "#0EA5E9" }}>{message}</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                required
+                className="nature-input"
+                style={{
+                  flex: "1 1 240px",
+                  maxWidth: "360px",
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1.5px solid rgba(14,165,233,0.25)",
+                  borderRadius: "12px",
+                  color: "#FFFFFF",
+                  padding: "12px 18px",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  outline: "none",
+                  transition: "border 0.2s, background 0.2s",
+                }}
+                onFocus={e => { e.target.style.border = "1.5px solid #0EA5E9"; e.target.style.background = "rgba(14,165,233,0.1)"; }}
+                onBlur={e => { e.target.style.border = "1.5px solid rgba(14,165,233,0.25)"; e.target.style.background = "rgba(255,255,255,0.06)"; }}
+              />
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                style={{
+                  background: "#0EA5E9",
+                  color: "#FFFFFF",
+                  border: "none",
+                  borderRadius: "12px",
+                  padding: "12px 28px",
+                  fontSize: "14px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  transition: "background 0.2s",
+                  whiteSpace: "nowrap",
+                  opacity: status === "loading" ? 0.7 : 1,
+                }}
+                onMouseEnter={e => { e.target.style.background = "#0284C7"; }}
+                onMouseLeave={e => { e.target.style.background = "#0EA5E9"; }}
+              >
+                {status === "loading" ? "Subscribing…" : "Subscribe"}
+              </button>
+            </form>
+          )}
+
+          {status === "error" && (
+            <p className="mt-3 text-sm font-medium" style={{ color: "#f87171" }}>{message}</p>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function WolfSection({ src, heading, sub }) {
   return (
     <section className="relative overflow-hidden flex items-center justify-center" style={{ height: "100vh" }}>
@@ -1046,9 +1373,9 @@ export default function App() {
       const y = window.scrollY;
       setScrolled(y > 20);
       if (y > lastScrollY.current && y > 80) {
-        setNavHidden(true);   // scrolling down → hide
+        setNavHidden(true);
       } else {
-        setNavHidden(false);  // scrolling up → show
+        setNavHidden(false);
       }
       lastScrollY.current = y;
     };
@@ -1074,7 +1401,7 @@ export default function App() {
   return (
     <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#080B12", color: "#F0F7FF" }}>
       <MouseSpotlight />
-      
+
       {/* Floating Background Blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] animate-pulse" style={{ background: "rgba(14,165,233,0.12)" }} />
@@ -1096,12 +1423,12 @@ export default function App() {
       >
         <Logo onClick={() => navigateTo("Home")} dark={false} />
 
-        <ul className="hidden md:flex gap-9 list-none">
+        <ul className="hidden md:flex gap-7 list-none">
           {NAV_LINKS.map((l) => (
             <li key={l}>
               <button
                 onClick={() => navigateTo(l)}
-                className="text-[14px] font-bold tracking-tight transition-all duration-200 bg-transparent border-0 cursor-pointer"
+                className="text-[13px] font-bold tracking-tight transition-all duration-200 bg-transparent border-0 cursor-pointer"
                 style={{ color: view === l ? "#0EA5E9" : "#94A3B8" }}
               >
                 {l}
@@ -1109,7 +1436,6 @@ export default function App() {
             </li>
           ))}
         </ul>
-
 
         <button
           onClick={() => navigateTo("Contact")}
@@ -1155,19 +1481,16 @@ export default function App() {
       {view === "Home" && (
         <>
         <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ minHeight: "100svh" }}>
-        {/* Wolf howling video background */}
         <video
           src="/wolf_howling_in_moon_202606211229.mp4"
           autoPlay muted playsInline loop
           style={{ position: "absolute", top: "50%", left: "50%", minWidth: "100%", minHeight: "100%", width: "auto", height: "auto", transform: "translate(-50%,-50%)", objectFit: "cover", objectPosition: "center 30%", opacity: 0.75 }}
         />
-        {/* Dark overlay — stronger at edges for text legibility */}
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.60) 0%, rgba(13,24,38,0.30) 40%, rgba(8,11,18,0.65) 100%)" }} />
         <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
 
-          {/* Left: text content */}
           <div className="flex-1 min-w-0">
             <p className="mono text-[11px] font-bold uppercase tracking-[0.15em] mb-7 flex items-center gap-3 fade-up d1" style={{ color: "#0369A1" }}>
               <span className="block w-12 h-[2px]" style={{ background: "#0EA5E9" }} />
@@ -1212,10 +1535,8 @@ export default function App() {
             </div>
           </div>
 
-          {/* Right: large logo — hidden on mobile */}
           <div className="hidden lg:flex flex-shrink-0 items-center justify-center fade-up d3">
             <div className="relative">
-              {/* outer glow ring */}
               <div className="absolute -inset-4 rounded-[2.5rem] blur-2xl opacity-40" style={{ background: "linear-gradient(135deg,#BAE6FD,#0EA5E9)" }} />
               <img
                 src={logo}
@@ -1223,7 +1544,6 @@ export default function App() {
                 className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[22rem] lg:h-[22rem] object-cover rounded-[2rem] shadow-2xl"
                 style={{ border: "4px solid rgba(14,165,233,0.35)" }}
               />
-              {/* label badge */}
               <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-5 py-2 rounded-full shadow-lg whitespace-nowrap"
                 style={{ background: "#0EA5E9", color: "#FFFFFF" }}>
                 <span className="font-black text-sm tracking-tight">11x Square</span>
@@ -1235,7 +1555,7 @@ export default function App() {
         </div>
         </section>
 
-        {/* MARQUEE - Now part of Home View only */}
+        {/* MARQUEE */}
         <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)", borderBottom: "1px solid rgba(14,165,233,0.2)" }}>
           <div className="marquee-track flex gap-14 w-max">
             {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
@@ -1246,6 +1566,9 @@ export default function App() {
             ))}
           </div>
         </div>
+
+        {/* TESTIMONIALS on Home */}
+        <TestimonialsSection />
         </>
       )}
 
@@ -1270,15 +1593,130 @@ export default function App() {
         </section>
       )}
 
+      {/* ABOUT VIEW */}
+      {view === "About" && (
+        <section id="about" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#080B12" }}>
+          {/* Team */}
+          <div className="mb-20 fade-up d1">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] mb-3" style={{ color: "#888888" }}>// Our People</p>
+            <h2 className="text-[clamp(2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-12" style={{ color: "#FFFFFF" }}>
+              The team behind 11x
+            </h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem" }}>
+              {TEAM.map((member, i) => (
+                <div
+                  key={i}
+                  className="p-7 rounded-2xl flex flex-col gap-4 transition-all duration-300"
+                  style={{ background: "#111827", border: "1px solid rgba(255,255,255,0.07)" }}
+                  onMouseEnter={e => e.currentTarget.style.background="#1E293B"}
+                  onMouseLeave={e => e.currentTarget.style.background="#111827"}
+                >
+                  <div style={{ fontSize: "48px", lineHeight: 1 }}>{member.emoji}</div>
+                  <div>
+                    <h3 className="font-black text-lg" style={{ color: "#FFFFFF" }}>{member.name}</h3>
+                    <p className="font-mono text-[11px] uppercase tracking-wider mt-1" style={{ color: "#0EA5E9" }}>{member.role}</p>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{member.bio}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Case Studies */}
+          <div className="mb-20 fade-up d2">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] mb-3" style={{ color: "#888888" }}>// Impact</p>
+            <h2 className="text-[clamp(2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-12" style={{ color: "#FFFFFF" }}>
+              Case studies
+            </h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
+              {CASE_STUDIES.map((cs, i) => (
+                <div
+                  key={i}
+                  className="p-7 rounded-2xl flex flex-col gap-5 transition-all duration-300"
+                  style={{ background: "#111827", border: `1px solid rgba(255,255,255,0.07)`, borderTop: `3px solid ${cs.color}` }}
+                  onMouseEnter={e => e.currentTarget.style.background="#1E293B"}
+                  onMouseLeave={e => e.currentTarget.style.background="#111827"}
+                >
+                  <div>
+                    <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full" style={{ background: `${cs.color}18`, color: cs.color }}>{cs.industry}</span>
+                    <h3 className="font-black text-xl mt-3" style={{ color: "#FFFFFF" }}>{cs.client}</h3>
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-wider mb-1" style={{ color: "#94A3B8" }}>Challenge</p>
+                    <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{cs.challenge}</p>
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-wider mb-1" style={{ color: "#94A3B8" }}>Solution</p>
+                    <p className="text-sm leading-relaxed" style={{ color: "#94A3B8" }}>{cs.solution}</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-auto pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                    {cs.metrics.map((m, j) => (
+                      <span key={j} className="font-mono text-[11px] font-bold px-3 py-1.5 rounded-lg" style={{ background: `${cs.color}18`, color: cs.color }}>{m}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Testimonials reused */}
+          <TestimonialsSection />
+        </section>
+      )}
+
+      {/* INSIGHTS VIEW */}
+      {view === "Insights" && (
+        <section id="insights" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#080B12" }}>
+          <div className="mb-14 fade-up d1">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] mb-3" style={{ color: "#888888" }}>// Knowledge</p>
+            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#FFFFFF" }}>
+              Insights & Perspectives
+            </h2>
+            <p className="text-lg font-medium mt-4 max-w-lg" style={{ color: "#94A3B8" }}>
+              Practical thinking on engineering, strategy, and building high-performance teams.
+            </p>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }} className="fade-up d2 blog-grid">
+            <style>{`@media(max-width:1024px){.blog-grid{grid-template-columns:repeat(2,1fr)!important}}@media(max-width:640px){.blog-grid{grid-template-columns:1fr!important}}`}</style>
+            {BLOG_POSTS.map((post, i) => {
+              const catStyle = CATEGORY_COLORS[post.category] || { bg: "rgba(14,165,233,0.12)", text: "#0EA5E9" };
+              return (
+                <div
+                  key={i}
+                  className="p-6 rounded-2xl flex flex-col gap-4 cursor-pointer transition-all duration-300 group"
+                  style={{ background: "#111827", border: "1px solid rgba(255,255,255,0.07)" }}
+                  onMouseEnter={e => e.currentTarget.style.background="#1E293B"}
+                  onMouseLeave={e => e.currentTarget.style.background="#111827"}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full font-bold" style={{ background: catStyle.bg, color: catStyle.text }}>
+                      {post.category}
+                    </span>
+                    <span className="font-mono text-[10px]" style={{ color: "#94A3B8" }}>{post.readTime}</span>
+                  </div>
+                  <h3 className="font-black text-[17px] leading-tight transition-colors duration-200" style={{ color: "#FFFFFF" }}>
+                    {post.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed flex-1" style={{ color: "#94A3B8" }}>{post.excerpt}</p>
+                  <div className="flex items-center justify-between pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                    <span className="font-mono text-[11px]" style={{ color: "#94A3B8" }}>{post.date}</span>
+                    <span className="text-sm font-bold transition-transform duration-200 group-hover:translate-x-1" style={{ color: "#0EA5E9" }}>Read →</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       {view === "Careers" && (
         <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ height: "100svh" }}>
-          {/* Group of wolves video background */}
           <video
             src="/Group_of_wolves_on_path_202606211412.mp4"
             autoPlay muted playsInline loop
             style={{ position: "absolute", top: "50%", left: "50%", minWidth: "100%", minHeight: "100%", width: "auto", height: "auto", transform: "translate(-50%,-50%)", objectFit: "cover", objectPosition: "center center", opacity: 0.75 }}
           />
-          {/* Dark overlay */}
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.65) 0%, rgba(8,11,18,0.35) 50%, rgba(8,11,18,0.70) 100%)" }} />
 
         <div className="relative z-10 h-full overflow-y-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start" style={{ maxHeight: "calc(100svh - 8rem)" }}>
@@ -1322,14 +1760,12 @@ export default function App() {
 
       {view === "Process" && (
         <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh" }}>
-          {/* Fire wolf video background */}
           <video
             src="/Wolf_mouth_fire_video_202606211302.mp4"
             autoPlay muted playsInline loop
             className="absolute inset-0 w-full h-full"
             style={{ objectFit: "cover", objectPosition: "center center", opacity: 0.80 }}
           />
-          {/* Dark overlay */}
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,11,18,0.65) 0%, rgba(8,11,18,0.30) 50%, rgba(8,11,18,0.70) 100%)" }} />
 
           <div className="relative z-10">
@@ -1369,7 +1805,6 @@ export default function App() {
 
       {view === "Contact" && (
         <section id="contact" className="px-5 md:px-12 py-16 md:py-24 fade-up d1 relative overflow-hidden" style={{ background: "#080B12" }}>
-          {/* decorative leaves */}
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
           </div>
@@ -1416,8 +1851,11 @@ export default function App() {
       {activeModal === "apply" && <ApplyNowModal onClose={() => setActiveModal(null)} />}
       {careersApplyRole && <CareersApplyModal role={careersApplyRole} onClose={() => setCareersApplyRole(null)} />}
 
-      {/* CHATBOT */}
+      {/* CHATBOT + WHATSAPP */}
       <ChatBot />
+
+      {/* NEWSLETTER — always visible above footer */}
+      <NewsletterSection />
 
       {/* FOOTER */}
       <footer className="px-5 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(14,165,233,0.2)" }}>
@@ -1432,10 +1870,10 @@ export default function App() {
           <div className="flex flex-wrap gap-8 sm:gap-16 fade-up d4">
             {[
               { heading: "Company", links: [
-                  { label: "About",    dest: "Home" },
+                  { label: "About",    dest: "About" },
                   { label: "Services", dest: "Services" },
                   { label: "Process",  dest: "Process" },
-                  { label: "Blog",     dest: "Home" },
+                  { label: "Insights", dest: "Insights" },
               ]},
               { heading: "Careers", links: [
                   { label: "Internships", dest: "Careers" },
