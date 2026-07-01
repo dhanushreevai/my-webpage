@@ -2,7 +2,13 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import logo from "./image/11x-logo.jpeg";
 
-const NAV_LINKS = ["Services", "About", "Careers", "Process", "Contact"];
+const NAV_LINKS = [
+  { label: "Services", id: "services" },
+  { label: "About",    id: "about"    },
+  { label: "Careers",  id: "careers"  },
+  { label: "Process",  id: "process"  },
+  { label: "Contact",  id: "contact"  },
+];
 
 const SERVICES = [
   {
@@ -414,97 +420,6 @@ function ParticleField({ className = "" }) {
     return () => { cancelAnimationFrame(animId); ro.disconnect(); };
   }, []);
   return <canvas ref={canvasRef} className={className} style={{ width: "100%", height: "100%", display: "block" }} />;
-}
-
-function ParticleTransition({ onMidpoint, onComplete }) {
-  const canvasRef = useRef(null);
-  const onMidRef = useRef(onMidpoint);
-  const onDoneRef = useRef(onComplete);
-  useEffect(() => { onMidRef.current = onMidpoint; }, [onMidpoint]);
-  useEffect(() => { onDoneRef.current = onComplete; }, [onComplete]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const W = window.innerWidth, H = window.innerHeight;
-    canvas.width = W; canvas.height = H;
-
-    const COLORS = ["#8052ff","#a78bff","#c4b5fd","#ffb829","#15846e","#ffffff","#6b3fd4","#f472b6"];
-    const cx = W / 2, cy = H / 2;
-
-    const particles = Array.from({ length: 340 }, () => {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 2 + Math.random() * 14;
-      const delay = Math.random() * 0.18;
-      return {
-        x: cx + (Math.random() - 0.5) * 120,
-        y: cy + (Math.random() - 0.5) * 120,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        size: 2 + Math.random() * 7,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
-        shape: Math.floor(Math.random() * 3),
-        alpha: 0,
-        delay,
-        decay: 0.006 + Math.random() * 0.01,
-      };
-    });
-
-    const drawShape = ({ x, y, size, shape, color, alpha }) => {
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      if (shape === 0) {
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-      } else if (shape === 1) {
-        ctx.moveTo(x, y - size * 1.5); ctx.lineTo(x + size * 1.3, y + size); ctx.lineTo(x - size * 1.3, y + size); ctx.closePath();
-      } else {
-        ctx.moveTo(x, y - size * 1.5); ctx.lineTo(x + size * 1.3, y); ctx.lineTo(x, y + size * 1.5); ctx.lineTo(x - size * 1.3, y); ctx.closePath();
-      }
-      ctx.fill();
-    };
-
-    const DURATION = 1400;
-    let startTime = null;
-    let midFired = false;
-    let animId;
-
-    const animate = (ts) => {
-      if (!startTime) startTime = ts;
-      const t = Math.min((ts - startTime) / DURATION, 1);
-
-      // Dark overlay: ramps up 0→0.5, holds, fades 0.6→1
-      const ov = t < 0.5 ? (t / 0.5) * 0.92 : t < 0.62 ? 0.92 : 0.92 * (1 - (t - 0.62) / 0.38);
-      ctx.clearRect(0, 0, W, H);
-      ctx.globalAlpha = Math.max(0, ov);
-      ctx.fillStyle = "#000000";
-      ctx.fillRect(0, 0, W, H);
-
-      if (t >= 0.42 && !midFired) { midFired = true; onMidRef.current?.(); }
-
-      particles.forEach(p => {
-        const localT = Math.max(0, t - p.delay);
-        if (localT <= 0) return;
-        p.vx *= 0.965; p.vy *= 0.965;
-        p.x += p.vx; p.y += p.vy;
-        // fade in fast, then decay
-        p.alpha = localT < 0.08 ? localT / 0.08 : Math.max(0, 1 - (localT - 0.08) / (0.92 - p.delay) * (1 + p.decay * 60));
-        if (p.alpha > 0.01) drawShape(p);
-      });
-
-      ctx.globalAlpha = 1;
-      if (t < 1) {
-        animId = requestAnimationFrame(animate);
-      } else {
-        onDoneRef.current?.();
-      }
-    };
-    animId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animId);
-  }, []);
-
-  return <canvas ref={canvasRef} style={{ position: "fixed", inset: 0, zIndex: 99990, pointerEvents: "none" }} />;
 }
 
 function ScrollProgress() {
@@ -1246,7 +1161,7 @@ function TestimonialsSection() {
 }
 
 /* ── Scroll Reveal Hook ───────────────────────────────────────────────────── */
-function useScrollReveal(dep) {
+function useScrollReveal() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("revealed"); observer.unobserve(e.target); } }),
@@ -1254,7 +1169,7 @@ function useScrollReveal(dep) {
     );
     document.querySelectorAll(".scroll-reveal").forEach(el => observer.observe(el));
     return () => observer.disconnect();
-  }, [dep]);
+  }, []);
 }
 
 /* ── Exit Intent Popup ────────────────────────────────────────────────────── */
@@ -1726,8 +1641,7 @@ function BusinessHours() {
 }
 
 export default function App() {
-  const [view, setView] = useState("Home");
-  const [transitioning, setTransitioning] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
@@ -1736,7 +1650,7 @@ export default function App() {
   const [careersApplyRole, setCareersApplyRole] = useState(null);
   const statsRef = useRef(null);
   const lastScrollY = useRef(0);
-  useScrollReveal(view);
+  useScrollReveal();
 
   useEffect(() => {
     const onScroll = () => {
@@ -1762,26 +1676,24 @@ export default function App() {
     return () => obs.disconnect();
   }, []);
 
-  const pendingViewRef = useRef(null);
-  const navigateTo = (v) => {
-    if (transitioning || v === view) return;
-    pendingViewRef.current = v;
-    setTransitioning(true);
+  useEffect(() => {
+    const ids = ["home","services","about","careers","process","contact"];
+    const obs = new IntersectionObserver(
+      (entries) => { entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }); },
+      { threshold: 0.35 }
+    );
+    ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
+    return () => obs.disconnect();
+  }, []);
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
   };
 
   return (
     <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#000000", color: "#ffffff" }}>
       <LoadingScreen />
-      {transitioning && (
-        <ParticleTransition
-          onMidpoint={() => {
-            setView(pendingViewRef.current);
-            window.scrollTo({ top: 0, behavior: "instant" });
-          }}
-          onComplete={() => setTransitioning(false)}
-        />
-      )}
       <MouseSpotlight />
 
       {/* Floating Background Blobs */}
@@ -1803,24 +1715,24 @@ export default function App() {
           transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.3s, box-shadow 0.3s",
         }}
       >
-        <Logo onClick={() => navigateTo("Home")} dark={false} />
+        <Logo onClick={() => scrollToSection("home")} dark={false} />
 
         <ul className="hidden md:flex gap-7 list-none">
-          {NAV_LINKS.map((l) => (
-            <li key={l}>
+          {NAV_LINKS.map(({ label, id }) => (
+            <li key={id}>
               <button
-                onClick={() => navigateTo(l)}
+                onClick={() => scrollToSection(id)}
                 className="text-[13px] font-bold tracking-tight transition-all duration-200 bg-transparent border-0 cursor-pointer"
-                style={{ color: view === l ? "#8052ff" : "#9a9a9a" }}
+                style={{ color: activeSection === id ? "#8052ff" : "#9a9a9a" }}
               >
-                {l}
+                {label}
               </button>
             </li>
           ))}
         </ul>
 
         <button
-          onClick={() => navigateTo("Contact")}
+          onClick={() => scrollToSection("contact")}
           className="hidden md:block text-[14px] font-bold px-6 py-2.5 rounded-full transition-all duration-200"
           style={{ background: "#8052ff", color: "#FFFFFF" }}
           onMouseEnter={e => { e.target.style.background = "#5b2fd4"; }}
@@ -1844,23 +1756,22 @@ export default function App() {
       {/* MOBILE MENU */}
       {menuOpen && (
         <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "rgba(0,0,0,0.98)" }}>
-          {NAV_LINKS.map((l) => (
+          {NAV_LINKS.map(({ label, id }) => (
             <button
-              key={l}
-              onClick={() => navigateTo(l)}
+              key={id}
+              onClick={() => scrollToSection(id)}
               className="text-2xl font-bold transition-colors duration-200 bg-transparent border-0 cursor-pointer"
               style={{ color: "#9a9a9a" }}
               onMouseEnter={e => e.target.style.color="#8052ff"}
               onMouseLeave={e => e.target.style.color="#9a9a9a"}
             >
-              {l}
+              {label}
             </button>
           ))}
         </div>
       )}
 
-      <main key={view} className="page-transition">
-      {view === "Home" && (
+      <main>
         <>
         <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ minHeight: "100svh" }}>
         <video
@@ -1895,14 +1806,14 @@ export default function App() {
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center fade-up d4">
               <MagneticButton
-                onClick={() => navigateTo("Services")}
+                onClick={() => scrollToSection("services")}
                 className="font-semibold text-[13px] uppercase tracking-[0.05em] px-9 py-4 rounded-[24px] transition-all duration-200 text-center"
                 style={{ background: "#8052ff", color: "#ffffff" }}
               >
                 Start Building
               </MagneticButton>
               <MagneticButton
-                onClick={() => navigateTo("Careers")}
+                onClick={() => scrollToSection("careers")}
                 className="font-bold text-[15px] px-9 py-4 rounded-full shadow-sm transition-all duration-200 text-center"
                 style={{ background: "transparent", border: "1.5px solid rgba(128,82,255,0.6)", color: "#8052ff" }}
               >
@@ -1941,10 +1852,6 @@ export default function App() {
           </div>
         </div>
 
-        </>
-      )}
-
-      {view === "Services" && (
         <section id="services" className="scroll-reveal px-5 md:px-12 py-14 md:py-20" style={{ background: "#000000" }}>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 fade-up d1">
           <div className="fade-up d2">
@@ -1963,10 +1870,8 @@ export default function App() {
           ))}
         </div>
         </section>
-      )}
 
-      {/* ABOUT VIEW */}
-      {view === "About" && (
+        {/* ABOUT */}
         <section id="about" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#000000" }}>
           {/* Case Studies */}
           <div className="mb-20 fade-up d2">
@@ -2008,10 +1913,8 @@ export default function App() {
           {/* Testimonials reused */}
           <TestimonialsSection />
         </section>
-      )}
 
-      {view === "Careers" && (
-        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ height: "100svh" }}>
+        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh" }}>
           <video
             src="/Group_of_wolves_on_path_202606211412.mp4"
             autoPlay muted playsInline loop
@@ -2056,9 +1959,7 @@ export default function App() {
           </div>
         </div>
         </section>
-      )}
 
-      {view === "Process" && (
         <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh" }}>
           <video
             src="/Wolf_mouth_fire_video_202606211302.mp4"
@@ -2101,9 +2002,7 @@ export default function App() {
             </div>
           </div>
         </section>
-      )}
 
-      {view === "Contact" && (
         <section id="contact" className="scroll-reveal px-5 md:px-12 py-16 md:py-24 relative overflow-hidden" style={{ background: "#000000" }}>
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
@@ -2143,7 +2042,7 @@ export default function App() {
           </div>
         </div>
         </section>
-      )}
+      </>
       </main>
 
       {/* MODALS */}
@@ -2160,7 +2059,7 @@ export default function App() {
       <footer className="px-5 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(128,82,255,0.2)" }}>
         <div className="flex flex-col lg:flex-row justify-between gap-10 lg:gap-16 mb-8 md:mb-10 fade-up d2">
           <div className="max-w-xs fade-up d3">
-            <Logo onClick={() => navigateTo("Home")} className="mb-4" size="footer" dark={false} />
+            <Logo onClick={() => scrollToSection("home")} className="mb-4" size="footer" dark={false} />
             <p className="text-sm leading-relaxed" style={{ color: "#9a9a9a" }}>
               Bridging elite consulting with the next generation of tech talent.
             </p>
@@ -2169,20 +2068,20 @@ export default function App() {
           <div className="flex flex-wrap gap-8 sm:gap-16 fade-up d4">
             {[
               { heading: "Company", links: [
-                  { label: "About",    dest: "About" },
-                  { label: "Services", dest: "Services" },
-                  { label: "Process",  dest: "Process" },
+                  { label: "About",    dest: "about" },
+                  { label: "Services", dest: "services" },
+                  { label: "Process",  dest: "process" },
               ]},
               { heading: "Careers", links: [
-                  { label: "Internships", dest: "Careers" },
-                  { label: "Full-time",   dest: "Careers" },
-                  { label: "Freelance",   dest: "Careers" },
+                  { label: "Internships", dest: "careers" },
+                  { label: "Full-time",   dest: "careers" },
+                  { label: "Freelance",   dest: "careers" },
               ]},
               { heading: "Contact", links: [
-                  { label: "11xsquarebusiness@gmail.com", dest: "Contact" },
-                  { label: "United Kingdom",       dest: "Contact" },
-                  { label: "LinkedIn",             dest: "Contact" },
-                  { label: "Twitter",              dest: "Contact" },
+                  { label: "11xsquarebusiness@gmail.com", dest: "contact" },
+                  { label: "United Kingdom",       dest: "contact" },
+                  { label: "LinkedIn",             dest: "contact" },
+                  { label: "Twitter",              dest: "contact" },
               ]},
             ].map((col) => (
               <div key={col.heading}>
@@ -2190,7 +2089,7 @@ export default function App() {
                 <ul className="flex flex-col gap-1.5 list-none">
                   {col.links.map(({ label, dest }) => (
                     <li key={label}>
-                      <a href="#" onClick={(e) => { e.preventDefault(); navigateTo(dest); }}
+                      <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(dest); }}
                         className="text-sm transition-colors duration-200 no-underline" style={{ color: "#9a9a9a" }}
                         onMouseEnter={e => e.target.style.color="#8052ff"}
                         onMouseLeave={e => e.target.style.color="#9a9a9a"}
