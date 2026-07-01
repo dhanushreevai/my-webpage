@@ -12,6 +12,7 @@
     "start": "concurrently \"npm run dev\" \"npm run server\""
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.109.0",
     "@tailwindcss/vite": "^4.3.0",
     "concurrently": "^9.2.1",
     "cors": "^2.8.6",
