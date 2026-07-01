@@ -589,7 +589,7 @@ function Logo({ onClick, className = "", size = "nav", dark = false }) {
       )}
       <div className="flex flex-col leading-none">
         <span className={`font-bold ${size === "footer" ? "text-2xl" : "text-[22px]"}`} style={{ color: dark ? "#ffffff" : "#360802", letterSpacing: "0.02em", lineHeight: 1 }}>
-          11x<span style={{ color: "#f73b20" }}>Square</span>
+          11x<span style={{ color: dark ? "#ffffff" : "#f73b20" }}>Square</span>
         </span>
         {size === "footer" && (
           <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: "#444444", marginTop: 2 }}>Consulting · Talent</span>
