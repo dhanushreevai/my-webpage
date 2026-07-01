@@ -2183,15 +2183,9 @@ export default function App() {
       <CookieBanner />
 
       {/* FOOTER — cinematic bento */}
-      <footer className="relative overflow-hidden" style={{ minHeight: "400px" }}>
-        <video
-          src="/Group_of_wolves_on_path_202606211412.mp4"
-          autoPlay muted playsInline loop
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }}
-        />
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.48)" }} />
+      <footer className="relative overflow-hidden" style={{ background: "#360802" }}>
 
-        <div className="relative z-10 px-6 md:px-14 py-14 md:py-20">
+        <div className="px-6 md:px-14 py-14 md:py-20">
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
