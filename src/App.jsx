@@ -2,13 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import logo from "./image/11x-logo.jpeg";
 
-const NAV_LINKS = [
-  { label: "Services", id: "services" },
-  { label: "About",    id: "about"    },
-  { label: "Careers",  id: "careers"  },
-  { label: "Process",  id: "process"  },
-  { label: "Contact",  id: "contact"  },
-];
+const NAV_LINKS = ["Services", "Careers", "Process", "Contact"];
 
 const SERVICES = [
   {
@@ -1161,7 +1155,7 @@ function TestimonialsSection() {
 }
 
 /* ── Scroll Reveal Hook ───────────────────────────────────────────────────── */
-function useScrollReveal() {
+function useScrollReveal(view) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("revealed"); observer.unobserve(e.target); } }),
@@ -1169,7 +1163,7 @@ function useScrollReveal() {
     );
     document.querySelectorAll(".scroll-reveal").forEach(el => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [view]);
 }
 
 /* ── Exit Intent Popup ────────────────────────────────────────────────────── */
@@ -1641,7 +1635,7 @@ function BusinessHours() {
 }
 
 export default function App() {
-  const [activeSection, setActiveSection] = useState("home");
+  const [view, setView] = useState("Home");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
@@ -1650,7 +1644,7 @@ export default function App() {
   const [careersApplyRole, setCareersApplyRole] = useState(null);
   const statsRef = useRef(null);
   const lastScrollY = useRef(0);
-  useScrollReveal();
+  useScrollReveal(view);
 
   useEffect(() => {
     const onScroll = () => {
@@ -1676,19 +1670,11 @@ export default function App() {
     return () => obs.disconnect();
   }, []);
 
-  useEffect(() => {
-    const ids = ["home","services","about","careers","process","contact"];
-    const obs = new IntersectionObserver(
-      (entries) => { entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }); },
-      { threshold: 0.35 }
-    );
-    ids.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
-    return () => obs.disconnect();
-  }, []);
 
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const navigateTo = (v) => {
+    setView(v);
     setMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   return (
@@ -1716,32 +1702,32 @@ export default function App() {
           transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.3s, border-color 0.3s",
         }}
       >
-        <Logo onClick={() => scrollToSection("home")} dark={false} />
+        <Logo onClick={() => navigateTo("Home")} dark={false} />
 
         <ul className="hidden md:flex gap-8 list-none">
-          {NAV_LINKS.map(({ label, id }) => (
-            <li key={id}>
+          {NAV_LINKS.map((l) => (
+            <li key={l}>
               <button
-                onClick={() => scrollToSection(id)}
+                onClick={() => navigateTo(l)}
                 className="transition-all duration-200 bg-transparent border-0 cursor-pointer"
                 style={{
-                  color: activeSection === id ? "#ffffff" : "#9a9a9a",
+                  color: view === l ? "#ffffff" : "#9a9a9a",
                   fontSize: 12,
                   fontWeight: 500,
                   letterSpacing: "1.44px",
                   textTransform: "uppercase",
                 }}
-                onMouseEnter={e => { if (activeSection !== id) e.target.style.color = "#ffffff"; }}
-                onMouseLeave={e => { if (activeSection !== id) e.target.style.color = "#9a9a9a"; }}
+                onMouseEnter={e => { if (view !== l) e.target.style.color = "#ffffff"; }}
+                onMouseLeave={e => { if (view !== l) e.target.style.color = "#9a9a9a"; }}
               >
-                {label}
+                {l}
               </button>
             </li>
           ))}
         </ul>
 
         <button
-          onClick={() => scrollToSection("contact")}
+          onClick={() => navigateTo("Contact")}
           className="hidden md:block ghost-aurora"
           style={{
             fontSize: 12,
@@ -1770,22 +1756,23 @@ export default function App() {
       {/* MOBILE MENU */}
       {menuOpen && (
         <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "rgba(0,0,0,0.98)" }}>
-          {NAV_LINKS.map(({ label, id }) => (
+          {NAV_LINKS.map((l) => (
             <button
-              key={id}
-              onClick={() => scrollToSection(id)}
+              key={l}
+              onClick={() => navigateTo(l)}
               className="text-2xl font-bold transition-colors duration-200 bg-transparent border-0 cursor-pointer"
               style={{ color: "#9a9a9a" }}
               onMouseEnter={e => e.target.style.color="#8052ff"}
               onMouseLeave={e => e.target.style.color="#9a9a9a"}
             >
-              {label}
+              {l}
             </button>
           ))}
         </div>
       )}
 
-      <main>
+      <main key={view} className="page-transition">
+        {view === "Home" && (
         <>
         <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ minHeight: "100svh" }}>
         <video
@@ -1819,14 +1806,14 @@ export default function App() {
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center fade-up d4">
               <MagneticButton
-                onClick={() => scrollToSection("services")}
+                onClick={() => navigateTo("Services")}
                 className="btn-gradient text-center"
                 style={{ padding: "14px 32px" }}
               >
                 Start Building ↗
               </MagneticButton>
               <MagneticButton
-                onClick={() => scrollToSection("careers")}
+                onClick={() => navigateTo("Careers")}
                 className="ghost-aurora text-center"
                 style={{ padding: "14px 28px", color: "#ffffff", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}
               >
@@ -1865,6 +1852,9 @@ export default function App() {
           </div>
         </div>
 
+        </>
+        )}
+        {view === "Services" && (
         <section id="services" className="scroll-reveal px-5 md:px-12 py-14 md:py-20" style={{ background: "#000000" }}>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 fade-up d1">
           <div className="fade-up d2">
@@ -1883,50 +1873,8 @@ export default function App() {
           ))}
         </div>
         </section>
-
-        {/* ABOUT */}
-        <section id="about" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#000000" }}>
-          {/* Case Studies */}
-          <div className="mb-20 fade-up d2">
-            <div className="eyebrow mb-3">Impact</div>
-            <h2 className="text-[clamp(2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-12" style={{ color: "#FFFFFF" }}>
-              Case studies
-            </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
-              {CASE_STUDIES.map((cs, i) => (
-                <div
-                  key={i}
-                  className="p-7 rounded-2xl flex flex-col gap-5 transition-all duration-300"
-                  style={{ background: "#0a0a0a", borderTop: `3px solid ${cs.color}` }}
-                  onMouseEnter={e => e.currentTarget.style.background="#111111"}
-                  onMouseLeave={e => e.currentTarget.style.background="#0a0a0a"}
-                >
-                  <div>
-                    <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full" style={{ background: `${cs.color}18`, color: cs.color }}>{cs.industry}</span>
-                    <h3 className="font-black text-xl mt-3" style={{ color: "#FFFFFF" }}>{cs.client}</h3>
-                  </div>
-                  <div>
-                    <p className="font-mono text-[10px] uppercase tracking-wider mb-1" style={{ color: "#9a9a9a" }}>Challenge</p>
-                    <p className="text-sm leading-relaxed" style={{ color: "#9a9a9a" }}>{cs.challenge}</p>
-                  </div>
-                  <div>
-                    <p className="font-mono text-[10px] uppercase tracking-wider mb-1" style={{ color: "#9a9a9a" }}>Solution</p>
-                    <p className="text-sm leading-relaxed" style={{ color: "#9a9a9a" }}>{cs.solution}</p>
-                  </div>
-                  <div className="flex flex-wrap gap-2 mt-auto pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                    {cs.metrics.map((m, j) => (
-                      <span key={j} className="font-mono text-[11px] font-bold px-3 py-1.5 rounded-lg" style={{ background: `${cs.color}18`, color: cs.color }}>{m}</span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Testimonials reused */}
-          <TestimonialsSection />
-        </section>
-
+        )}
+        {view === "Careers" && (
         <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh" }}>
           <video
             src="/Group_of_wolves_on_path_202606211412.mp4"
@@ -1972,7 +1920,8 @@ export default function App() {
           </div>
         </div>
         </section>
-
+        )}
+        {view === "Process" && (
         <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh" }}>
           <video
             src="/Wolf_mouth_fire_video_202606211302.mp4"
@@ -2015,7 +1964,8 @@ export default function App() {
             </div>
           </div>
         </section>
-
+        )}
+        {view === "Contact" && (
         <section id="contact" className="scroll-reveal px-5 md:px-12 py-16 md:py-24 relative overflow-hidden" style={{ background: "#000000" }}>
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
             <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="white"/><path d="M100 10 L100 160" stroke="white" strokeWidth="2"/></svg>
@@ -2051,7 +2001,7 @@ export default function App() {
           </div>
         </div>
         </section>
-      </>
+        )}
       </main>
 
       {/* MODALS */}
@@ -2068,7 +2018,7 @@ export default function App() {
       <footer className="px-5 md:px-12 pt-10 pb-8 md:pt-14 md:pb-10 fade-up d1" style={{ background: "#0D1117", borderTop: "1px solid rgba(128,82,255,0.2)" }}>
         <div className="flex flex-col lg:flex-row justify-between gap-10 lg:gap-16 mb-8 md:mb-10 fade-up d2">
           <div className="max-w-xs fade-up d3">
-            <Logo onClick={() => scrollToSection("home")} className="mb-4" size="footer" dark={false} />
+            <Logo onClick={() => navigateTo("Home")} className="mb-4" size="footer" dark={false} />
             <p className="text-sm leading-relaxed" style={{ color: "#9a9a9a" }}>
               Bridging elite consulting with the next generation of tech talent.
             </p>
@@ -2077,20 +2027,20 @@ export default function App() {
           <div className="flex flex-wrap gap-8 sm:gap-16 fade-up d4">
             {[
               { heading: "Company", links: [
-                  { label: "About",    dest: "about" },
-                  { label: "Services", dest: "services" },
-                  { label: "Process",  dest: "process" },
+                  { label: "Services", dest: "Services" },
+                  { label: "Process",  dest: "Process" },
+                  { label: "Contact",  dest: "Contact" },
               ]},
               { heading: "Careers", links: [
-                  { label: "Internships", dest: "careers" },
-                  { label: "Full-time",   dest: "careers" },
-                  { label: "Freelance",   dest: "careers" },
+                  { label: "Internships", dest: "Careers" },
+                  { label: "Full-time",   dest: "Careers" },
+                  { label: "Freelance",   dest: "Careers" },
               ]},
               { heading: "Contact", links: [
-                  { label: "11xsquarebusiness@gmail.com", dest: "contact" },
-                  { label: "United Kingdom",       dest: "contact" },
-                  { label: "LinkedIn",             dest: "contact" },
-                  { label: "Twitter",              dest: "contact" },
+                  { label: "11xsquarebusiness@gmail.com", dest: "Contact" },
+                  { label: "United Kingdom",       dest: "Contact" },
+                  { label: "LinkedIn",             dest: "Contact" },
+                  { label: "Twitter",              dest: "Contact" },
               ]},
             ].map((col) => (
               <div key={col.heading}>
@@ -2098,7 +2048,7 @@ export default function App() {
                 <ul className="flex flex-col gap-1.5 list-none">
                   {col.links.map(({ label, dest }) => (
                     <li key={label}>
-                      <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(dest); }}
+                      <a href="#" onClick={(e) => { e.preventDefault(); navigateTo(dest); }}
                         className="text-sm transition-colors duration-200 no-underline" style={{ color: "#9a9a9a" }}
                         onMouseEnter={e => e.target.style.color="#8052ff"}
                         onMouseLeave={e => e.target.style.color="#9a9a9a"}
