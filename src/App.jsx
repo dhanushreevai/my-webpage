@@ -1814,19 +1814,13 @@ export default function App() {
             </div>
           </div>
 
-          <div className="hidden lg:flex flex-shrink-0 items-center justify-center fade-up d3" style={{ position: "relative", width: 420, height: 480 }}>
-            <ParticleField style={{ position: "absolute", inset: 0 }} className="absolute inset-0" />
-            <div className="relative z-10 flex flex-col items-center gap-4">
-              <div className="relative">
-                <div className="absolute -inset-3 rounded-[28px] opacity-50" style={{ background: "radial-gradient(circle, rgba(128,82,255,0.4) 0%, transparent 70%)", filter: "blur(12px)" }} />
-                <img
-                src={logo}
-                alt="11x Square"
-                className="relative object-cover"
-                style={{ width: 220, height: 220, borderRadius: 36, border: "1px solid rgba(128,82,255,0.4)" }}
-              />
-              </div>
-            </div>
+          <div className="hidden lg:flex flex-shrink-0 items-center justify-center fade-up d3">
+            <img
+              src={logo}
+              alt="11x Square"
+              className="object-cover"
+              style={{ width: 320, height: 320, borderRadius: 40, border: "1px solid rgba(128,82,255,0.35)" }}
+            />
           </div>
 
         </div>
