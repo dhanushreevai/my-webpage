@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=DM+Mono:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@200;400;500;600;700;800;900&family=DM+Mono:wght@300;400&display=swap');
 @import "tailwindcss";
 
-html, body { background: #080B12; margin: 0; padding: 0; }
+html, body { background: #000000; margin: 0; padding: 0; }
 
 * { font-family: 'Archivo', sans-serif; letter-spacing: -0.01em; }
 .mono { font-family: 'DM Mono', monospace; }
@@ -44,25 +44,32 @@ html, body { background: #080B12; margin: 0; padding: 0; }
 .d1{animation-delay:0.1s}.d2{animation-delay:0.25s}.d3{animation-delay:0.4s}.d4{animation-delay:0.55s}.d5{animation-delay:0.7s}
 .d6{animation-delay:0.85s}.d7{animation-delay:1s}.d8{animation-delay:1.15s}.d9{animation-delay:1.3s}.d10{animation-delay:1.45s}
 
-/* Subtle blue grid */
+/* Void grid — violet micro-lines */
 .grid-bg {
   background-image:
-    linear-gradient(rgba(14,165,233,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(14,165,233,0.08) 1px, transparent 1px);
+    linear-gradient(rgba(128,82,255,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(128,82,255,0.07) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
-/* Gradient headline text — sky blue */
+/* Display headline — Dala signature: ultra-thin, tight tracking */
+.display-headline {
+  font-weight: 200;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+}
+
+/* Gradient headline text — violet */
 .gradient-text {
-  background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+  background: linear-gradient(135deg, #c4b5fd 0%, #8052ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.text-stroke  { -webkit-text-stroke: 2px #0EA5E9; color: transparent; }
+.text-stroke  { -webkit-text-stroke: 2px #8052ff; color: transparent; }
 .text-reveal  {
-  background: linear-gradient(to right, #1A1A1A 50%, #0EA5E9 50%);
+  background: linear-gradient(to right, #1A1A1A 50%, #8052ff 50%);
   background-size: 200% 100%; background-position: 100% 0;
   transition: background-position 0.8s ease;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -71,7 +78,7 @@ html, body { background: #080B12; margin: 0; padding: 0; }
 
 .perspective-1000    { perspective: 1000px; }
 .transform-style-3d  { transform-style: preserve-3d; }
-.shadow-premium      { box-shadow: 0 20px 50px -12px rgba(14,165,233,0.20), 0 10px 20px -10px rgba(2,132,199,0.12); }
+.shadow-premium      { box-shadow: 0 20px 50px -12px rgba(128,82,255,0.20), 0 10px 20px -10px rgba(107,63,212,0.12); }
 .hover-lift          { transition: transform 0.5s cubic-bezier(0.2,0,0.2,1), box-shadow 0.5s ease; }
 .hover-lift:hover    { transform: translateY(-8px) rotateX(2deg) rotateY(-2deg); }
 .translate-z-10 { transform: translateZ(10px); }
@@ -81,17 +88,17 @@ html, body { background: #080B12; margin: 0; padding: 0; }
 .magnetic-area { padding: 40px; margin: -40px; display: inline-block; }
 
 .glass-panel {
-  background: rgba(14,165,233,0.06);
+  background: rgba(128,82,255,0.06);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .nature-input::placeholder { color: rgba(255,255,255,0.35); }
-.typing-cursor { animation: blink 1s step-end infinite; color: #38BDF8; -webkit-text-stroke: 0; }
+.typing-cursor { animation: blink 1s step-end infinite; color: #a78bff; -webkit-text-stroke: 0; }
 
 ::-webkit-scrollbar       { width: 6px; }
-::-webkit-scrollbar-track { background: #080B12; }
-::-webkit-scrollbar-thumb { background: linear-gradient(#0EA5E9,#0284C7); border-radius: 3px; }
+::-webkit-scrollbar-track { background: #000000; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#8052ff,#6b3fd4); border-radius: 3px; }
 
 /* ── Space view ── */
 @keyframes spBlurIn {
@@ -136,7 +143,7 @@ html, body { background: #080B12; margin: 0; padding: 0; }
 }
 .load-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #0EA5E9, #38BDF8);
+  background: linear-gradient(90deg, #8052ff, #a78bff);
   border-radius: 2px;
   animation: loadBar 2s cubic-bezier(0.4,0,0.2,1) forwards;
 }
