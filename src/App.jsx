@@ -2013,23 +2013,35 @@ export default function App() {
         </div>
 
         {/* ── SERVICES ──────────────────────────────────────────────────── */}
-        <section id="services" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#ffffff" }}>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-            <div>
-              <div className="eyebrow mb-4 lusion-fade d1">Our Solutions</div>
-              <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#000000" }}>
-                <span className="lusion-clip d2" style={{ display: "block" }}>Consulting for the</span>
-                <span className="lusion-clip d3" style={{ display: "block" }}>bold &amp; ambitious</span>
-              </h2>
+        <section id="services" style={{ background: "#ffffff" }}>
+          {/* Video header */}
+          <div className="relative overflow-hidden flex flex-col justify-end px-5 md:px-12 pb-14 pt-24" style={{ minHeight: "420px" }}>
+            <video
+              src="/wolf_howling_in_moon_202606211229.mp4"
+              autoPlay muted playsInline loop
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%" }}
+            />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.55) 100%)" }} />
+            <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+              <div>
+                <div className="eyebrow mb-4 lusion-fade d1" style={{ color: "rgba(255,255,255,0.75)" }}>Our Solutions</div>
+                <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#ffffff" }}>
+                  <span className="lusion-clip d2" style={{ display: "block" }}>Consulting for the</span>
+                  <span className="lusion-clip d3" style={{ display: "block" }}>bold &amp; ambitious</span>
+                </h2>
+              </div>
+              <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md lusion-fade d4" style={{ color: "rgba(255,255,255,0.82)", textShadow: "0 1px 8px rgba(0,0,0,0.60)" }}>
+                Platform-driven consulting that solves deep engineering and product problems in record time.
+              </p>
             </div>
-            <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md lusion-fade d4" style={{ color: "#444444" }}>
-              Platform-driven consulting that solves deep engineering and product problems in record time.
-            </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lusion-fade d5">
-            {SERVICES.map((s, i) => (
-              <ServiceCard key={s.num} {...s} delay={0.1 * i} />
-            ))}
+          {/* Cards */}
+          <div className="px-5 md:px-12 py-14 md:py-20">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lusion-fade d5">
+              {SERVICES.map((s, i) => (
+                <ServiceCard key={s.num} {...s} delay={0.1 * i} />
+              ))}
+            </div>
           </div>
         </section>
 
@@ -2183,15 +2195,8 @@ export default function App() {
       <CookieBanner />
 
       {/* FOOTER — cinematic bento */}
-      <footer className="relative overflow-hidden" style={{ minHeight: "320px" }}>
-        <video
-          src="/wolf_howling_in_moon_202606211229.mp4"
-          autoPlay muted playsInline loop
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }}
-        />
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.60)" }} />
-
-        <div className="relative z-10 px-6 md:px-14 py-14 md:py-20">
+      <footer className="relative" style={{ background: "#360802" }}>
+        <div className="px-6 md:px-14 py-14 md:py-20">
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
