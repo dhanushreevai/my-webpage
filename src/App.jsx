@@ -584,11 +584,11 @@ function Logo({ onClick, className = "", size = "nav", dark = false }) {
         <img
           src={logo}
           alt="11x Logo"
-          className="h-12 w-auto rounded-xl"
+          className="h-10 w-auto rounded-lg"
         />
       )}
       <div className="flex flex-col leading-none">
-        <span className={`font-bold ${size === "footer" ? "text-3xl" : "text-[22px]"}`} style={{ color: dark ? "#360802" : "#360802", letterSpacing: "0.02em", lineHeight: 1 }}>
+        <span className={`font-bold ${size === "footer" ? "text-2xl" : "text-[22px]"}`} style={{ color: dark ? "#ffffff" : "#360802", letterSpacing: "0.02em", lineHeight: 1 }}>
           11x<span style={{ color: "#f73b20" }}>Square</span>
         </span>
         {size === "footer" && (
@@ -1857,7 +1857,7 @@ export default function App() {
           borderBottom: scrolled ? "1px solid rgba(247,59,32,0.15)" : "none",
         }}
       >
-        <Logo onClick={() => scrollToSection("home")} dark={false} />
+        <Logo onClick={() => scrollToSection("home")} dark={!scrolled} />
 
         <ul className="hidden md:flex gap-8 list-none">
           {NAV_LINKS.map(({ label, id }) => (
@@ -2194,7 +2194,7 @@ export default function App() {
             margin: "0 auto",
           }}>
             {/* Logo card */}
-            <div style={{ background: "#fef5f3", borderRadius: 16, padding: "18px 18px" }}>
+            <div style={{ background: "#fef5f3", borderRadius: 16, padding: "20px 22px", gridColumn: "span 2" }}>
               <Logo onClick={() => scrollToSection("home")} size="footer" dark={false} />
               <p className="mt-3 text-xs leading-relaxed" style={{ color: "#666666", fontWeight: 400 }}>
                 Bridging elite consulting with the next generation of tech talent.
