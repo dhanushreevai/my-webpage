@@ -1201,7 +1201,7 @@ function FaqAccordion() {
 
 /* ── Chatbot Widget ───────────────────────────────────────────────────────── */
 function ChatBot() {
-  const WELCOME = { text: "👋 Hi! I'm the 11x Square AI assistant. Ask me anything — services, open roles, pricing, or how to get started!", from: "bot", time: new Date().toISOString() };
+  const WELCOME = { text: "👋 Welcome to 11x Square! I'm your virtual assistant. Ask me about our services, careers, or how to get in touch!", from: "bot", time: new Date().toISOString() };
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([WELCOME]);
   const [input, setInput] = useState("");
@@ -1222,7 +1222,7 @@ function ChatBot() {
       const res = await fetch(`${API_BASE}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, history: messages }),
+        body: JSON.stringify({ text }),
       });
       const data = await res.json();
       setMessages((prev) => [...prev, { text: data.text, from: "bot", time: data.time }]);
