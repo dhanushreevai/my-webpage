@@ -1045,7 +1045,7 @@ function ChatBot() {
       {/* WhatsApp floating button */}
       <div style={{ position: "relative" }} className="group/wa">
         <a
-          href="https://wa.me/447778303743"
+          href="https://wa.me/447778303743?text=Hi%20there!%20I%20found%20you%20on%2011xSquare.com%20and%20I%27m%20interested%20in%20your%20services.%20Can%20we%20connect%3F"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
