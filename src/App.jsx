@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import logo from "./image/11x-logo.jpeg";
 
-const NAV_LINKS = ["Services", "About", "Insights", "Careers", "Process", "Contact"];
+const NAV_LINKS = ["Services", "About", "Careers", "Process", "Contact"];
 
 const SERVICES = [
   {
@@ -1749,52 +1749,6 @@ export default function App() {
         </section>
       )}
 
-      {/* INSIGHTS VIEW */}
-      {view === "Insights" && (
-        <section id="insights" className="px-5 md:px-12 py-14 md:py-20" style={{ background: "#080B12" }}>
-          <div className="mb-14 fade-up d1">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] mb-3" style={{ color: "#888888" }}>// Knowledge</p>
-            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#FFFFFF" }}>
-              Insights & Perspectives
-            </h2>
-            <p className="text-lg font-medium mt-4 max-w-lg" style={{ color: "#94A3B8" }}>
-              Practical thinking on engineering, strategy, and building high-performance teams.
-            </p>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.5rem" }} className="fade-up d2 blog-grid">
-            <style>{`@media(max-width:1024px){.blog-grid{grid-template-columns:repeat(2,1fr)!important}}@media(max-width:640px){.blog-grid{grid-template-columns:1fr!important}}`}</style>
-            {BLOG_POSTS.map((post, i) => {
-              const catStyle = CATEGORY_COLORS[post.category] || { bg: "rgba(14,165,233,0.12)", text: "#0EA5E9" };
-              return (
-                <div
-                  key={i}
-                  className="p-6 rounded-2xl flex flex-col gap-4 cursor-pointer transition-all duration-300 group"
-                  style={{ background: "#111827", border: "1px solid rgba(255,255,255,0.07)" }}
-                  onMouseEnter={e => e.currentTarget.style.background="#1E293B"}
-                  onMouseLeave={e => e.currentTarget.style.background="#111827"}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full font-bold" style={{ background: catStyle.bg, color: catStyle.text }}>
-                      {post.category}
-                    </span>
-                    <span className="font-mono text-[10px]" style={{ color: "#94A3B8" }}>{post.readTime}</span>
-                  </div>
-                  <h3 className="font-black text-[17px] leading-tight transition-colors duration-200" style={{ color: "#FFFFFF" }}>
-                    {post.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed flex-1" style={{ color: "#94A3B8" }}>{post.excerpt}</p>
-                  <div className="flex items-center justify-between pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                    <span className="font-mono text-[11px]" style={{ color: "#94A3B8" }}>{post.date}</span>
-                    <span className="text-sm font-bold transition-transform duration-200 group-hover:translate-x-1" style={{ color: "#0EA5E9" }}>Read →</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      )}
-
       {view === "Careers" && (
         <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ height: "100svh" }}>
           <video
@@ -1957,7 +1911,6 @@ export default function App() {
                   { label: "About",    dest: "About" },
                   { label: "Services", dest: "Services" },
                   { label: "Process",  dest: "Process" },
-                  { label: "Insights", dest: "Insights" },
               ]},
               { heading: "Careers", links: [
                   { label: "Internships", dest: "Careers" },
