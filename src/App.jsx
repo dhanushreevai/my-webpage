@@ -2015,8 +2015,6 @@ export default function App() {
         <TestimonialsSection />
 
         {/* ── FAQ ───────────────────────────────────────────────────────── */}
-        <FaqAccordion />
-
         {/* ── CONTACT ───────────────────────────────────────────────────── */}
         <section id="contact" className="px-5 md:px-12 py-16 md:py-24 relative overflow-hidden" style={{ background: "#100904" }}>
           <div className="absolute -top-10 -right-10 w-64 h-64 opacity-10 leaf-sway" style={{ transformOrigin: "bottom center" }}>
