@@ -542,13 +542,13 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
     <div
       onClick={onApply}
       className="flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 transition-all duration-300 cursor-pointer group"
-      style={{ background: "#ffffff", borderBottom: "1px solid #fbdfd9" }}
-      onMouseEnter={e => e.currentTarget.style.background="#fef0ee"}
-      onMouseLeave={e => e.currentTarget.style.background="#ffffff"}
+      style={{ background: "rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.14)" }}
+      onMouseEnter={e => e.currentTarget.style.background="rgba(247,59,32,0.15)"}
+      onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.06)"}
     >
       <div className="flex flex-col gap-1.5">
-        <span className="text-sm font-bold" style={{ color: "#000000" }}>{title}</span>
-        <div className="flex gap-4 font-mono text-[11px]" style={{ color: "#222222" }}>
+        <span className="text-sm font-bold" style={{ color: "#ffffff" }}>{title}</span>
+        <div className="flex gap-4 font-mono text-[11px]" style={{ color: "rgba(255,255,255,0.65)" }}>
           <span>{location}</span>
           <span>{period}</span>
         </div>
@@ -563,7 +563,7 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
         >
           {type === "intern" ? "Intern" : "Full-time"}
         </span>
-        <span className="text-lg transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" style={{ color: "#000000" }}>
+        <span className="text-lg transition-all duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" style={{ color: "#f73b20" }}>
           ↗
         </span>
       </div>
@@ -2041,28 +2041,29 @@ export default function App() {
           </div>
         </section>
 
-        {/* Wolf break 1 */}
-        <WolfSection
-          src="/Group_of_wolves_on_path_202606211412.mp4"
-          heading="Run with the pack"
-          sub="Join a team that hunts for excellence and never settles for less."
-        />
-
         {/* ── CAREERS ───────────────────────────────────────────────────── */}
-        <section id="careers" className="relative px-5 md:px-12 py-14 md:py-20 overflow-hidden" style={{ minHeight: "100svh", background: "#ffffff" }}>
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+        <section id="careers" className="relative overflow-hidden" style={{ minHeight: "100svh" }}>
+          <video
+            src="/Group_of_wolves_on_path_202606211412.mp4"
+            autoPlay muted playsInline loop
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ objectPosition: "center 30%" }}
+          />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.65) 100%)" }} />
+
+          <div className="relative z-10 px-5 md:px-12 py-14 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
             <div>
-              <div className="eyebrow mb-4 lusion-fade d1">Careers</div>
-              <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6" style={{ color: "#000000" }}>
+              <div className="eyebrow mb-4 lusion-fade d1" style={{ color: "rgba(255,255,255,0.75)" }}>Careers</div>
+              <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6" style={{ color: "#ffffff" }}>
                 <span className="lusion-clip d2" style={{ display: "block" }}>Find your next</span>
-                <span className="lusion-clip d3" style={{ display: "block" }}>challenge at <span style={{ color: "#222222" }}>11x</span></span>
+                <span className="lusion-clip d3" style={{ display: "block" }}>challenge at <span style={{ color: "#f73b20" }}>11x</span></span>
               </h2>
-              <p className="text-lg font-medium leading-relaxed mb-10 max-w-md lusion-fade d4" style={{ color: "#444444" }}>
+              <p className="text-lg font-medium leading-relaxed mb-10 max-w-md lusion-fade d4" style={{ color: "rgba(255,255,255,0.82)", textShadow: "0 1px 8px rgba(0,0,0,0.60)" }}>
                 Whether you're a seasoned consultant or a fresh grad ready to make your mark — we have a seat for you.
               </p>
 
-              <div className="p-7 rounded-2xl lusion-fade d5" style={{ background: "#fef5f3", border: "1px solid #fbdfd9" }}>
-                <p className="mono text-[10px] font-medium uppercase tracking-[0.15em] mb-4" style={{ color: "#888888" }}>Intern Program Highlights</p>
+              <div className="p-7 rounded-2xl lusion-fade d5" style={{ background: "rgba(254,245,243,0.12)", border: "1px solid rgba(255,255,255,0.20)", backdropFilter: "blur(12px)" }}>
+                <p className="mono text-[10px] font-medium uppercase tracking-[0.15em] mb-4" style={{ color: "rgba(255,255,255,0.60)" }}>Intern Program Highlights</p>
                 <ul className="flex flex-col gap-3">
                   {[
                     "3-month structured cohort program",
@@ -2070,15 +2071,15 @@ export default function App() {
                     "Mentorship from senior consultants",
                     "Full-time conversion for top performers",
                   ].map((item) => (
-                    <li key={item} className="flex gap-3 text-sm" style={{ color: "#222222", fontWeight: 400 }}>
-                      <span className="flex-shrink-0 text-base" style={{ color: "#000000" }}>→</span> {item}
+                    <li key={item} className="flex gap-3 text-sm" style={{ color: "rgba(255,255,255,0.88)", fontWeight: 400 }}>
+                      <span className="flex-shrink-0 text-base" style={{ color: "#f73b20" }}>→</span> {item}
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
 
-            <div className="flex flex-col lusion-fade d5 rounded-2xl overflow-hidden" style={{ border: "1px solid #fbdfd9" }}>
+            <div className="flex flex-col lusion-fade d5 rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.18)", backdropFilter: "blur(8px)", background: "rgba(255,255,255,0.06)" }}>
               {ROLES.map((r, i) => (
                 <RoleItem key={r.title} {...r} delay={0.1 * i} onApply={() => setCareersApplyRole(r)} />
               ))}
