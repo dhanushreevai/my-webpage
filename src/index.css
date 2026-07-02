@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap');
 @import "tailwindcss";
 
 html {
   scroll-behavior: smooth;
 }
-html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
+html, body { background: #0b1628; margin: 0; padding: 0; cursor: none; }
 
 * { font-family: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif; letter-spacing: 0.01em; }
 .mono { font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; letter-spacing: 0.01em; }
@@ -55,7 +55,7 @@ html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
 /* ── Custom cursor ── */
 .cursor-dot {
   width: 6px; height: 6px;
-  background: #f73b20;
+  background: #d4a855;
   border-radius: 50%;
   position: fixed; top: 0; left: 0;
   pointer-events: none; z-index: 99999;
@@ -64,7 +64,7 @@ html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
 }
 .cursor-ring {
   width: 32px; height: 32px;
-  border: 1px solid rgba(247,59,32,0.30);
+  border: 1px solid rgba(212,168,85,0.35);
   border-radius: 50%;
   position: fixed; top: 0; left: 0;
   pointer-events: none; z-index: 99998;
@@ -73,7 +73,7 @@ html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
 }
 .cursor-ring.hovered {
   width: 56px; height: 56px;
-  border-color: rgba(247,59,32,0.65);
+  border-color: rgba(212,168,85,0.70);
 }
 
 .marquee-track    { animation: marquee 24s linear infinite; }
@@ -84,29 +84,31 @@ html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
 .d1{animation-delay:0.1s}.d2{animation-delay:0.25s}.d3{animation-delay:0.4s}.d4{animation-delay:0.55s}.d5{animation-delay:0.7s}
 .d6{animation-delay:0.85s}.d7{animation-delay:1s}.d8{animation-delay:1.15s}.d9{animation-delay:1.3s}.d10{animation-delay:1.45s}
 
-/* Very subtle editorial grid */
+/* Night sky grid */
 .grid-bg {
   background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
-/* Display headline — Jeton: weight 500, positive tracking */
+/* Display headline — cinematic serif */
 .display-headline {
-  font-weight: 500;
-  letter-spacing: 0.03em;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
   line-height: 0.90;
+  text-transform: uppercase;
 }
 
-/* Gradient text — Coral Flame */
+/* Gradient text — gold */
 .gradient-text {
-  color: #f73b20;
+  color: #d4a855;
 }
 
-.text-stroke  { -webkit-text-stroke: 2px #f73b20; color: transparent; }
+.text-stroke  { -webkit-text-stroke: 2px #d4a855; color: transparent; }
 .text-reveal  {
-  background: linear-gradient(to right, #fef5f3 50%, #f73b20 50%);
+  background: linear-gradient(to right, #ffffff 50%, #d4a855 50%);
   background-size: 200% 100%; background-position: 100% 0;
   transition: background-position 0.8s ease;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -115,7 +117,7 @@ html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
 
 .perspective-1000    { perspective: 1000px; }
 .transform-style-3d  { transform-style: preserve-3d; }
-.shadow-premium      { box-shadow: rgba(247,59,32,0.10) 0px 8px 24px 0px; border: 1px solid #fbdfd9; }
+.shadow-premium      { box-shadow: rgba(0,0,0,0.40) 0px 8px 24px 0px; border: 1px solid rgba(255,255,255,0.12); }
 .hover-lift          { transition: transform 0.4s cubic-bezier(0.2,0,0.2,1); }
 .hover-lift:hover    { transform: translateY(-4px); }
 .translate-z-10 { transform: translateZ(10px); }
@@ -125,23 +127,23 @@ html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
 .magnetic-area { padding: 40px; margin: -40px; display: inline-block; }
 
 .glass-panel {
-  background: rgba(254,245,243,0.90);
+  background: rgba(255,255,255,0.06);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid #fbdfd9;
+  border: 1px solid rgba(255,255,255,0.12);
 }
 
-.nature-input::placeholder { color: rgba(54,8,2,0.30); }
-.typing-cursor { animation: blink 1s step-end infinite; color: #ffffff; -webkit-text-stroke: 0; }
+.nature-input::placeholder { color: rgba(255,255,255,0.30); }
+.typing-cursor { animation: blink 1s step-end infinite; color: #d4a855; -webkit-text-stroke: 0; }
 
-/* Jeton scrollbar — coral */
+/* Scrollbar — dark + gold */
 ::-webkit-scrollbar       { width: 2px; }
-::-webkit-scrollbar-track { background: #fef5f3; }
+::-webkit-scrollbar-track { background: #0b1628; }
 ::-webkit-scrollbar-thumb {
-  background: #f73b20;
+  background: #d4a855;
   border-radius: 1px;
 }
-* { scrollbar-width: thin; scrollbar-color: #f73b20 #fef5f3; }
+* { scrollbar-width: thin; scrollbar-color: #d4a855 #0b1628; }
 
 /* ── Space view ── */
 @keyframes spBlurIn {
@@ -157,16 +159,16 @@ html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
 .sp-fade          { opacity: 0; }
 .sp-fade.go       { animation: spFadeUp 0.6s ease-out forwards; }
 .sp-glass {
-  background: rgba(254,245,243,0.90);
+  background: rgba(255,255,255,0.06);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid #fbdfd9;
+  border: 1px solid rgba(255,255,255,0.12);
 }
 .sp-glass-strong {
-  background: rgba(254,245,243,0.96);
+  background: rgba(255,255,255,0.10);
   backdrop-filter: blur(50px);
   -webkit-backdrop-filter: blur(50px);
-  border: 1px solid #fbdfd9;
+  border: 1px solid rgba(255,255,255,0.15);
 }
 
 .modal-container {
@@ -186,7 +188,7 @@ html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
 }
 .load-bar-fill {
   height: 100%;
-  background: #f73b20;
+  background: #d4a855;
   border-radius: 1px;
   animation: loadBar 2s cubic-bezier(0.4,0,0.2,1) forwards;
 }
@@ -198,16 +200,16 @@ html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
 
 /* ── Design tokens ── */
 
-/* Eyebrow label — Jeton dash, brandwood */
+/* Eyebrow label */
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #360802;
+  color: rgba(255,255,255,0.55);
   font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
 }
 .eyebrow::before {
@@ -219,35 +221,34 @@ html, body { background: #ffffff; margin: 0; padding: 0; cursor: none; }
   flex-shrink: 0;
 }
 
-/* Primary button — Outlined Coral (Jeton: outlined, NOT filled) */
+/* Primary button — white pill */
 .btn-gradient {
   background: #ffffff;
-  border-radius: 16px;
-  border: 1.5px solid #f73b20;
-  color: #f73b20;
+  border-radius: 999px;
+  border: none;
+  color: #0b1628;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.01em;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, opacity 0.2s;
   font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 }
 .btn-gradient:hover {
-  background: #f73b20;
-  color: #ffffff;
+  background: rgba(255,255,255,0.88);
 }
 
-/* Ghost button — Brandwood border */
+/* Ghost button — white outline pill */
 .ghost-aurora {
   background: transparent;
-  border: 1.5px solid rgba(54,8,2,0.30);
-  border-radius: 16px;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-  color: #360802;
+  transition: background 0.2s, border-color 0.2s;
+  color: #ffffff;
 }
-.ghost-aurora:hover { border-color: #f73b20; color: #f73b20; background: rgba(247,59,32,0.04); }
+.ghost-aurora:hover { border-color: #ffffff; background: rgba(255,255,255,0.08); color: #ffffff; }
 
-/* Tonal surfaces */
-.surface-card  { background: #fef5f3; }   /* Warm Tint */
-.surface-lift  { background: #fbdfd9; }   /* Blush Mist */
+/* Tonal surfaces — glass on dark */
+.surface-card  { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
+.surface-lift  { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.14); }
