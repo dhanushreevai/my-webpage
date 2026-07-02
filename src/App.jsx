@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
+import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "./image/11x-logo.jpeg";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,10 +9,10 @@ import { motion, AnimatePresence } from "motion/react";
 gsap.registerPlugin(ScrollTrigger);
 
 const NAV_LINKS = [
-  { label: "Services", id: "services" },
-  { label: "Careers",  id: "careers" },
-  { label: "Process",  id: "process" },
-  { label: "Contact",  id: "contact" },
+  { label: "Services", path: "/services" },
+  { label: "Careers",  path: "/careers" },
+  { label: "Process",  path: "/process" },
+  { label: "Contact",  path: "/contact" },
 ];
 
 const SERVICES = [
@@ -148,87 +149,6 @@ const TEAM = [
   },
 ];
 
-const CASE_STUDIES = [
-  {
-    client: "FinTech Startup",
-    industry: "Financial Services",
-    challenge: "Legacy monolith causing 40% downtime, blocking Series B due diligence and preventing international expansion.",
-    solution: "Full cloud migration to microservices architecture, implemented CI/CD pipeline, and deployed 99.99% SLA monitoring.",
-    metrics: ["340% capacity", "99.99% uptime", "£8M Series B"],
-    color: "#222222",
-  },
-  {
-    client: "EdTech Platform",
-    industry: "Education Technology",
-    challenge: "High churn rate of 35% monthly due to poor UX and lack of personalisation in learning pathways.",
-    solution: "Redesigned onboarding flow, built ML-based personalisation engine, and ran 4-week design sprint with the product team.",
-    metrics: ["70% less churn", "3x DAU", "90d results"],
-    color: "#8B5CF6",
-  },
-  {
-    client: "Global Retailer",
-    industry: "E-Commerce & Retail",
-    challenge: "Manual inventory management across 12 markets costing £1.8M annually in overstock and stockout losses.",
-    solution: "Deployed predictive inventory system with real-time demand forecasting and automated supplier integrations.",
-    metrics: ["£1.8M saved", "94% accuracy", "12 markets"],
-    color: "#10B981",
-  },
-];
-
-const BLOG_POSTS = [
-  {
-    category: "Engineering",
-    title: "Why Your Microservices Are Slower Than Your Monolith",
-    excerpt: "The promise of microservices is speed and scale — but most teams end up with distributed complexity. Here's how to avoid the common traps.",
-    date: "12 Jun 2025",
-    readTime: "6 min read",
-  },
-  {
-    category: "Strategy",
-    title: "The OKR Framework That Actually Works for Startups",
-    excerpt: "Most OKR implementations fail because they're copied from enterprise playbooks. We share the lightweight version that scales with your team.",
-    date: "5 Jun 2025",
-    readTime: "8 min read",
-  },
-  {
-    category: "Talent",
-    title: "How We Vet 1,000 Applicants to Place the Top 1%",
-    excerpt: "Our multi-stage evaluation framework goes beyond LeetCode. We look for the engineers who thrive in ambiguous, high-stakes environments.",
-    date: "28 May 2025",
-    readTime: "5 min read",
-  },
-  {
-    category: "AI & Data",
-    title: "Building Production ML Pipelines That Don't Break in 6 Months",
-    excerpt: "Most ML projects fail post-deployment. We outline the data contracts, monitoring, and retraining loops that keep models healthy in production.",
-    date: "20 May 2025",
-    readTime: "10 min read",
-  },
-  {
-    category: "Consulting",
-    title: "The Discovery Call That Changes Everything",
-    excerpt: "The first client call sets the tone for the entire engagement. We share our 12-question framework that uncovers the real problem, not the stated one.",
-    date: "14 May 2025",
-    readTime: "4 min read",
-  },
-  {
-    category: "Startup",
-    title: "From MVP to Series A: A Technical Roadmap",
-    excerpt: "The architecture decisions you make at MVP stage define your ceiling at Series A. Here's how to build for growth without over-engineering.",
-    date: "7 May 2025",
-    readTime: "9 min read",
-  },
-];
-
-const CATEGORY_COLORS = {
-  Engineering: { bg: "#c5d5e8", text: "#000000" },
-  Strategy:    { bg: "#e7d3bf", text: "#000000" },
-  Talent:      { bg: "#d4e6eb", text: "#000000" },
-  "AI & Data": { bg: "#efe5f9", text: "#000000" },
-  Consulting:  { bg: "#e7d3bf", text: "#000000" },
-  Startup:     { bg: "#d4e6eb", text: "#000000" },
-};
-
 function useCountUp(target, duration = 1500, start = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -304,7 +224,6 @@ function LoadingScreen() {
       pointerEvents: fading ? "none" : "all",
     }}>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        {/* Logo with glow */}
         <div style={{ position: "relative", marginBottom: 28 }}>
           <img
             src={logo}
@@ -319,8 +238,6 @@ function LoadingScreen() {
             }}
           />
         </div>
-
-        {/* Brand */}
         <div style={{
           fontFamily: "'DM Sans', ui-sans-serif, system-ui, sans-serif",
           fontSize: "clamp(2rem, 6vw, 3rem)",
@@ -332,7 +249,6 @@ function LoadingScreen() {
         }}>
           11x<span style={{ color: "#d4a855" }}>Square</span>
         </div>
-
         <p style={{
           color: "rgba(255,255,255,0.45)",
           fontSize: 10,
@@ -343,8 +259,6 @@ function LoadingScreen() {
         }}>
           Consulting · Talent · Technology
         </p>
-
-        {/* Loading bar */}
         <div style={{ width: 160, height: 2, background: "rgba(255,255,255,0.10)", borderRadius: 2, overflow: "hidden" }}>
           <div className="load-bar-fill" />
         </div>
@@ -466,15 +380,12 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
   const handleMouseMove = (e) => {
     const card = cardRef.current;
     if (!card) return;
-
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-
     const multiplier = 12;
     const xRotation = (multiplier * (y - rect.height / 2)) / rect.height;
     const yRotation = (multiplier * (rect.width / 2 - x)) / rect.width;
-
     setRotation({ x: xRotation, y: yRotation });
     setGlare({ x: (x / rect.width) * 100, y: (y / rect.height) * 100, opacity: 0.15 });
   };
@@ -493,7 +404,6 @@ function ServiceCard({ num, title, desc, tags, color, image, delay }) {
     amber:   { bg: "rgba(212,168,85,0.10)",  bgHover: "rgba(212,168,85,0.18)",  tag: "rgba(212,168,85,0.25)",  tagText: "#d4a855" },
   };
   const theme = THEMES[color] || { bg: "rgba(255,255,255,0.07)", bgHover: "rgba(255,255,255,0.12)", tag: "rgba(255,255,255,0.15)", tagText: "rgba(255,255,255,0.80)" };
-
   const isResting = rotation.x === 0 && rotation.y === 0;
 
   return (
@@ -572,7 +482,7 @@ function RoleItem({ title, type, location, period, delay, onApply }) {
   );
 }
 
-function Logo({ onClick, className = "", size = "nav", dark = false }) {
+function Logo({ onClick, className = "", size = "nav" }) {
   return (
     <div
       onClick={onClick}
@@ -582,11 +492,7 @@ function Logo({ onClick, className = "", size = "nav", dark = false }) {
       onMouseLeave={e => e.currentTarget.style.opacity = "1"}
     >
       {size === "footer" && (
-        <img
-          src={logo}
-          alt="11x Logo"
-          className="h-10 w-auto rounded-lg"
-        />
+        <img src={logo} alt="11x Logo" className="h-10 w-auto rounded-lg" />
       )}
       <div className="flex flex-col leading-none">
         <span className={`font-bold ${size === "footer" ? "text-2xl" : "text-[22px]"}`} style={{ color: "#ffffff", letterSpacing: "0.02em", lineHeight: 1 }}>
@@ -641,7 +547,6 @@ function TypingText({ words = [] }) {
   return <>{displayed}<span className="typing-cursor">|</span></>;
 }
 
-/* Nature palette */
 const N = {
   green:      "#222222",
   greenLight: "#f73b20",
@@ -973,7 +878,6 @@ function ApplyNowModal({ onClose }) {
   );
 }
 
-/* ── Careers Apply Modal — Midnight / Indigo theme ───────────────────────── */
 const M = {
   bg:      "#fef5f3",
   panel:   "#fef5f3",
@@ -1111,7 +1015,6 @@ function CareersApplyModal({ role, onClose }) {
   );
 }
 
-/* ── Testimonials Section ────────────────────────────────────────────────── */
 function TestimonialsSection() {
   return (
     <section id="testimonials" style={{ background: "#0d1f35", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
@@ -1149,14 +1052,12 @@ function TestimonialsSection() {
   );
 }
 
-/* ── Scroll Reveal Hook (handles both legacy + Lusion classes) ─────────────── */
 function useGSAPAnimations() {
   useEffect(() => {
     const alreadyLoaded = sessionStorage.getItem("11x_loaded");
     const heroDelay = alreadyLoaded ? 0.15 : 2.85;
 
     const ctx = gsap.context(() => {
-      // ── Hero: timeline on page load (not scroll-triggered) ──
       gsap.timeline({ delay: heroDelay })
         .from("#home .lusion-fade.d1", { y: 20, opacity: 0, duration: 0.6, ease: "power3.out" })
         .from("#home .lusion-line-inner", { y: "110%", duration: 1.1, stagger: 0.15, ease: "power4.out" }, "-=0.3")
@@ -1166,7 +1067,6 @@ function useGSAPAnimations() {
           "-=0.85"
         );
 
-      // ── All other sections: scroll-triggered ──
       ["services", "careers", "process", "testimonials", "contact"].forEach((id) => {
         const section = document.getElementById(id);
         if (!section) return;
@@ -1190,7 +1090,6 @@ function useGSAPAnimations() {
           tl.from(reveals, { y: 36, opacity: 0, duration: 0.7, stagger: 0.08, ease: "power3.out" }, "<0.15");
       });
 
-      // ── Wolf cinematic sections ──
       gsap.utils.toArray(".wolf-heading").forEach((el) => {
         gsap.from(el, {
           y: 50, opacity: 0, duration: 1.1, ease: "power3.out",
@@ -1204,7 +1103,6 @@ function useGSAPAnimations() {
   }, []);
 }
 
-/* ── Custom cursor (dot + lagging ring) ─────────────────────────────────── */
 function CustomCursor() {
   const dotRef  = useRef(null);
   const ringRef = useRef(null);
@@ -1245,45 +1143,6 @@ function CustomCursor() {
   );
 }
 
-/* ── Exit Intent Popup ────────────────────────────────────────────────────── */
-function ExitIntentPopup({ onContact }) {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    if (sessionStorage.getItem("exitShown")) return;
-    const handle = (e) => {
-      if (e.clientY <= 0) {
-        setShow(true);
-        sessionStorage.setItem("exitShown", "1");
-      }
-    };
-    document.addEventListener("mouseleave", handle);
-    return () => document.removeEventListener("mouseleave", handle);
-  }, []);
-  if (!show) return null;
-  return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ background: "rgba(6,14,26,0.90)", backdropFilter: "blur(6px)" }}>
-      <div className="relative w-full max-w-md rounded-2xl p-8 text-center" style={{ background: "#0d1f35", border: "1px solid rgba(255,255,255,0.15)", boxShadow: "0 0 60px rgba(0,0,0,0.50)" }}>
-        <button onClick={() => setShow(false)} className="absolute top-4 right-4 text-xl bg-transparent border-0 cursor-pointer" style={{ color: "rgba(255,255,255,0.50)" }}>✕</button>
-        <div className="text-4xl mb-4">🎯</div>
-        <div className="eyebrow mb-2 justify-center">Wait — before you go!</div>
-        <h3 className="text-2xl font-black tracking-tighter mb-3" style={{ color: "#ffffff" }}>Get a FREE 30-min Strategy Session</h3>
-        <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.60)" }}>No commitment. Just clarity on what's possible for your business. Our consultants have helped 120+ companies unlock breakthrough growth.</p>
-        <button
-          onClick={() => { setShow(false); onContact(); }}
-          className="w-full font-bold text-base py-3 rounded-xl transition-all duration-200 cursor-pointer"
-          style={{ background: "#d4a855", color: "#0b1628", border: "none" }}
-          onMouseEnter={e => e.target.style.opacity="0.85"}
-          onMouseLeave={e => e.target.style.opacity="1"}
-        >
-          Claim Free Session →
-        </button>
-        <button onClick={() => setShow(false)} className="mt-3 text-xs bg-transparent border-0 cursor-pointer underline" style={{ color: "rgba(255,255,255,0.40)" }}>No thanks, I'll pass</button>
-      </div>
-    </div>
-  );
-}
-
-/* ── Cookie Consent Banner ────────────────────────────────────────────────── */
 function CookieBanner() {
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -1305,7 +1164,6 @@ function CookieBanner() {
   );
 }
 
-/* ── FAQ Accordion ────────────────────────────────────────────────────────── */
 const FAQ_ITEMS = [
   { q: "What types of companies do you work with?", a: "We work with startups (Seed to Series B), scale-ups, and enterprise teams across the UK and India. Our sweet spot is companies with 10–200 employees ready to scale their technology or talent." },
   { q: "How long does a typical engagement last?", a: "Project-based engagements typically run 8–16 weeks. Ongoing retainers are month-to-month. Talent placements are permanent or contract-based depending on your needs." },
@@ -1318,7 +1176,7 @@ const FAQ_ITEMS = [
 function FaqAccordion() {
   const [open, setOpen] = useState(null);
   return (
-    <section className="px-5 md:px-12 py-16 md:py-20 scroll-reveal" style={{ background: "#0b1628", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+    <section className="px-5 md:px-12 py-16 md:py-20" style={{ background: "#0b1628", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <div className="eyebrow mb-3">FAQ</div>
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tighter leading-[1] mb-10" style={{ color: "#ffffff" }}>Common questions</h2>
@@ -1345,7 +1203,6 @@ function FaqAccordion() {
   );
 }
 
-/* ── Chatbot Widget ───────────────────────────────────────────────────────── */
 function ChatBot() {
   const WELCOME = { text: "👋 Welcome to 11x Square! I'm your virtual assistant. Ask me about our services, careers, or how to get in touch!", from: "bot", time: new Date().toISOString() };
   const [isOpen, setIsOpen] = useState(false);
@@ -1383,7 +1240,6 @@ function ChatBot() {
 
   return (
     <div className="fixed bottom-6 right-6 z-[300] flex flex-col items-end gap-3">
-      {/* WhatsApp floating button */}
       <div style={{ position: "relative" }} className="group/wa">
         <a
           href="https://wa.me/447778303743?text=Hi%20there!%20I%20found%20you%20on%2011xSquare.com%20and%20I%27m%20interested%20in%20your%20services.%20Can%20we%20connect%3F"
@@ -1412,7 +1268,6 @@ function ChatBot() {
             <path d="M23.5 19.8c-.3-.15-1.78-.88-2.06-.98-.27-.1-.47-.15-.67.15-.2.3-.77.98-.95 1.18-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.89-.8-1.5-1.78-1.67-2.08-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.92-2.2-.24-.57-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.03 1.01-1.03 2.46s1.06 2.86 1.2 3.06c.15.2 2.07 3.17 5.02 4.44.7.3 1.25.48 1.67.62.7.22 1.34.19 1.84.12.56-.08 1.73-.71 1.97-1.4.24-.69.24-1.28.17-1.4-.07-.12-.27-.19-.57-.34Z" fill="white"/>
           </svg>
         </a>
-        {/* Tooltip */}
         <div
           style={{
             position: "absolute",
@@ -1420,7 +1275,7 @@ function ChatBot() {
             top: "50%",
             transform: "translateY(-50%)",
             background: "#1a1a1a",
-            color: "#000000",
+            color: "#ffffff",
             fontSize: "12px",
             fontWeight: 600,
             padding: "6px 12px",
@@ -1429,7 +1284,7 @@ function ChatBot() {
             pointerEvents: "none",
             opacity: 0,
             transition: "opacity 0.2s",
-            border: "1px solid rgba(0,0,0,0.15)",
+            border: "1px solid rgba(255,255,255,0.15)",
           }}
           className="group-hover/wa:opacity-100"
         >
@@ -1452,7 +1307,6 @@ function ChatBot() {
         <div className="rounded-2xl overflow-hidden shadow-2xl animate-fadeIn flex flex-col"
           style={{ width: 340, height: 480, background: C.bg, border: "1px solid rgba(255,255,255,0.12)" }}
         >
-          {/* header */}
           <div className="px-5 py-4 flex items-center justify-between shrink-0" style={{ background: C.header, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#d4a855" }}>
@@ -1474,7 +1328,6 @@ function ChatBot() {
             >✕</button>
           </div>
 
-          {/* messages */}
           <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3" style={{ scrollbarWidth: "none" }}>
             {messages.map((msg, i) => (
               <div key={i} className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}>
@@ -1500,7 +1353,6 @@ function ChatBot() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* quick reply chips */}
           <div className="px-4 pt-2.5 pb-1.5 flex flex-wrap gap-1.5 shrink-0" style={{ borderTop: "1px solid rgba(0,0,0,0.08)" }}>
             {["Services", "Careers", "Pricing", "Contact Us"].map((label) => (
               <button
@@ -1515,7 +1367,6 @@ function ChatBot() {
             ))}
           </div>
 
-          {/* input */}
           <div className="px-4 py-3 shrink-0 flex gap-2" style={{ borderTop: "1px solid rgba(0,0,0,0.12)" }}>
             <input
               value={input}
@@ -1536,10 +1387,9 @@ function ChatBot() {
         </div>
       )}
 
-      {/* toggle button */}
       <button
         onClick={() => setIsOpen((o) => !o)}
-        className="w-14 h-14 rounded-2xl shadow-2xl flex items-center justify-center border-0 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-green-900/40"
+        className="w-14 h-14 rounded-2xl shadow-2xl flex items-center justify-center border-0 cursor-pointer transition-all duration-300 hover:scale-105"
         style={{ background: "linear-gradient(135deg, #222222, #f73b20)", border: "1px solid rgba(0,0,0,0.4)" }}
         aria-label="Open chat"
       >
@@ -1557,109 +1407,6 @@ function ChatBot() {
         )}
       </button>
     </div>
-  );
-}
-
-/* ── Newsletter Section ───────────────────────────────────────────────────── */
-function NewsletterSection() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle"); // idle | loading | success | error
-  const [message, setMessage] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!email.trim()) return;
-    setStatus("loading");
-    setMessage("");
-    try {
-      const res = await fetch(`${API_BASE}/newsletter`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Subscription failed.");
-      setStatus("success");
-      setMessage(data.message || "You're subscribed!");
-      setEmail("");
-    } catch (err) {
-      setStatus("error");
-      setMessage(err.message);
-    }
-  };
-
-  return (
-    <section style={{ background: "#fef5f3", borderTop: "1px solid rgba(0,0,0,0.15)", borderBottom: "1px solid rgba(0,0,0,0.15)" }}>
-      <div className="px-5 md:px-12 py-12 md:py-16">
-        <div style={{ maxWidth: "640px", margin: "0 auto", textAlign: "center" }}>
-          <div className="eyebrow mb-3">Stay Informed</div>
-          <h2 className="text-[clamp(1.6rem,4vw,2.5rem)] font-black tracking-tighter mb-3" style={{ color: "#000000" }}>
-            Insights delivered to your inbox
-          </h2>
-          <p className="text-sm font-medium mb-8" style={{ color: "#444444" }}>
-            Strategy, engineering, and talent — one newsletter, no noise.
-          </p>
-
-          {status === "success" ? (
-            <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-2xl" style={{ background: "rgba(0,0,0,0.12)", border: "1px solid rgba(0,0,0,0.3)" }}>
-              <span style={{ color: "#222222", fontSize: "20px" }}>✓</span>
-              <p className="font-bold text-sm" style={{ color: "#222222" }}>{message}</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} style={{ display: "flex", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                required
-                className="nature-input"
-                style={{
-                  flex: "1 1 240px",
-                  maxWidth: "360px",
-                  background: "rgba(0,0,0,0.05)",
-                  border: "1.5px solid rgba(0,0,0,0.25)",
-                  borderRadius: "12px",
-                  color: "#000000",
-                  padding: "12px 18px",
-                  fontSize: "14px",
-                  fontWeight: 500,
-                  outline: "none",
-                  transition: "border 0.2s, background 0.2s",
-                }}
-                onFocus={e => { e.target.style.border = "1.5px solid #222222"; e.target.style.background = "rgba(0,0,0,0.1)"; }}
-                onBlur={e => { e.target.style.border = "1.5px solid rgba(0,0,0,0.25)"; e.target.style.background = "rgba(0,0,0,0.05)"; }}
-              />
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                style={{
-                  background: "#222222",
-                  color: "#000000",
-                  border: "none",
-                  borderRadius: "12px",
-                  padding: "12px 28px",
-                  fontSize: "14px",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  transition: "background 0.2s",
-                  whiteSpace: "nowrap",
-                  opacity: status === "loading" ? 0.7 : 1,
-                }}
-                onMouseEnter={e => { e.target.style.background = "#f73b20"; }}
-                onMouseLeave={e => { e.target.style.background = "#222222"; }}
-              >
-                {status === "loading" ? "Subscribing…" : "Subscribe"}
-              </button>
-            </form>
-          )}
-
-          {status === "error" && (
-            <p className="mt-3 text-sm font-medium" style={{ color: "#f87171" }}>{message}</p>
-          )}
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -1686,124 +1433,232 @@ function WolfSection({ src, heading, sub }) {
   );
 }
 
-const SECTION_ORDER = ["home", "services", "careers", "process", "testimonials", "contact"];
-
-function ScrollToContinue({ activeSection }) {
-  const idx = SECTION_ORDER.indexOf(activeSection);
-  const nextId = SECTION_ORDER[idx + 1];
-
-  const [visible, setVisible] = useState(true);
-  useEffect(() => {
-    let t;
-    const onScroll = () => {
-      setVisible(false);
-      clearTimeout(t);
-      t = setTimeout(() => setVisible(true), 600);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => { window.removeEventListener("scroll", onScroll); clearTimeout(t); };
-  }, []);
-
-  if (!nextId) return null;
-
-  const handleClick = () => {
-    const el = document.getElementById(nextId);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
+/* ── Nav ─────────────────────────────────────────────────────────────────── */
+function NavBar({ menuOpen, setMenuOpen, scrolled, navHidden }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   return (
-    <button
-      onClick={handleClick}
+    <motion.nav
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 md:px-12"
+      initial={{ y: -72, opacity: 0 }}
+      animate={{ y: navHidden ? -72 : 0, opacity: navHidden ? 0 : 1 }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
       style={{
-        position: "fixed",
-        bottom: 36,
-        left: "50%",
-        transform: `translateX(-50%) translateY(${visible ? 0 : 12}px)`,
-        opacity: visible ? 1 : 0,
-        transition: "opacity 0.4s ease, transform 0.4s ease",
-        zIndex: 49,
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        padding: "10px 22px",
-        borderRadius: 999,
-        background: "rgba(255,255,255,0.72)",
-        border: "1px solid rgba(0,0,0,0.35)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-        color: "#000000",
-        fontSize: 11,
-        fontWeight: 600,
-        letterSpacing: "0.16em",
-        textTransform: "uppercase",
-        cursor: "pointer",
-        boxShadow: "0 4px 32px rgba(0,0,0,0.12)",
+        height: 64,
+        backdropFilter: scrolled ? "blur(16px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
+        background: scrolled ? "rgba(11,22,40,0.92)" : "transparent",
+        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.10)" : "none",
       }}
-      onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.7)"; e.currentTarget.style.boxShadow = "0 4px 32px rgba(0,0,0,0.25)"; }}
-      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.35)"; e.currentTarget.style.boxShadow = "0 4px 32px rgba(0,0,0,0.12)"; }}
     >
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ animation: "scrollBounce 1.6s ease-in-out infinite" }}>
-        <path d="M2 4.5L7 9.5L12 4.5" stroke="#222222" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-      Scroll to continue
-    </button>
+      <Logo onClick={() => navigate("/")} />
+
+      <ul className="hidden md:flex gap-8 list-none">
+        {NAV_LINKS.map(({ label, path }) => (
+          <li key={path}>
+            <Link
+              to={path}
+              style={{
+                color: currentPath === path ? "#ffffff" : "rgba(255,255,255,0.65)",
+                fontSize: 12,
+                fontWeight: 500,
+                letterSpacing: "1.44px",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                transition: "color 0.3s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = "#ffffff"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = currentPath === path ? "#ffffff" : "rgba(255,255,255,0.65)"; }}
+            >
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <Link
+        to="/contact"
+        className="hidden md:inline-block"
+        style={{
+          fontSize: 12,
+          fontWeight: 500,
+          letterSpacing: "1.44px",
+          textTransform: "uppercase",
+          color: "#0b1628",
+          padding: "10px 22px",
+          background: "#ffffff",
+          borderRadius: "16px",
+          textDecoration: "none",
+          transition: "opacity 0.2s",
+        }}
+        onMouseEnter={e => { e.currentTarget.style.opacity = "0.85"; }}
+        onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+      >
+        Get Started ↗
+      </Link>
+
+      <button
+        className="md:hidden bg-transparent border-0 cursor-pointer text-2xl"
+        style={{ color: "#ffffff" }}
+        onClick={() => setMenuOpen(!menuOpen)}
+        aria-label="Toggle navigation"
+        aria-expanded={menuOpen}
+        aria-controls="mobile-menu"
+      >
+        {menuOpen ? "✕" : "☰"}
+      </button>
+    </motion.nav>
   );
 }
 
-function BusinessHours() {
-  const [status, setStatus] = useState({ available: false, timeStr: "" });
-  useEffect(() => {
-    const update = () => {
-      const now = new Date();
-      const ist = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 5.5 * 3600000);
-      const day = ist.getDay();
-      const hour = ist.getHours();
-      const timeStr = ist.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true });
-      setStatus({ available: day >= 1 && day <= 5 && hour >= 9 && hour < 19, timeStr });
-    };
-    update();
-    const id = setInterval(update, 30000);
-    return () => clearInterval(id);
-  }, []);
+function MobileMenu({ setMenuOpen }) {
+  const navigate = useNavigate();
+
+  const handleNav = (path) => {
+    setMenuOpen(false);
+    navigate(path);
+  };
+
   return (
-    <div className="hidden lg:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full"
-      style={{ background: status.available ? "rgba(0,0,0,0.10)" : "rgba(0,0,0,0.06)", border: `1px solid ${status.available ? "rgba(0,0,0,0.30)" : "rgba(0,0,0,0.15)"}` }}
-    >
-      <span className={`w-1.5 h-1.5 rounded-full ${status.available ? "bg-emerald-400 animate-pulse" : "bg-gray-500"}`} />
-      <span style={{ color: status.available ? "#444444" : "#6B7280" }}>
-        {status.available ? "Team available" : "Offline"} · {status.timeStr} IST
-      </span>
+    <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "rgba(11,22,40,0.96)" }}>
+      {NAV_LINKS.map(({ label, path }) => (
+        <button
+          key={path}
+          onClick={() => handleNav(path)}
+          className="text-2xl font-bold transition-colors duration-200 bg-transparent border-0 cursor-pointer"
+          style={{ color: "rgba(255,255,255,0.70)" }}
+          onMouseEnter={e => e.currentTarget.style.color="#ffffff"}
+          onMouseLeave={e => e.currentTarget.style.color="rgba(255,255,255,0.70)"}
+        >
+          {label}
+        </button>
+      ))}
     </div>
   );
 }
 
-export default function App() {
-  const [activeSection, setActiveSection] = useState("home");
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [navHidden, setNavHidden] = useState(false);
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+function FooterBar() {
+  const navigate = useNavigate();
+
+  return (
+    <footer className="relative" style={{ background: "#060e1a" }}>
+      <div className="px-6 md:px-14 py-14 md:py-20">
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+          gap: "20px",
+          maxWidth: "1200px",
+          margin: "0 auto",
+        }}>
+          <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 16, padding: "20px" }}>
+            <div className="flex items-center gap-2 mb-2" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+              <img src={logo} alt="11x Square" style={{ width: 32, height: 32, borderRadius: 7, objectFit: "cover" }} />
+              <span style={{ fontWeight: 700, fontSize: 17, color: "#ffffff", letterSpacing: "0.02em", lineHeight: 1 }}>
+                11x<span style={{ color: "#d4a855" }}>Square</span>
+              </span>
+            </div>
+            <p className="text-[9px] font-semibold tracking-[0.14em] uppercase mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Consulting · Talent</p>
+            <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.50)", fontWeight: 400 }}>
+              Bridging elite consulting with the next generation of tech talent.
+            </p>
+          </div>
+
+          <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "18px" }}>
+            <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Quicklinks</p>
+            <ul className="flex flex-col gap-2 list-none">
+              {[
+                { label: "Services", dest: "/services" },
+                { label: "Careers",  dest: "/careers" },
+                { label: "Process",  dest: "/process" },
+                { label: "Contact",  dest: "/contact" },
+              ].map(({ label, dest }) => (
+                <li key={label}>
+                  <Link to={dest}
+                    className="text-sm no-underline transition-colors"
+                    style={{ color: "rgba(255,255,255,0.65)", fontWeight: 400 }}
+                    onMouseEnter={e => e.currentTarget.style.color="#ffffff"}
+                    onMouseLeave={e => e.currentTarget.style.color="rgba(255,255,255,0.65)"}
+                  >{label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div style={{ background: "rgba(71,126,233,0.08)", border: "1px solid rgba(71,126,233,0.20)", borderRadius: 16, padding: "18px" }}>
+            <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Services</p>
+            <ul className="flex flex-col gap-1.5 list-none">
+              {["Tech Consulting", "Product & Strategy", "Data & Intelligence", "Startup Acceleration"].map((s) => (
+                <li key={s}>
+                  <Link to="/services"
+                    className="text-xs no-underline transition-colors"
+                    style={{ color: "rgba(255,255,255,0.55)" }}
+                    onMouseEnter={e => e.currentTarget.style.color="#ffffff"}
+                    onMouseLeave={e => e.currentTarget.style.color="rgba(255,255,255,0.55)"}
+                  >{s}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "18px" }}>
+            <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Location</p>
+            <div style={{ marginBottom: 12 }}>
+              <p className="text-sm font-semibold" style={{ color: "#ffffff", letterSpacing: "-0.02em" }}>Chennai</p>
+              <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>India · Hybrid</p>
+            </div>
+            <div>
+              <p className="text-sm font-semibold" style={{ color: "#ffffff", letterSpacing: "-0.02em" }}>United Kingdom</p>
+              <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Remote · Global</p>
+            </div>
+          </div>
+
+          <div style={{ background: "rgba(212,168,85,0.08)", border: "1px solid rgba(212,168,85,0.20)", borderRadius: 16, padding: "18px" }}>
+            <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Contact</p>
+            <a href="mailto:11xsquarebusiness@gmail.com"
+              className="text-xs no-underline block mb-4" style={{ color: "rgba(255,255,255,0.70)", wordBreak: "break-all", lineHeight: 1.5 }}>
+              11xsquarebusiness@gmail.com
+            </a>
+            <div className="flex gap-2">
+              {["LinkedIn", "X"].map((s) => (
+                <a key={s} href="#"
+                  className="mono text-[9px] no-underline px-2.5 py-1.5"
+                  style={{ background: "#d4a855", color: "#0b1628", borderRadius: 8, fontWeight: 700 }}
+                >{s}</a>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "18px" }}>
+            <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Legal</p>
+            <ul className="flex flex-col gap-1.5 list-none">
+              {["Privacy Policy", "Terms & Conditions", "Cookie Policy"].map((l) => (
+                <li key={l}>
+                  <a href="#" className="text-xs no-underline transition-colors" style={{ color: "rgba(255,255,255,0.55)" }}
+                    onMouseEnter={e => e.currentTarget.style.color="#ffffff"}
+                    onMouseLeave={e => e.currentTarget.style.color="rgba(255,255,255,0.55)"}
+                  >{l}</a>
+                </li>
+              ))}
+            </ul>
+            <p className="mono text-[9px] mt-4" style={{ color: "rgba(255,255,255,0.30)" }}>
+              © 2025 11x Square Inc.<br/>All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ── Pages ───────────────────────────────────────────────────────────────── */
+function HomePage() {
+  const navigate = useNavigate();
   const [statsVisible, setStatsVisible] = useState(false);
-  const [activeModal, setActiveModal] = useState(null);
-  const [careersApplyRole, setCareersApplyRole] = useState(null);
   const statsRef = useRef(null);
-  const lastScrollY = useRef(0);
   useGSAPAnimations();
-
-
-  useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 20);
-      if (y > lastScrollY.current && y > 80) {
-        setNavHidden(true);
-      } else {
-        setNavHidden(false);
-      }
-      lastScrollY.current = y;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -1814,362 +1669,267 @@ export default function App() {
     return () => obs.disconnect();
   }, []);
 
-  useEffect(() => {
-    const ids = ["home", "services", "careers", "process", "testimonials", "contact"];
-    const secObs = new IntersectionObserver(
-      (entries) => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }),
-      { threshold: 0.4 }
-    );
-    ids.forEach(id => { const el = document.getElementById(id); if (el) secObs.observe(el); });
-    return () => secObs.disconnect();
-  }, []);
-
-  const scrollToSection = useCallback((id) => {
-    setMenuOpen(false);
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  }, []);
-
   return (
-    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#0b1628", color: "#ffffff" }}>
-      <LoadingScreen />
-      <CustomCursor />
-      <MouseSpotlight />
-      <ScrollProgress />
+    <>
+      <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ height: "100svh" }}>
+        <video src="/11xlogo-video.mp4" autoPlay muted playsInline loop style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.72) 100%)" }} />
+        <div className="absolute inset-0 grid-bg pointer-events-none" />
 
-      {/* Floating Background Blobs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(71,126,233,0.12)" }} />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(212,168,85,0.08)", animationDelay: "2s" }} />
-        <div className="absolute top-[40%] left-[55%] w-[30%] h-[30%] rounded-full blur-[110px] animate-pulse" style={{ background: "rgba(71,126,233,0.08)", animationDelay: "4s" }} />
-      </div>
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
+          <div className="flex-1 min-w-0">
+            <div className="eyebrow mb-7 lusion-fade d1" style={{ color: "rgba(255,255,255,0.90)" }}>Consulting · Talent · Technology</div>
 
-      {/* NAV */}
-      <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 md:px-12"
-        initial={{ y: -72, opacity: 0 }}
-        animate={{ y: navHidden ? -72 : 0, opacity: navHidden ? 0 : 1 }}
-        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        style={{
-          height: 64,
-          backdropFilter: scrolled ? "blur(16px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
-          background: scrolled ? "rgba(11,22,40,0.92)" : "transparent",
-          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.10)" : "none",
-        }}
-      >
-        <Logo onClick={() => scrollToSection("home")} dark={!scrolled} />
+            <h1 className="text-[clamp(3rem,8vw,7.5rem)] display-headline mb-6 md:mb-10" style={{ color: "#ffffff" }}>
+              <span className="lusion-line d2"><span className="lusion-line-inner">Scale your</span></span>
+              <span className="lusion-line d3"><span className="lusion-line-inner" style={{ color: "#ede2d7" }}>
+                <TypingText words={["ambition", "vision", "growth", "impact"]} />
+              </span></span>
+            </h1>
 
-        <ul className="hidden md:flex gap-8 list-none">
-          {NAV_LINKS.map(({ label, id }) => (
-            <li key={id}>
-              <button
-                onClick={() => scrollToSection(id)}
-                className="transition-all duration-200 bg-transparent border-0 cursor-pointer"
-                style={{
-                  color: activeSection === id ? "#ffffff" : "rgba(255,255,255,0.65)",
-                  fontSize: 12,
-                  fontWeight: 500,
-                  letterSpacing: "1.44px",
-                  textTransform: "uppercase",
-                  transition: "color 0.3s",
-                }}
-                onMouseEnter={e => { e.target.style.color = "#ffffff"; }}
-                onMouseLeave={e => { e.target.style.color = activeSection === id ? "#ffffff" : "rgba(255,255,255,0.65)"; }}
+            <p className="text-[clamp(1rem,1.6vw,1.2rem)] leading-[1.6] max-w-xl mb-10 lusion-fade d3"
+              style={{ color: "#ffffff", fontWeight: 400, textShadow: "0 1px 10px rgba(0,0,0,0.70)" }}>
+              Bridging the gap between elite engineering and strategic growth with a platform-first approach.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center lusion-fade d4">
+              <MagneticButton
+                onClick={() => navigate("/services")}
+                className="text-center"
+                style={{ padding: "14px 32px", background: "#ffffff", color: "#000000", border: "1.5px solid rgba(255,255,255,0.90)", borderRadius: "16px", fontSize: 14, fontWeight: 500, cursor: "pointer" }}
               >
-                {label}
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        <button
-          onClick={() => scrollToSection("contact")}
-          className="hidden md:block"
-          style={{
-            fontSize: 12,
-            fontWeight: 500,
-            letterSpacing: "1.44px",
-            textTransform: "uppercase",
-            color: "#0b1628",
-            padding: "10px 22px",
-            background: "#ffffff",
-            border: "none",
-            borderRadius: "999px",
-            borderRadius: "16px",
-            cursor: "pointer",
-            transition: "color 0.3s, border-color 0.3s",
-          }}
-        >
-          Get Started ↗
-        </button>
-
-        <button
-          className="md:hidden bg-transparent border-0 cursor-pointer text-2xl"
-          style={{ color: "#ffffff" }}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation"
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-        >
-          {menuOpen ? "✕" : "☰"}
-        </button>
-      </motion.nav>
-
-      {/* MOBILE MENU */}
-      {menuOpen && (
-        <div id="mobile-menu" className="fixed inset-0 z-40 backdrop-blur-xl flex flex-col items-center justify-center gap-8" style={{ background: "rgba(11,22,40,0.96)" }}>
-          {NAV_LINKS.map(({ label, id }) => (
-            <button
-              key={id}
-              onClick={() => scrollToSection(id)}
-              className="text-2xl font-bold transition-colors duration-200 bg-transparent border-0 cursor-pointer"
-              style={{ color: "rgba(255,255,255,0.70)" }}
-              onMouseEnter={e => e.target.style.color="#ffffff"}
-              onMouseLeave={e => e.target.style.color="rgba(255,255,255,0.70)"}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      )}
-
-      <main>
-
-        {/* ── HOME ─────────────────────────────────────────────────────── */}
-        <section id="home" className="relative flex flex-col justify-center px-5 md:px-12 pt-20 pb-10 md:pt-28 md:pb-12 overflow-hidden z-10" style={{ height: "100svh" }}>
-          <video src="/11xlogo-video.mp4" autoPlay muted playsInline loop style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }} />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.72) 100%)" }} />
-          <div className="absolute inset-0 grid-bg pointer-events-none" />
-
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
-            <div className="flex-1 min-w-0">
-              <div className="eyebrow mb-7 lusion-fade d1" style={{ color: "rgba(255,255,255,0.90)" }}>Consulting · Talent · Technology</div>
-
-              <h1 className="text-[clamp(3rem,8vw,7.5rem)] display-headline mb-6 md:mb-10"
-                style={{ color: "#ffffff" }}>
-                <span className="lusion-line d2"><span className="lusion-line-inner">Scale your</span></span>
-                <span className="lusion-line d3"><span className="lusion-line-inner" style={{ color: "#ede2d7" }}>
-                  <TypingText words={["ambition", "vision", "growth", "impact"]} />
-                </span></span>
-              </h1>
-
-              <p className="text-[clamp(1rem,1.6vw,1.2rem)] leading-[1.6] max-w-xl mb-10 lusion-fade d3"
-                style={{ color: "#ffffff", fontWeight: 400, textShadow: "0 1px 10px rgba(0,0,0,0.70)" }}>
-                Bridging the gap between elite engineering and strategic growth with a platform-first approach.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center lusion-fade d4">
-                <MagneticButton
-                  onClick={() => scrollToSection("services")}
-                  className="text-center"
-                  style={{ padding: "14px 32px", background: "#ffffff", color: "#000000", border: "1.5px solid rgba(255,255,255,0.90)", borderRadius: "16px", fontSize: 14, fontWeight: 500, cursor: "pointer" }}
-                >
-                  Start Building ↗
-                </MagneticButton>
-                <MagneticButton
-                  onClick={() => scrollToSection("careers")}
-                  className="text-center"
-                  style={{ padding: "14px 28px", color: "#ffffff", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase", background: "transparent", border: "1.5px solid rgba(255,255,255,0.60)", borderRadius: "16px" }}
-                >
-                  Explore Roles
-                </MagneticButton>
-              </div>
-
-              <motion.div
-                ref={statsRef}
-                className="mt-8 md:mt-10 pt-7 md:pt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10"
-                style={{ borderTop: "1px solid rgba(255,255,255,0.20)" }}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: sessionStorage.getItem("11x_loaded") ? 0.9 : 3.6 }}
+                Start Building ↗
+              </MagneticButton>
+              <MagneticButton
+                onClick={() => navigate("/careers")}
+                className="text-center"
+                style={{ padding: "14px 28px", color: "#ffffff", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase", background: "transparent", border: "1.5px solid rgba(255,255,255,0.60)", borderRadius: "16px" }}
               >
-                {STATS.map((s) => (
-                  <StatCard key={s.label} {...s} animate={statsVisible} />
-                ))}
-              </motion.div>
+                Explore Roles
+              </MagneticButton>
             </div>
 
             <motion.div
-              className="hidden lg:flex flex-shrink-0 items-center justify-center"
-              initial={{ opacity: 0, scale: 0.88, rotate: -8 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: sessionStorage.getItem("11x_loaded") ? 0.4 : 3.1 }}
+              ref={statsRef}
+              className="mt-8 md:mt-10 pt-7 md:pt-8 grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.20)" }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: sessionStorage.getItem("11x_loaded") ? 0.9 : 3.6 }}
             >
-              <img src={logo} alt="11x Square" className="object-cover"
-                style={{ width: 320, height: 320, borderRadius: 40, border: "2px solid rgba(255,255,255,0.45)" }} />
+              {STATS.map((s) => (
+                <StatCard key={s.label} {...s} animate={statsVisible} />
+              ))}
             </motion.div>
           </div>
-        </section>
 
-        {/* MARQUEE */}
-        <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#060e1a", borderTop: "1px solid rgba(212,168,85,0.20)", borderBottom: "1px solid rgba(212,168,85,0.20)" }}>
-          <div className="marquee-track flex gap-14 w-max">
-            {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-              <span key={i} className="mono text-[11px] font-medium uppercase tracking-widest whitespace-nowrap flex items-center gap-4" style={{ color: "#ffffff" }}>
-                {item}
-                <span className="text-[8px]" style={{ color: "#d4a855" }}>✦</span>
-              </span>
+          <motion.div
+            className="hidden lg:flex flex-shrink-0 items-center justify-center"
+            initial={{ opacity: 0, scale: 0.88, rotate: -8 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: sessionStorage.getItem("11x_loaded") ? 0.4 : 3.1 }}
+          >
+            <img src={logo} alt="11x Square" className="object-cover"
+              style={{ width: 320, height: 320, borderRadius: 40, border: "2px solid rgba(255,255,255,0.45)" }} />
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#060e1a", borderTop: "1px solid rgba(212,168,85,0.20)", borderBottom: "1px solid rgba(212,168,85,0.20)" }}>
+        <div className="marquee-track flex gap-14 w-max">
+          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
+            <span key={i} className="mono text-[11px] font-medium uppercase tracking-widest whitespace-nowrap flex items-center gap-4" style={{ color: "#ffffff" }}>
+              {item}
+              <span className="text-[8px]" style={{ color: "#d4a855" }}>✦</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+function ServicesPage() {
+  useGSAPAnimations();
+  return (
+    <section id="services" className="relative overflow-hidden" style={{ minHeight: "100svh" }}>
+      <video
+        src="/wolf_howling_in_moon_202606211229.mp4"
+        autoPlay muted playsInline loop
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%" }}
+      />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.58) 100%)" }} />
+      <div className="relative z-10 px-5 md:px-12 pt-24 pb-20 md:pt-28 md:pb-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+          <div>
+            <div className="eyebrow mb-4 lusion-fade d1" style={{ color: "rgba(255,255,255,0.75)" }}>Our Solutions</div>
+            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#ffffff" }}>
+              <span className="lusion-clip d2" style={{ display: "block" }}>Consulting for the</span>
+              <span className="lusion-clip d3" style={{ display: "block" }}>bold &amp; ambitious</span>
+            </h2>
+          </div>
+          <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md lusion-fade d4" style={{ color: "rgba(255,255,255,0.82)", textShadow: "0 1px 8px rgba(0,0,0,0.60)" }}>
+            Platform-driven consulting that solves deep engineering and product problems in record time.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {SERVICES.map((s, i) => (
+            <ServiceCard key={s.num} {...s} delay={0.1 * i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CareersPage() {
+  useGSAPAnimations();
+  const [careersApplyRole, setCareersApplyRole] = useState(null);
+
+  return (
+    <>
+      <section id="careers" className="relative overflow-hidden" style={{ minHeight: "100svh" }}>
+        <video
+          src="/Group_of_wolves_on_path_202606211412.mp4"
+          autoPlay muted playsInline loop
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: "center 30%" }}
+        />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.65) 100%)" }} />
+
+        <div className="relative z-10 px-5 md:px-12 pt-24 pb-20 md:pt-28 md:pb-24 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+          <div>
+            <div className="eyebrow mb-4 lusion-fade d1" style={{ color: "rgba(255,255,255,0.75)" }}>Careers</div>
+            <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6" style={{ color: "#ffffff" }}>
+              <span className="lusion-clip d2" style={{ display: "block" }}>Find your next</span>
+              <span className="lusion-clip d3" style={{ display: "block" }}>challenge at <span style={{ color: "#d4a855" }}>11x</span></span>
+            </h2>
+            <p className="text-lg font-medium leading-relaxed mb-10 max-w-md lusion-fade d4" style={{ color: "rgba(255,255,255,0.82)", textShadow: "0 1px 8px rgba(0,0,0,0.60)" }}>
+              Whether you're a seasoned consultant or a fresh grad ready to make your mark — we have a seat for you.
+            </p>
+
+            <div className="p-7 rounded-2xl lusion-fade d5" style={{ background: "rgba(254,245,243,0.12)", border: "1px solid rgba(255,255,255,0.20)", backdropFilter: "blur(12px)" }}>
+              <p className="mono text-[10px] font-medium uppercase tracking-[0.15em] mb-4" style={{ color: "rgba(255,255,255,0.60)" }}>Intern Program Highlights</p>
+              <ul className="flex flex-col gap-3">
+                {[
+                  "3-month structured cohort program",
+                  "Real client projects from day one",
+                  "Mentorship from senior consultants",
+                  "Full-time conversion for top performers",
+                ].map((item) => (
+                  <li key={item} className="flex gap-3 text-sm" style={{ color: "rgba(255,255,255,0.80)", fontWeight: 400 }}>
+                    <span className="flex-shrink-0 text-base" style={{ color: "#d4a855" }}>→</span> {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="flex flex-col lusion-fade d5 rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.18)", backdropFilter: "blur(8px)", background: "rgba(255,255,255,0.06)" }}>
+            {ROLES.map((r, i) => (
+              <RoleItem key={r.title} {...r} delay={0.1 * i} onApply={() => setCareersApplyRole(r)} />
             ))}
           </div>
         </div>
+      </section>
 
-        {/* ── SERVICES ──────────────────────────────────────────────────── */}
-        <section id="services" className="relative overflow-hidden">
-          <video
-            src="/wolf_howling_in_moon_202606211229.mp4"
-            autoPlay muted playsInline loop
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%" }}
-          />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.58) 100%)" }} />
-          <div className="relative z-10 px-5 md:px-12 py-14 md:py-20">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-              <div>
-                <div className="eyebrow mb-4 lusion-fade d1" style={{ color: "rgba(255,255,255,0.75)" }}>Our Solutions</div>
-                <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-tighter leading-[0.9]" style={{ color: "#ffffff" }}>
-                  <span className="lusion-clip d2" style={{ display: "block" }}>Consulting for the</span>
-                  <span className="lusion-clip d3" style={{ display: "block" }}>bold &amp; ambitious</span>
-                </h2>
-              </div>
-              <p className="text-lg md:text-xl font-medium leading-relaxed max-w-md lusion-fade d4" style={{ color: "rgba(255,255,255,0.82)", textShadow: "0 1px 8px rgba(0,0,0,0.60)" }}>
-                Platform-driven consulting that solves deep engineering and product problems in record time.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lusion-fade d5">
-              {SERVICES.map((s, i) => (
-                <ServiceCard key={s.num} {...s} delay={0.1 * i} />
-              ))}
-            </div>
+      <AnimatePresence>
+        {careersApplyRole && (
+          <motion.div key="modal-careers" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+            <CareersApplyModal role={careersApplyRole} onClose={() => setCareersApplyRole(null)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+function ProcessPage() {
+  useGSAPAnimations();
+  return (
+    <>
+      <WolfSection
+        src="/Wolf_mouth_fire_video_202606211302.mp4"
+        heading="Forged in fire"
+        sub="Our process is battle-tested. Results that speak louder than slides."
+      />
+
+      <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh", background: "#0b1628" }}>
+        <div className="relative z-10">
+          <div className="eyebrow mb-3 lusion-fade d1">The Process</div>
+          <h2 className="text-[clamp(1.5rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-6 md:mb-14 max-w-xl" style={{ color: "#ffffff" }}>
+            <span className="lusion-clip d2" style={{ display: "block" }}>From discovery</span>
+            <span className="lusion-clip d3" style={{ display: "block" }}>to results in weeks</span>
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden lusion-fade d4" style={{ border: "1px solid rgba(255,255,255,0.10)" }}>
+            {STEPS.map((s, i) => (
+              <motion.div
+                key={s.num}
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                viewport={{ once: true, margin: "-40px" }}
+                style={{
+                  background: "rgba(255,255,255,0.04)",
+                  borderRight: i < STEPS.length - 1 ? "1px solid rgba(255,255,255,0.08)" : undefined,
+                  borderBottom: "1px solid rgba(255,255,255,0.08)",
+                }}
+                className="p-5 sm:p-6 lg:p-8 relative group transition-colors duration-300"
+                onMouseEnter={e => e.currentTarget.style.background="rgba(212,168,85,0.08)"}
+                onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
+              >
+                <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(255,255,255,0.15)" }}>{s.num}</div>
+                <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#ffffff" }}>{s.title}</h4>
+                <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.60)" }}>{s.desc}</p>
+              </motion.div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
+    </>
+  );
+}
 
-        {/* ── CAREERS ───────────────────────────────────────────────────── */}
-        <section id="careers" className="relative overflow-hidden" style={{ minHeight: "100svh" }}>
-          <video
-            src="/Group_of_wolves_on_path_202606211412.mp4"
-            autoPlay muted playsInline loop
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "center 30%" }}
-          />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.65) 100%)" }} />
+function ContactPage() {
+  useGSAPAnimations();
+  const [activeModal, setActiveModal] = useState(null);
 
-          <div className="relative z-10 px-5 md:px-12 py-14 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
-            <div>
-              <div className="eyebrow mb-4 lusion-fade d1" style={{ color: "rgba(255,255,255,0.75)" }}>Careers</div>
-              <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-black tracking-tighter leading-[1] mb-6" style={{ color: "#ffffff" }}>
-                <span className="lusion-clip d2" style={{ display: "block" }}>Find your next</span>
-                <span className="lusion-clip d3" style={{ display: "block" }}>challenge at <span style={{ color: "#d4a855" }}>11x</span></span>
-              </h2>
-              <p className="text-lg font-medium leading-relaxed mb-10 max-w-md lusion-fade d4" style={{ color: "rgba(255,255,255,0.82)", textShadow: "0 1px 8px rgba(0,0,0,0.60)" }}>
-                Whether you're a seasoned consultant or a fresh grad ready to make your mark — we have a seat for you.
-              </p>
+  return (
+    <>
+      <TestimonialsSection />
+      <FaqAccordion />
 
-              <div className="p-7 rounded-2xl lusion-fade d5" style={{ background: "rgba(254,245,243,0.12)", border: "1px solid rgba(255,255,255,0.20)", backdropFilter: "blur(12px)" }}>
-                <p className="mono text-[10px] font-medium uppercase tracking-[0.15em] mb-4" style={{ color: "rgba(255,255,255,0.60)" }}>Intern Program Highlights</p>
-                <ul className="flex flex-col gap-3">
-                  {[
-                    "3-month structured cohort program",
-                    "Real client projects from day one",
-                    "Mentorship from senior consultants",
-                    "Full-time conversion for top performers",
-                  ].map((item) => (
-                    <li key={item} className="flex gap-3 text-sm" style={{ color: "rgba(255,255,255,0.80)", fontWeight: 400 }}>
-                      <span className="flex-shrink-0 text-base" style={{ color: "#d4a855" }}>→</span> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="flex flex-col lusion-fade d5 rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.18)", backdropFilter: "blur(8px)", background: "rgba(255,255,255,0.06)" }}>
-              {ROLES.map((r, i) => (
-                <RoleItem key={r.title} {...r} delay={0.1 * i} onApply={() => setCareersApplyRole(r)} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Wolf break 2 */}
-        <WolfSection
-          src="/Wolf_mouth_fire_video_202606211302.mp4"
-          heading="Forged in fire"
-          sub="Our process is battle-tested. Results that speak louder than slides."
-        />
-
-        {/* ── PROCESS ───────────────────────────────────────────────────── */}
-        <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh", background: "#0b1628" }}>
-          <div className="relative z-10">
-            <div className="eyebrow mb-3 lusion-fade d1">The Process</div>
-            <h2 className="text-[clamp(1.5rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-6 md:mb-14 max-w-xl"
-              style={{ color: "#ffffff" }}>
-              <span className="lusion-clip d2" style={{ display: "block" }}>From discovery</span>
-              <span className="lusion-clip d3" style={{ display: "block" }}>to results in weeks</span>
+      <section id="contact" className="px-5 md:px-12 relative overflow-hidden flex flex-col justify-center" style={{ minHeight: "100svh", background: "#0d1f35" }}>
+        <div className="absolute -top-10 -right-10 w-64 h-64 opacity-06 leaf-sway" style={{ transformOrigin: "bottom center" }}>
+          <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="rgba(212,168,85,0.15)"/><path d="M100 10 L100 160" stroke="rgba(212,168,85,0.15)" strokeWidth="2"/></svg>
+        </div>
+        <div className="absolute -bottom-8 -left-8 w-48 h-48 opacity-06" style={{ transform: "rotate(45deg)" }}>
+          <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="rgba(71,126,233,0.15)"/></svg>
+        </div>
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 relative z-10">
+          <div>
+            <div className="eyebrow mb-3 lusion-fade d1">Get In Touch</div>
+            <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl" style={{ color: "#ffffff" }}>
+              <span className="lusion-clip d2" style={{ display: "block" }}>Accelerate your team's</span>
+              <span className="lusion-clip d3" style={{ display: "block" }}>potential today.</span>
             </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden lusion-fade d4" style={{ border: "1px solid rgba(255,255,255,0.10)" }}>
-              {STEPS.map((s, i) => (
-                <motion.div
-                  key={s.num}
-                  initial={{ opacity: 0, y: 32 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  style={{
-                    background: "rgba(255,255,255,0.04)",
-                    borderRight: i < STEPS.length - 1 ? "1px solid rgba(255,255,255,0.08)" : undefined,
-                    borderBottom: "1px solid rgba(255,255,255,0.08)",
-                  }}
-                  className="p-5 sm:p-6 lg:p-8 relative group transition-colors duration-300"
-                  onMouseEnter={e => e.currentTarget.style.background="rgba(212,168,85,0.08)"}
-                  onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
-                >
-                  <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(255,255,255,0.15)" }}>{s.num}</div>
-                  <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#ffffff" }}>{s.title}</h4>
-                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.60)" }}>{s.desc}</p>
-                </motion.div>
-              ))}
-            </div>
+            <p className="text-[18px] font-medium mt-4 max-w-md lusion-fade d4" style={{ color: "rgba(255,255,255,0.65)" }}>
+              Connect with our leadership to explore high-impact consulting or talent solutions.
+            </p>
           </div>
-        </section>
-
-        {/* ── TESTIMONIALS ──────────────────────────────────────────────── */}
-        <TestimonialsSection />
-
-        {/* ── FAQ ───────────────────────────────────────────────────────── */}
-        {/* ── CONTACT ───────────────────────────────────────────────────── */}
-        <section id="contact" className="px-5 md:px-12 relative overflow-hidden flex flex-col justify-center" style={{ minHeight: "100svh", background: "#0d1f35" }}>
-          <div className="absolute -top-10 -right-10 w-64 h-64 opacity-06 leaf-sway" style={{ transformOrigin: "bottom center" }}>
-            <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="rgba(212,168,85,0.15)"/><path d="M100 10 L100 160" stroke="rgba(212,168,85,0.15)" strokeWidth="2"/></svg>
+          <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0 lusion-fade d5">
+            <button onClick={() => setActiveModal("project")} className="btn-gradient" style={{ padding: "16px 44px", fontSize: 13 }}>
+              Start a Project ↗
+            </button>
+            <button onClick={() => setActiveModal("apply")} className="ghost-aurora"
+              style={{ padding: "16px 44px", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}>
+              Apply Now
+            </button>
           </div>
-          <div className="absolute -bottom-8 -left-8 w-48 h-48 opacity-06" style={{ transform: "rotate(45deg)" }}>
-            <svg viewBox="0 0 200 200" fill="none"><path d="M100 10 C30 10 10 80 40 140 C70 200 160 180 170 120 C180 60 170 10 100 10Z" fill="rgba(71,126,233,0.15)"/></svg>
-          </div>
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 relative z-10">
-            <div>
-              <div className="eyebrow mb-3 lusion-fade d1">Get In Touch</div>
-              <h2 className="text-[clamp(1.6rem,4vw,3rem)] font-black tracking-tight leading-[1.1] max-w-xl" style={{ color: "#ffffff" }}>
-                <span className="lusion-clip d2" style={{ display: "block" }}>Accelerate your team's</span>
-                <span className="lusion-clip d3" style={{ display: "block" }}>potential today.</span>
-              </h2>
-              <p className="text-[18px] font-medium mt-4 max-w-md lusion-fade d4" style={{ color: "rgba(255,255,255,0.65)" }}>
-                Connect with our leadership to explore high-impact consulting or talent solutions.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0 lusion-fade d5">
-              <button onClick={() => setActiveModal("project")} className="btn-gradient" style={{ padding: "16px 44px", fontSize: 13 }}>
-                Start a Project ↗
-              </button>
-              <button onClick={() => setActiveModal("apply")} className="ghost-aurora"
-                style={{ padding: "16px 44px", fontSize: 12, fontWeight: 500, letterSpacing: "1.44px", textTransform: "uppercase" }}>
-                Apply Now
-              </button>
-            </div>
-          </div>
-        </section>
+        </div>
+      </section>
 
-      </main>
-
-      {/* MODALS */}
       <AnimatePresence>
         {activeModal === "project" && (
           <motion.div key="modal-project" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
@@ -2181,129 +1941,73 @@ export default function App() {
             <ApplyNowModal onClose={() => setActiveModal(null)} />
           </motion.div>
         )}
-        {careersApplyRole && (
-          <motion.div key="modal-careers" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-            <CareersApplyModal role={careersApplyRole} onClose={() => setCareersApplyRole(null)} />
-          </motion.div>
-        )}
       </AnimatePresence>
+    </>
+  );
+}
 
-      {/* CHATBOT + WHATSAPP */}
+/* ── App Shell ───────────────────────────────────────────────────────────── */
+function AppInner() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
+  const lastScrollY = useRef(0);
+  const location = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      setNavHidden(y > lastScrollY.current && y > 80);
+      lastScrollY.current = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  return (
+    <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#0b1628", color: "#ffffff" }}>
+      <LoadingScreen />
+      <CustomCursor />
+      <MouseSpotlight />
+      <ScrollProgress />
+
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(71,126,233,0.12)" }} />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(212,168,85,0.08)", animationDelay: "2s" }} />
+        <div className="absolute top-[40%] left-[55%] w-[30%] h-[30%] rounded-full blur-[110px] animate-pulse" style={{ background: "rgba(71,126,233,0.08)", animationDelay: "4s" }} />
+      </div>
+
+      <NavBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} scrolled={scrolled} navHidden={navHidden} />
+
+      {menuOpen && <MobileMenu setMenuOpen={setMenuOpen} />}
+
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/careers" element={<CareersPage />} />
+          <Route path="/process" element={<ProcessPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+      </main>
+
+      <FooterBar />
       <ChatBot />
-
       <CookieBanner />
-
-      {/* FOOTER — cinematic bento */}
-      <footer className="relative" style={{ background: "#060e1a" }}>
-        <div className="px-6 md:px-14 py-14 md:py-20">
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
-            gap: "20px",
-            maxWidth: "1200px",
-            margin: "0 auto",
-          }}>
-            {/* Logo card */}
-            <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 16, padding: "20px" }}>
-              <div className="flex items-center gap-2 mb-2" onClick={() => scrollToSection("home")} style={{ cursor: "pointer" }}>
-                <img src={logo} alt="11x Square" style={{ width: 32, height: 32, borderRadius: 7, objectFit: "cover" }} />
-                <span style={{ fontWeight: 700, fontSize: 17, color: "#ffffff", letterSpacing: "0.02em", lineHeight: 1 }}>
-                  11x<span style={{ color: "#d4a855" }}>Square</span>
-                </span>
-              </div>
-              <p className="text-[9px] font-semibold tracking-[0.14em] uppercase mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Consulting · Talent</p>
-              <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.50)", fontWeight: 400 }}>
-                Bridging elite consulting with the next generation of tech talent.
-              </p>
-            </div>
-
-            {/* Quicklinks */}
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "18px" }}>
-              <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Quicklinks</p>
-              <ul className="flex flex-col gap-2 list-none">
-                {[
-                  { label: "Services", dest: "services" },
-                  { label: "Careers",  dest: "careers" },
-                  { label: "Process",  dest: "process" },
-                  { label: "Contact",  dest: "contact" },
-                ].map(({ label, dest }) => (
-                  <li key={label}>
-                    <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection(dest); }}
-                      className="text-sm no-underline transition-colors" style={{ color: "rgba(255,255,255,0.65)", fontWeight: 400 }}
-                      onMouseEnter={e => e.target.style.color="#ffffff"}
-                      onMouseLeave={e => e.target.style.color="rgba(255,255,255,0.65)"}
-                    >{label}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Services */}
-            <div style={{ background: "rgba(71,126,233,0.08)", border: "1px solid rgba(71,126,233,0.20)", borderRadius: 16, padding: "18px" }}>
-              <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Services</p>
-              <ul className="flex flex-col gap-1.5 list-none">
-                {["Tech Consulting", "Product & Strategy", "Data & Intelligence", "Startup Acceleration"].map((s) => (
-                  <li key={s}>
-                    <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection("services"); }}
-                      className="text-xs no-underline transition-colors" style={{ color: "rgba(255,255,255,0.55)" }}
-                      onMouseEnter={e => e.target.style.color="#ffffff"}
-                      onMouseLeave={e => e.target.style.color="rgba(255,255,255,0.55)"}
-                    >{s}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Location */}
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "18px" }}>
-              <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Location</p>
-              <div style={{ marginBottom: 12 }}>
-                <p className="text-sm font-semibold" style={{ color: "#ffffff", letterSpacing: "-0.02em" }}>Chennai</p>
-                <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>India · Hybrid</p>
-              </div>
-              <div>
-                <p className="text-sm font-semibold" style={{ color: "#ffffff", letterSpacing: "-0.02em" }}>United Kingdom</p>
-                <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Remote · Global</p>
-              </div>
-            </div>
-
-            {/* Contact */}
-            <div style={{ background: "rgba(212,168,85,0.08)", border: "1px solid rgba(212,168,85,0.20)", borderRadius: 16, padding: "18px" }}>
-              <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Contact</p>
-              <a href="mailto:11xsquarebusiness@gmail.com"
-                className="text-xs no-underline block mb-4" style={{ color: "rgba(255,255,255,0.70)", wordBreak: "break-all", lineHeight: 1.5 }}>
-                11xsquarebusiness@gmail.com
-              </a>
-              <div className="flex gap-2">
-                {["LinkedIn", "X"].map((s) => (
-                  <a key={s} href="#"
-                    className="mono text-[9px] no-underline px-2.5 py-1.5"
-                    style={{ background: "#d4a855", color: "#0b1628", borderRadius: 8, fontWeight: 700 }}
-                  >{s}</a>
-                ))}
-              </div>
-            </div>
-
-            {/* Legal + copyright */}
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "18px" }}>
-              <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Legal</p>
-              <ul className="flex flex-col gap-1.5 list-none">
-                {["Privacy Policy", "Terms & Conditions", "Cookie Policy"].map((l) => (
-                  <li key={l}>
-                    <a href="#" className="text-xs no-underline transition-colors" style={{ color: "rgba(255,255,255,0.55)" }}
-                      onMouseEnter={e => e.target.style.color="#ffffff"}
-                      onMouseLeave={e => e.target.style.color="rgba(255,255,255,0.55)"}
-                    >{l}</a>
-                  </li>
-                ))}
-              </ul>
-              <p className="mono text-[9px] mt-4" style={{ color: "rgba(255,255,255,0.30)" }}>
-                © 2025 11x Square Inc.<br/>All rights reserved.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppInner />
+    </BrowserRouter>
   );
 }
