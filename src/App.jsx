@@ -1847,47 +1847,49 @@ function CareersPage() {
 function ProcessPage() {
   useGSAPAnimations();
   return (
-    <>
-      <WolfSection
+    <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 pt-24 pb-20 md:pt-28 md:pb-24 overflow-hidden" style={{ minHeight: "100svh" }}>
+      <video
         src="/Wolf_mouth_fire_video_202606211302.mp4"
-        heading="Forged in fire"
-        sub="Our process is battle-tested. Results that speak louder than slides."
+        autoPlay muted playsInline loop
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: 0.88 }}
       />
+      <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.70) 100%)" }} />
 
-      <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 py-20 md:py-28 overflow-hidden" style={{ minHeight: "100svh", background: "#0b1628" }}>
-        <div className="relative z-10">
-          <div className="eyebrow mb-3 lusion-fade d1">The Process</div>
-          <h2 className="text-[clamp(1.5rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-6 md:mb-14 max-w-xl" style={{ color: "#ffffff" }}>
-            <span className="lusion-clip d2" style={{ display: "block" }}>From discovery</span>
-            <span className="lusion-clip d3" style={{ display: "block" }}>to results in weeks</span>
-          </h2>
+      <div className="relative z-10">
+        <div className="eyebrow mb-3 lusion-fade d1" style={{ color: "rgba(255,255,255,0.80)" }}>The Process</div>
+        <h2 className="text-[clamp(1.5rem,5vw,4rem)] font-black tracking-tighter leading-[1.05] mb-6 md:mb-14 max-w-xl" style={{ color: "#ffffff", textShadow: "0 2px 16px rgba(0,0,0,0.80)" }}>
+          <span className="lusion-clip d2" style={{ display: "block" }}>From discovery</span>
+          <span className="lusion-clip d3" style={{ display: "block" }}>to results in weeks</span>
+        </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden lusion-fade d4" style={{ border: "1px solid rgba(255,255,255,0.10)" }}>
-            {STEPS.map((s, i) => (
-              <motion.div
-                key={s.num}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                viewport={{ once: true, margin: "-40px" }}
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  borderRight: i < STEPS.length - 1 ? "1px solid rgba(255,255,255,0.08)" : undefined,
-                  borderBottom: "1px solid rgba(255,255,255,0.08)",
-                }}
-                className="p-5 sm:p-6 lg:p-8 relative group transition-colors duration-300"
-                onMouseEnter={e => e.currentTarget.style.background="rgba(212,168,85,0.08)"}
-                onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.04)"}
-              >
-                <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(255,255,255,0.15)" }}>{s.num}</div>
-                <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#ffffff" }}>{s.title}</h4>
-                <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.60)" }}>{s.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl overflow-hidden lusion-fade d4" style={{ border: "1px solid rgba(255,255,255,0.18)" }}>
+          {STEPS.map((s, i) => (
+            <motion.div
+              key={s.num}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, margin: "-40px" }}
+              style={{
+                background: "rgba(0,0,0,0.45)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)",
+                borderRight: i < STEPS.length - 1 ? "1px solid rgba(255,255,255,0.12)" : undefined,
+                borderBottom: "1px solid rgba(255,255,255,0.12)",
+              }}
+              className="p-5 sm:p-6 lg:p-8 relative group transition-colors duration-300"
+              onMouseEnter={e => e.currentTarget.style.background="rgba(212,168,85,0.18)"}
+              onMouseLeave={e => e.currentTarget.style.background="rgba(0,0,0,0.45)"}
+            >
+              <div className="text-[40px] sm:text-[56px] lg:text-[72px] font-black leading-none mb-3 tracking-tighter" style={{ color: "rgba(255,255,255,0.20)" }}>{s.num}</div>
+              <h4 className="text-sm sm:text-base font-bold mb-2" style={{ color: "#ffffff", textShadow: "0 1px 8px rgba(0,0,0,0.80)" }}>{s.title}</h4>
+              <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.70)" }}>{s.desc}</p>
+            </motion.div>
+          ))}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
