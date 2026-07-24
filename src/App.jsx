@@ -69,12 +69,42 @@ const SERVICES = [
 ];
 
 const ROLES = [
-  { title: "Software Engineering Intern", type: "intern", location: "Hybrid · India", period: "Summer 2025" },
-  { title: "Product Strategy Intern", type: "intern", location: "Remote", period: "Summer 2025" },
-  { title: "Data & Analytics Intern", type: "intern", location: "Hybrid · Bangalore", period: "Fall 2025" },
-  { title: "Senior Consultant", type: "full", location: "Full-time · India", period: "Open" },
-  { title: "Tech Lead", type: "full", location: "Full-time · Remote", period: "Open" },
-  { title: "UX Researcher", type: "full", location: "Contract · Remote", period: "Open" },
+  {
+    title: "Business Consultant",
+    type: "full",
+    location: "Full-time · Remote",
+    period: "Open",
+  },
+  {
+    title: "IT Consultant",
+    type: "full",
+    location: "Full-time · Remote",
+    period: "Open",
+  },
+  {
+    title: "Data & Analytics Intern",
+    type: "intern",
+    location: "Hybrid",
+    period: "Fall 2025",
+  },
+  {
+    title: "Senior Consultant",
+    type: "full",
+    location: "Full-time · Remote",
+    period: "Open",
+  },
+  {
+    title: "Tech Lead",
+    type: "full",
+    location: "Full-time · Remote",
+    period: "Open",
+  },
+  {
+    title: "UX Researcher",
+    type: "full",
+    location: "Contract · Remote",
+    period: "Open",
+  },
 ];
 
 const STEPS = [
@@ -1482,10 +1512,7 @@ function FooterBar() {
 
           <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "18px" }}>
             <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Location</p>
-            <div style={{ marginBottom: 12 }}>
-              <p className="text-sm font-semibold" style={{ color: "#ffffff", letterSpacing: "-0.02em" }}>India</p>
-              <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Hybrid</p>
-            </div>
+           
             <div>
               <p className="text-sm font-semibold" style={{ color: "#ffffff", letterSpacing: "-0.02em" }}>United Kingdom</p>
               <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Remote · Global</p>
