@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Space Travel — Cinematic</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #000; font-family: 'Barlow', sans-serif; color: #fff; }
+
+    /* ── Liquid glass ── */
+    .glass {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+    }
+    .glass-strong {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+      position: relative;
+    }
+    .glass::before, .glass-strong::before {
+      content: "";
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.35) 0%,
+        rgba(255,255,255,0.08) 30%,
+        rgba(255,255,255,0)    50%,
+        rgba(255,255,255,0.08) 70%,
+        rgba(255,255,255,0.35) 100%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* ── Animations ── */
+    @keyframes blurIn {
+      0%   { filter: blur(10px); opacity: 0; transform: translateY(40px); }
+      100% { filter: blur(0);    opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      0%   { opacity: 0; transform: translateY(20px); filter: blur(6px); }
+      100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+    }
+
+    .blur-word {
+      display: inline-block;
+      margin-right: 0.25em;
+      opacity: 0;
+    }
+    .blur-word.go { animation: blurIn 0.7s ease-out forwards; }
+
+    .fade-el { opacity: 0; }
+    .fade-el.go { animation: fadeUp 0.6s ease-out forwards; }
+
+    /* ── Nav link ── */
+    .nav-link {
+      color: #A8C4DC;
+      text-decoration: none;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 9999px;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: #E8F4FF; }
+
+    /* ── Tag pill ── */
+    .tag {
+      border-radius: 9999px;
+      padding: 0.2rem 0.65rem;
+      font-family: 'Barlow', sans-serif;
+      font-size: 11px;
+      color: rgba(255,255,255,0.9);
+      white-space: nowrap;
+    }
+
+    /* ── Responsive tweaks ── */
+    @media (max-width: 768px) {
+      #cap-content { padding: 5rem 1.5rem 2rem !important; }
+      #cap-cards { grid-template-columns: 1fr !important; }
+      #nav-links { display: none !important; }
+      #partners-row { gap: 1.5rem !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     HERO SECTION
+═════════════════════════════════════════════════ -->
+<section style="position:relative; min-height:100vh; background:#000; overflow:hidden; display:flex; flex-direction:column;">
+
+  <!-- Background video -->
+  <video id="hero-video" autoplay muted playsinline preload="auto"
+    src="/wolf_howling_in_moon_202606211229.mp4"
+    style="position:absolute; left:50%; top:0; transform:translateX(-50%); width:120%; height:120%; object-fit:cover; object-position:top; z-index:0; opacity:0;">
+  </video>
+
+  <!-- Content layer -->
+  <div style="position:relative; z-index:10; display:flex; flex-direction:column; flex:1; min-height:100vh;">
+
+    <!-- ── Navbar ── -->
+    <nav style="position:fixed; top:1rem; left:0; right:0; z-index:50; padding:0 2rem; display:flex; align-items:center; justify-content:space-between;">
+      <!-- Logo circle -->
+      <div class="glass" style="width:48px; height:48px; border-radius:9999px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <span style="font-family:'Cinzel',serif; font-style:normal; font-weight:700; color:#fff; font-size:1.3rem; line-height:1;">a</span>
+      </div>
+
+      <!-- Links pill -->
+      <div id="nav-links" class="glass" style="border-radius:9999px; display:flex; align-items:center; gap:0.125rem; padding:0.3rem;">
+        <a href="#" class="nav-link">Home</a>
+        <a href="#" class="nav-link">Voyages</a>
+        <a href="#" class="nav-link">Worlds</a>
+        <a href="#" class="nav-link">Innovation</a>
+        <button style="background:#fff; color:#000; border:none; border-radius:9999px; padding:0.5rem 1rem; font-family:'Barlow',sans-serif; font-weight:500; font-size:0.875rem; cursor:pointer; display:flex; align-items:center; gap:0.4rem;">
+          Claim a Spot
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+        </button>
+      </div>
+
+      <!-- Spacer -->
+      <div style="width:48px; flex-shrink:0;"></div>
+    </nav>
+
+    <!-- ── Hero content ── -->
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:7rem 1rem 2rem; text-align:center;">
+
+      <!-- Badge -->
+      <div class="glass fade-el" data-delay="0.4" style="border-radius:9999px; padding:4px; display:inline-flex; align-items:center; gap:0.5rem; margin-bottom:1.5rem;">
+        <span style="background:#fff; color:#000; border-radius:9999px; font-family:'Barlow',sans-serif; font-weight:600; font-size:0.7rem; padding:0.2rem 0.7rem;">New</span>
+        <span style="font-family:'Barlow',sans-serif; font-size:0.875rem; color:rgba(255,255,255,0.9); padding-right:0.75rem;">Maiden Crewed Voyage to Mars Arrives 2026</span>
+      </div>
+
+      <!-- Headline (blur-word JS) -->
+      <div id="headline" style="max-width:50rem; font-family:'Cinzel',serif; font-style:normal; font-weight:700; color:#FFFFFF; font-size:clamp(1.8rem,4vw,3.2rem); line-height:1.15; letter-spacing:0.06em; text-transform:uppercase; display:flex; flex-wrap:wrap; justify-content:center; row-gap:0.1em; margin-bottom:1.25rem; text-shadow:0 1px 3px rgba(0,0,0,1), 0 4px 18px rgba(0,0,0,0.95), 0 8px 40px rgba(0,0,0,0.8);"></div>
+
+      <!-- Subheading -->
+      <p class="fade-el" data-delay="0.9" style="font-family:'Barlow',sans-serif; font-weight:400; font-size:0.9375rem; color:#ffffff; max-width:38rem; line-height:1.65; margin-bottom:1.75rem; text-shadow:0 1px 4px rgba(0,0,0,1), 0 3px 12px rgba(0,0,0,0.9);">
+        Discover the universe in ways once unimaginable. Our pioneering vessels and
+        breakthrough engineering bring deep-space exploration within reach—secure and extraordinary.
+      </p>
+
+      <!-- CTAs -->
+      <div class="fade-el" data-delay="1.15" style="display:flex; align-items:center; gap:1.5rem; margin-bottom:2.25rem; flex-wrap:wrap; justify-content:center;">
+        <button class="glass-strong" style="border-radius:9999px; padding:0.625rem 1.375rem; border:none; cursor:pointer; font-family:'Barlow',sans-serif; font-weight:500; font-size:0.875rem; color:#fff; display:flex; align-items:center; gap:0.5rem;">
+          Start Your Voyage
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+        </button>
+        <button style="background:transparent; border:none; cursor:pointer; font-family:'Barlow',sans-serif; font-weight:500; font-size:0.875rem; color:#A8C4DC; display:flex; align-items:center; gap:0.5rem;">
+          View Liftoff
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+        </button>
+      </div>
+
+      <!-- Stats cards -->
+      <div class="fade-el" data-delay="1.35" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <div class="glass" style="border-radius:1.25rem; padding:1.25rem; width:208px; display:flex; flex-direction:column; text-align:left;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A8C0DC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div style="margin-top:auto; padding-top:1rem;">
+            <div style="font-family:'Cinzel',serif; font-style:normal; font-weight:700; color:#C8A440; font-size:2.4rem; letter-spacing:-1px; line-height:1;">34.5 Min</div>
+            <div style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.72rem; color:#6A8AAA; margin-top:0.4rem;">Average Videos Watch Time</div>
+          </div>
+        </div>
+        <div class="glass" style="border-radius:1.25rem; padding:1.25rem; width:208px; display:flex; flex-direction:column; text-align:left;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A8C0DC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <div style="margin-top:auto; padding-top:1rem;">
+            <div style="font-family:'Cinzel',serif; font-style:normal; font-weight:700; color:#C8A440; font-size:2.4rem; letter-spacing:-1px; line-height:1;">2.8B+</div>
+            <div style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.72rem; color:#6A8AAA; margin-top:0.4rem;">Users Across the Globe</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Partners row -->
+    <div class="fade-el" data-delay="1.5" style="display:flex; flex-direction:column; align-items:center; gap:1rem; padding-bottom:2.5rem;">
+      <div class="glass" style="border-radius:9999px; padding:0.25rem 1.125rem;">
+        <span style="font-family:'Barlow',sans-serif; font-weight:500; font-size:0.72rem; color:rgba(255,255,255,0.9);">Collaborating with top aerospace pioneers globally</span>
+      </div>
+      <div id="partners-row" style="display:flex; align-items:center; gap:3.5rem; flex-wrap:wrap; justify-content:center; padding:0 1rem;">
+        <span style="font-family:'Cinzel',serif; font-style:normal; font-weight:700; color:#A8C0DC; font-size:1.75rem;">Aeon</span>
+        <span style="font-family:'Cinzel',serif; font-style:normal; font-weight:700; color:#A8C0DC; font-size:1.75rem;">Vela</span>
+        <span style="font-family:'Cinzel',serif; font-style:normal; font-weight:700; color:#A8C0DC; font-size:1.75rem;">Apex</span>
+        <span style="font-family:'Cinzel',serif; font-style:normal; font-weight:700; color:#A8C0DC; font-size:1.75rem;">Orbit</span>
+        <span style="font-family:'Cinzel',serif; font-style:normal; font-weight:700; color:#A8C0DC; font-size:1.75rem;">Zeno</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     CAPABILITIES SECTION
+═════════════════════════════════════════════════ -->
+<section style="position:relative; min-height:100vh; background:#000; overflow:hidden; display:flex; flex-direction:column;">
+
+  <!-- Background video -->
+  <video id="cap-video" autoplay muted playsinline preload="auto"
+    src="/Wolf_mouth_fire_video_202606211302.mp4"
+    style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:0;">
+  </video>
+
+  <!-- Content -->
+  <div id="cap-content" style="position:relative; z-index:10; display:flex; flex-direction:column; min-height:100vh; padding:6rem 5rem 3rem;">
+
+    <!-- Header -->
+    <div style="margin-bottom:auto;">
+      <p style="font-family:'Barlow',sans-serif; font-size:0.875rem; color:#5A7A9A; margin-bottom:1.5rem;">// Capabilities</p>
+      <h2 style="font-family:'Cinzel',serif; font-style:normal; font-weight:700; color:#C8E0F8; font-size:clamp(2.8rem,6vw,4.5rem); line-height:1.1; letter-spacing:0.05em; text-transform:uppercase; text-shadow:0 2px 20px rgba(0,0,0,0.8);">
+        Production<br>Evolved
+      </h2>
+    </div>
+
+    <!-- Cards -->
+    <div id="cap-cards" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:4rem;">
+
+      <!-- AI Scenery -->
+      <div class="glass" style="border-radius:1.25rem; padding:1.5rem; min-height:340px; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.75rem;">
+          <div class="glass" style="width:44px; height:44px; border-radius:0.75rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#A8C0DC"><path d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21H5Zm1-4h12l-3.75-5-3 4L9 13l-3 4Z"/></svg>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; justify-content:flex-end; gap:0.35rem; max-width:72%;">
+            <span class="tag glass">Natural Context</span>
+            <span class="tag glass">Photo Realism</span>
+            <span class="tag glass">Infinite Settings</span>
+            <span class="tag glass">Eco-Vibe</span>
+          </div>
+        </div>
+        <div style="margin-top:auto; padding-top:1.5rem;">
+          <h3 style="font-family:'Cinzel',serif; font-style:normal; font-weight:600; color:#B8D4F0; font-size:1.5rem; letter-spacing:0.04em; text-transform:uppercase; line-height:1.1; margin-bottom:0.75rem;">AI Scenery</h3>
+          <p style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.875rem; color:#7A9AB8; line-height:1.55; max-width:30ch;">AI analyzes your product to create indistinguishable natural environments — from Icelandic cliffs to misty forests.</p>
+        </div>
+      </div>
+
+      <!-- Batch Production -->
+      <div class="glass" style="border-radius:1.25rem; padding:1.5rem; min-height:340px; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.75rem;">
+          <div class="glass" style="width:44px; height:44px; border-radius:0.75rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#A8C0DC"><path d="M4 6.47 5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.89-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4Z"/></svg>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; justify-content:flex-end; gap:0.35rem; max-width:72%;">
+            <span class="tag glass">Scale Fast</span>
+            <span class="tag glass">Visual Consistency</span>
+            <span class="tag glass">Time Saver</span>
+            <span class="tag glass">Ready to Post</span>
+          </div>
+        </div>
+        <div style="margin-top:auto; padding-top:1.5rem;">
+          <h3 style="font-family:'Cinzel',serif; font-style:normal; font-weight:600; color:#B8D4F0; font-size:1.5rem; letter-spacing:0.04em; text-transform:uppercase; line-height:1.1; margin-bottom:0.75rem;">Batch Production</h3>
+          <p style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.875rem; color:#7A9AB8; line-height:1.55; max-width:30ch;">Style your entire product line in minutes. Create a unified visual identity for catalogues and social media without weeks of retouching.</p>
+        </div>
+      </div>
+
+      <!-- Smart Lighting -->
+      <div class="glass" style="border-radius:1.25rem; padding:1.5rem; min-height:340px; display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:0.75rem;">
+          <div class="glass" style="width:44px; height:44px; border-radius:0.75rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#A8C0DC"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1Zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7Z"/></svg>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; justify-content:flex-end; gap:0.35rem; max-width:72%;">
+            <span class="tag glass">Ray Tracing</span>
+            <span class="tag glass">Physical Shadows</span>
+            <span class="tag glass">Studio Quality</span>
+            <span class="tag glass">Sunlight Sync</span>
+          </div>
+        </div>
+        <div style="margin-top:auto; padding-top:1.5rem;">
+          <h3 style="font-family:'Cinzel',serif; font-style:normal; font-weight:600; color:#B8D4F0; font-size:1.5rem; letter-spacing:0.04em; text-transform:uppercase; line-height:1.1; margin-bottom:0.75rem;">Smart Lighting</h3>
+          <p style="font-family:'Barlow',sans-serif; font-weight:300; font-size:0.875rem; color:#7A9AB8; line-height:1.55; max-width:30ch;">Automatic lighting and material adjustment. Achieve flawless integration with realistic shadows and sunlight.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+// ── Video crossfade (rAF-driven, no CSS transitions) ─────────────────────────
+(function () {
+  var FADE_MS = 500;
+  var LEAD    = 0.55;
+
+  function initVideo(vid) {
+    if (!vid) return;
+    var raf = null;
+    var fadingOut = false;
+
+    function fadeTo(target, ms) {
+      if (raf) cancelAnimationFrame(raf);
+      var t0 = performance.now();
+      var from = parseFloat(vid.style.opacity) || 0;
+      (function step(now) {
+        var p = Math.min((now - t0) / ms, 1);
+        vid.style.opacity = from + (target - from) * p;
+        if (p < 1) raf = requestAnimationFrame(step);
+        else raf = null;
+      })(t0);
+    }
+
+    vid.addEventListener('loadeddata', function () {
+      vid.style.opacity = 0;
+      vid.play().catch(function(){});
+      fadeTo(1, FADE_MS);
+    });
+
+    vid.addEventListener('timeupdate', function () {
+      if (!vid.duration) return;
+      var rem = vid.duration - vid.currentTime;
+      if (!fadingOut && rem <= LEAD && rem > 0) {
+        fadingOut = true;
+        fadeTo(0, FADE_MS);
+      }
+    });
+
+    vid.addEventListener('ended', function () {
+      vid.style.opacity = 0;
+      fadingOut = false;
+      vid.currentTime = 0;
+      vid.play().catch(function(){});
+      fadeTo(1, FADE_MS);
+    });
+
+    if (vid.readyState >= 3) {
+      vid.style.opacity = 0;
+      vid.play().catch(function(){});
+      fadeTo(1, FADE_MS);
+    }
+  }
+
+  initVideo(document.getElementById('hero-video'));
+  initVideo(document.getElementById('cap-video'));
+}());
+
+// ── Blur-text headline ────────────────────────────────────────────────────────
+(function () {
+  var el    = document.getElementById('headline');
+  var words = 'Venture Past Our Sky Across the Universe'.split(' ');
+
+  words.forEach(function (word, i) {
+    var span = document.createElement('span');
+    span.className = 'blur-word';
+    span.textContent = word;
+    span.style.animationDelay = (i * 0.1) + 's';
+    el.appendChild(span);
+  });
+
+  var obs = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) {
+      el.querySelectorAll('.blur-word').forEach(function (s) { s.classList.add('go'); });
+      obs.disconnect();
+    }
+  }, { threshold: 0.1 });
+  obs.observe(el);
+}());
+
+// ── Fade-up elements ──────────────────────────────────────────────────────────
+(function () {
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        var delay = parseFloat(el.dataset.delay) || 0;
+        el.style.animationDelay = delay + 's';
+        el.classList.add('go');
+        obs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.fade-el').forEach(function (el) { obs.observe(el); });
+}());
+</script>
+
+</body>
+</html>

@@ -2,11 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "./image/11x-logo.jpeg";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion, AnimatePresence } from "motion/react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const NAV_LINKS = [
   { label: "Services", path: "/services" },
@@ -73,10 +69,10 @@ const SERVICES = [
 ];
 
 const ROLES = [
-  { title: "Software Engineering Intern", type: "intern", location: "Hybrid · Chennai", period: "Summer 2025" },
+  { title: "Software Engineering Intern", type: "intern", location: "Hybrid · India", period: "Summer 2025" },
   { title: "Product Strategy Intern", type: "intern", location: "Remote", period: "Summer 2025" },
   { title: "Data & Analytics Intern", type: "intern", location: "Hybrid · Bangalore", period: "Fall 2025" },
-  { title: "Senior Consultant", type: "full", location: "Full-time · Chennai", period: "Open" },
+  { title: "Senior Consultant", type: "full", location: "Full-time · India", period: "Open" },
   { title: "Tech Lead", type: "full", location: "Full-time · Remote", period: "Open" },
   { title: "UX Researcher", type: "full", location: "Contract · Remote", period: "Open" },
 ];
@@ -167,35 +163,7 @@ function useCountUp(target, duration = 1500, start = false) {
 }
 
 function MagneticButton({ children, className = "", onClick, style: customStyle = {} }) {
-  const buttonRef = useRef(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e) => {
-    const { clientX, clientY } = e;
-    const { left, top, width, height } = buttonRef.current.getBoundingClientRect();
-    const middleX = clientX - (left + width / 2);
-    const middleY = clientY - (top + height / 2);
-    setPosition({ x: middleX * 0.3, y: middleY * 0.3 });
-  };
-
-  const reset = () => setPosition({ x: 0, y: 0 });
-
-  return (
-    <div className="magnetic-area" onMouseMove={handleMouseMove} onMouseLeave={reset}>
-      <button
-        ref={buttonRef}
-        onClick={onClick}
-        style={{
-          transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-          transition: position.x === 0 ? "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)" : "none",
-          ...customStyle
-        }}
-        className={className}
-      >
-        {children}
-      </button>
-    </div>
-  );
+  return <button onClick={onClick} style={customStyle} className={className}>{children}</button>;
 }
 
 function LoadingScreen() {
@@ -1052,97 +1020,6 @@ function TestimonialsSection() {
   );
 }
 
-function useGSAPAnimations() {
-  useEffect(() => {
-    const alreadyLoaded = sessionStorage.getItem("11x_loaded");
-    const heroDelay = alreadyLoaded ? 0.15 : 2.85;
-
-    const ctx = gsap.context(() => {
-      gsap.timeline({ delay: heroDelay })
-        .from("#home .lusion-fade.d1", { y: 20, opacity: 0, duration: 0.6, ease: "power3.out" })
-        .from("#home .lusion-line-inner", { y: "110%", duration: 1.1, stagger: 0.15, ease: "power4.out" }, "-=0.3")
-        .from(
-          "#home .lusion-fade:not(.d1)",
-          { y: 44, opacity: 0, duration: 0.9, stagger: 0.13, ease: "power3.out" },
-          "-=0.85"
-        );
-
-      ["services", "careers", "process", "testimonials", "contact"].forEach((id) => {
-        const section = document.getElementById(id);
-        if (!section) return;
-
-        const lineInners = section.querySelectorAll(".lusion-line-inner");
-        const clips      = section.querySelectorAll(".lusion-clip");
-        const fades      = section.querySelectorAll(".lusion-fade");
-        const reveals    = section.querySelectorAll(".scroll-reveal");
-
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: section, start: "top 78%", once: true },
-        });
-
-        if (lineInners.length)
-          tl.from(lineInners, { y: "110%", duration: 1.1, stagger: 0.15, ease: "power4.out" });
-        if (clips.length)
-          tl.from(clips, { clipPath: "inset(0 0 100% 0)", y: 20, opacity: 0, duration: 1.1, stagger: 0.14, ease: "power4.out" }, lineInners.length ? "<0.2" : ">");
-        if (fades.length)
-          tl.from(fades, { y: 44, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out" }, "<0.2");
-        if (reveals.length)
-          tl.from(reveals, { y: 36, opacity: 0, duration: 0.7, stagger: 0.08, ease: "power3.out" }, "<0.15");
-      });
-
-      gsap.utils.toArray(".wolf-heading").forEach((el) => {
-        gsap.from(el, {
-          y: 50, opacity: 0, duration: 1.1, ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 82%", once: true },
-        });
-      });
-    });
-
-    ScrollTrigger.refresh();
-    return () => ctx.revert();
-  }, []);
-}
-
-function CustomCursor() {
-  const dotRef  = useRef(null);
-  const ringRef = useRef(null);
-  const ringPos = useRef({ x: 0, y: 0 });
-  const mouse   = useRef({ x: 0, y: 0 });
-  const animId  = useRef(null);
-  const [hovered, setHovered] = useState(false);
-
-  useEffect(() => {
-    const onMove = (e) => {
-      mouse.current = { x: e.clientX, y: e.clientY };
-      if (dotRef.current) dotRef.current.style.transform = `translate3d(${e.clientX - 3}px,${e.clientY - 3}px,0)`;
-    };
-    const onEnter = () => setHovered(true);
-    const onLeave = () => setHovered(false);
-    window.addEventListener("mousemove", onMove);
-    const addHover = () => document.querySelectorAll("a,button,[data-cursor]").forEach(el => {
-      el.addEventListener("mouseenter", onEnter);
-      el.addEventListener("mouseleave", onLeave);
-    });
-    addHover();
-    const lerp = (a, b, n) => a + (b - a) * n;
-    const loop = () => {
-      ringPos.current.x = lerp(ringPos.current.x, mouse.current.x - 16, 0.13);
-      ringPos.current.y = lerp(ringPos.current.y, mouse.current.y - 16, 0.13);
-      if (ringRef.current) ringRef.current.style.transform = `translate3d(${ringPos.current.x}px,${ringPos.current.y}px,0)`;
-      animId.current = requestAnimationFrame(loop);
-    };
-    loop();
-    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(animId.current); };
-  }, []);
-
-  return (
-    <>
-      <div ref={dotRef} className="cursor-dot" />
-      <div ref={ringRef} className={`cursor-ring${hovered ? " hovered" : ""}`} />
-    </>
-  );
-}
-
 function CookieBanner() {
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -1606,8 +1483,8 @@ function FooterBar() {
           <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "18px" }}>
             <p className="mono text-[9px] font-medium uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>Location</p>
             <div style={{ marginBottom: 12 }}>
-              <p className="text-sm font-semibold" style={{ color: "#ffffff", letterSpacing: "-0.02em" }}>Chennai</p>
-              <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>India · Hybrid</p>
+              <p className="text-sm font-semibold" style={{ color: "#ffffff", letterSpacing: "-0.02em" }}>India</p>
+              <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>Hybrid</p>
             </div>
             <div>
               <p className="text-sm font-semibold" style={{ color: "#ffffff", letterSpacing: "-0.02em" }}>United Kingdom</p>
@@ -1658,8 +1535,6 @@ function HomePage() {
   const navigate = useNavigate();
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef(null);
-  useGSAPAnimations();
-
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setStatsVisible(true); },
@@ -1737,7 +1612,7 @@ function HomePage() {
 
       <div className="py-4 overflow-hidden z-20 relative" style={{ background: "#060e1a", borderTop: "1px solid rgba(212,168,85,0.20)", borderBottom: "1px solid rgba(212,168,85,0.20)" }}>
         <div className="marquee-track flex gap-14 w-max">
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
+          {MARQUEE_ITEMS.map((item, i) => (
             <span key={i} className="mono text-[11px] font-medium uppercase tracking-widest whitespace-nowrap flex items-center gap-4" style={{ color: "#ffffff" }}>
               {item}
               <span className="text-[8px]" style={{ color: "#d4a855" }}>✦</span>
@@ -1750,7 +1625,6 @@ function HomePage() {
 }
 
 function ServicesPage() {
-  useGSAPAnimations();
   return (
     <section id="services" className="relative overflow-hidden" style={{ minHeight: "100svh" }}>
       <video
@@ -1783,7 +1657,6 @@ function ServicesPage() {
 }
 
 function CareersPage() {
-  useGSAPAnimations();
   const [careersApplyRole, setCareersApplyRole] = useState(null);
 
   return (
@@ -1845,7 +1718,6 @@ function CareersPage() {
 }
 
 function ProcessPage() {
-  useGSAPAnimations();
   return (
     <section id="process" className="relative flex flex-col justify-center px-5 md:px-12 pt-24 pb-20 md:pt-28 md:pb-24 overflow-hidden" style={{ minHeight: "100svh" }}>
       <video
@@ -1894,7 +1766,6 @@ function ProcessPage() {
 }
 
 function ContactPage() {
-  useGSAPAnimations();
   const [activeModal, setActiveModal] = useState(null);
 
   return (
@@ -1974,17 +1845,6 @@ function AppInner() {
 
   return (
     <div className="min-h-screen font-sans overflow-x-hidden" style={{ background: "#0b1628", color: "#ffffff" }}>
-      <LoadingScreen />
-      <CustomCursor />
-      <MouseSpotlight />
-      <ScrollProgress />
-
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(71,126,233,0.12)" }} />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[130px] animate-pulse" style={{ background: "rgba(212,168,85,0.08)", animationDelay: "2s" }} />
-        <div className="absolute top-[40%] left-[55%] w-[30%] h-[30%] rounded-full blur-[110px] animate-pulse" style={{ background: "rgba(71,126,233,0.08)", animationDelay: "4s" }} />
-      </div>
-
       <NavBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} scrolled={scrolled} navHidden={navHidden} />
 
       {menuOpen && <MobileMenu setMenuOpen={setMenuOpen} />}
